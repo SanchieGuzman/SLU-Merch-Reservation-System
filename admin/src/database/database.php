@@ -30,7 +30,23 @@ class Database
 
     public function login($username, $password)
     {
-        return true;
+        $stmt = $this->mysqli->prepare("SELECT password FROM users WHERE username = ?");
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        //Check if user exists
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $storedPassword = $row['password'];
+            if ($password === $storedPassword) {
+                return true; //Correct password
+            } else {
+                return false; //Incorrect password
+            }
+        } else { //User does not exist
+            return false;
+        }
     }
 }
 ?>
