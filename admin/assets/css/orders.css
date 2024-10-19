@@ -13,6 +13,6 @@ body{
 }
 
 /* this is where your content should be placed */
-#dashboard-content{
+#orders-content{
     border: solid green 5px;
 }
