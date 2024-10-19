@@ -28,6 +28,7 @@ class Database
         return self::$instance;
     }
 
+    // todo: change the return type to userID, or 0 if wala
     public function login($username, $password)
     {
         $stmt = $this->mysqli->prepare("SELECT password FROM users WHERE username = ?");
@@ -47,6 +48,11 @@ class Database
         } else { //User does not exist
             return false;
         }
+    }
+
+    //todo: create a function that fetches organization data based on the given userID
+    public function getOrganizationData($userID){
+        // make use of the Organization class, pero i null mo lang other fields. ang important lang is OrgID, OrgName, Org Logo, then return mo object na Organization
     }
 }
 ?>
