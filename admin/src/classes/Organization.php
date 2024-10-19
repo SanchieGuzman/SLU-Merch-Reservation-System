@@ -1,5 +1,5 @@
 <?php
-class organization
+class Organization
 {
     private $organizationID;
     private $organizationName;

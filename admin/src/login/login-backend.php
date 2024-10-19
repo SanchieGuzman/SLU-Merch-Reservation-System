@@ -7,7 +7,9 @@
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if ($db->login($username, $password)) {
+    $userID = $db->login($username, $password);
+    if ($userID > 0) {
+        $_SESSION['USER_ID'] = $userID;
         header("Location: ../dashboard/dashboard.php");
         exit();
     } else {

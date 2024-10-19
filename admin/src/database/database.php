@@ -28,9 +28,14 @@ class Database
         return self::$instance;
     }
 
+    // todo: change the return type to userID, or 0 if wala
     public function login($username, $password)
     {
-        $stmt = $this->mysqli->prepare("SELECT password FROM users WHERE username = ?");
+        $stmt = $this->mysqli->prepare("SELECT v.user_id, u.password 
+                                    FROM vendors AS v 
+                                    JOIN users AS u ON u.user_id = v.user_id 
+                                    WHERE u.username = ?");
+
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -39,13 +44,40 @@ class Database
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $storedPassword = $row['password'];
+            $storedUserId = $row['user_id'];
             if ($password === $storedPassword) {
-                return true; //Correct password
+                return $storedUserId; //Correct password
             } else {
-                return false; //Incorrect password
+                return 0; //Incorrect password
             }
-        } else { //User does not exist
-            return false;
+        } else { //User does not exist/not a vendor
+            return 0;
+        }
+    }
+
+    //todo: create a function that fetches organization data based on the given userID
+    public function getOrganizationData($userID){
+        // make use of the Organization class, pero i null mo lang other fields. ang important lang is OrgID, OrgName, Org Logo, then return mo object na Organization
+        $stmt = $this->mysqli->prepare("SELECT o.organization_id, o.organization_name, o.organization_description, o.logo FROM organizations AS o 
+                                        JOIN organization_members om ON o.organization_id = om.organization_id 
+                                        JOIN vendors v ON v.vendor_id = om.vendor_id WHERE user_id = ?");
+        
+        $stmt->bind_param('i', $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        // Check if an organization was found
+        if ($row = $result->fetch_assoc()) {
+            
+            return new Organization(
+                $row['organization_id'],
+                $row['organization_name'],
+                $row['organization_description'],
+                $row['logo'],
+                null
+            );
+        } else {
+            // If no organization is found, return null
+            return null;
         }
     }
 }

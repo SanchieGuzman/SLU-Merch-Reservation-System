@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 16, 2024 at 02:22 PM
+-- Generation Time: Oct 19, 2024 at 03:35 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `organization_schedules` (
   `organization_id` int(11) NOT NULL,
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
+  `location` varchar(255) NOT NULL,
   PRIMARY KEY (`schedule_id`),
   KEY `organization_schedules` (`organization_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -155,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(25) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
+  `contact` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -168,7 +170,6 @@ DROP TABLE IF EXISTS `vendors`;
 CREATE TABLE IF NOT EXISTS `vendors` (
   `vendor_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `contact` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`vendor_id`),
   KEY `vendors_user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
