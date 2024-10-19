@@ -8,9 +8,10 @@
 </head>
 
 <body>
-    <h1>Hello World</h1>
+    <!-- this serves as an entry point to the application -->
     <?php
-        echo "hello world"
+        header("Location: login/login.php");
+        exit();
     ?>
 </body>
 
