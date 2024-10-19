@@ -31,7 +31,7 @@ class Database
     // todo: change the return type to userID, or 0 if wala
     public function login($username, $password)
     {
-        $stmt = $this->mysqli->prepare("SELECT password FROM users WHERE username = ?");
+        $stmt = $this->mysqli->prepare("SELECT user_id, password FROM users WHERE username = ?");
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -40,19 +40,20 @@ class Database
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $storedPassword = $row['password'];
+            $storedUserId = $row['user_id'];
             if ($password === $storedPassword) {
-                return true; //Correct password
+                return $storedUserId; //Correct password
             } else {
-                return false; //Incorrect password
+                return 0; //Incorrect password
             }
         } else { //User does not exist
-            return false;
+            return 0;
         }
     }
 
     //todo: create a function that fetches organization data based on the given userID
     public function getOrganizationData($userID){
-        // make use of the Organization class, pero i null mo lang other fields. ang important lang is OrgID, OrgName, Org Logo, then return mo object na Organization
+        
     }
 }
 ?>
