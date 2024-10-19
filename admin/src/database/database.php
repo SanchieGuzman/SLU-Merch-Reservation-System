@@ -31,7 +31,11 @@ class Database
     // todo: change the return type to userID, or 0 if wala
     public function login($username, $password)
     {
-        $stmt = $this->mysqli->prepare("SELECT user_id, password FROM users WHERE username = ?");
+        $stmt = $this->mysqli->prepare("SELECT v.user_id, u.password 
+                                    FROM vendors AS v 
+                                    JOIN users AS u ON u.user_id = v.user_id 
+                                    WHERE u.username = ?");
+
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -46,7 +50,7 @@ class Database
             } else {
                 return 0; //Incorrect password
             }
-        } else { //User does not exist
+        } else { //User does not exist/not a vendor
             return 0;
         }
     }
