@@ -1,11 +1,12 @@
 .sidebar {
   /* do not remove*/
   position: sticky;
-  top: 0 ;
+  top: 0;
+  left: 0;
   width: 15%;
   height: 100vh;
   background-color: #fecb41;
-
+  border-right: 1px solid black;
 }
 
 .profile {
@@ -15,6 +16,8 @@
   gap: 20%;
   width: 100%;
   padding: 10% 5%;
+  height: 10%;
+  border-bottom: 1px solid white;
 }
 
 .profile img {
@@ -25,29 +28,41 @@
   padding-top: 2.7rem;
   display: flex;
   flex-flow: column nowrap;
+  height: 90%;
+}
+
+.buttons-container .side-icons {
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: invert(38%) sepia(96%) saturate(3241%) hue-rotate(233deg)
+    brightness(0%) contrast(88%);
 }
 
 .buttons-container button {
   background-color: transparent;
   border: none;
-  height: 3.3rem;
-  font-size: 1.2rem;  
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+  text-align: left;
+  padding-left: 18%;
 }
 
 .buttons-container .spacer {
-  height: 10rem;
+  height: 40%;
 }
 
-.buttons-container button:active {
-  background-color: #2235a2;
-  border: 1px solid black;
-  color: white;
-  border-radius: 0 2rem 2rem 0;
-}
-
+.buttons-container button:active,
 .buttons-container button:focus {
   background-color: #2235a2;
   border: 1px solid black;
   color: white;
   border-radius: 0 2rem 2rem 0;
+}
+
+.buttons-container button:active .side-icons,
+.buttons-container button:focus .side-icons {
+  filter: none;
 }
