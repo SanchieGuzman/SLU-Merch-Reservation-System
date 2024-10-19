@@ -15,14 +15,14 @@
     $mimeType = finfo_buffer($finfo, $orgImage); // Get the MIME type from the BLOB
     finfo_close($finfo); // Close the resource
 
-    $imageSource;
+    $imageSource = '';
     // Display the image
     if ($orgImage) {
         // Convert the image blob to base64
         $base64 = base64_encode($orgImage);
 
         // Output the image as an HTML img tag
-        $imageSource = "data:' . htmlspecialchars($mimeType) . ';base64,' . $base64 . ";
+        $imageSource = "data:" . htmlspecialchars($mimeType) . ";base64," . $base64;
     }
     $orgName = $organization->getOrganizationName();
 ?>

@@ -1,7 +1,3 @@
-<?php
-$orgName = "INTEGRATED CONFIDERACY";
-$welcomeText = "Welcome Back!";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +10,7 @@ $welcomeText = "Welcome Back!";
     <!-- Top bar section -->
     <header class="topbar">
         <div class="welcome-message">
-            <h3><?php echo $welcomeText; ?></h3>
+            <h3>Welcome back!</h3>
             <h2><?php echo $orgName; ?></h2>
         </div>
         <div class="notification-icon">

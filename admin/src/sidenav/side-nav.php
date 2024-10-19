@@ -10,7 +10,7 @@
 <body>
     <aside class="sidebar">
         <div class="profile">
-            <?php echo  "<img src=\"$orgImage\" alt=\"\">" ?>
+            <?php echo  "<img src=\"$imageSource\" alt=\"\">" ?>
             <?php echo  "<h2>$orgName</h2>" ?>
         </div>
         <div class="buttons-container">
