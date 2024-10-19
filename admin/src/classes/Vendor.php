@@ -1,5 +1,5 @@
 <?php
-class vendor
+class Vendor
 {
     private $vendorID;  
     private $userID;  
