@@ -53,6 +53,8 @@ class Database
     //todo: create a function that fetches organization data based on the given userID
     public function getOrganizationData($userID){
         // make use of the Organization class, pero i null mo lang other fields. ang important lang is OrgID, OrgName, Org Logo, then return mo object na Organization
+        $org = new Organization('1', 'Integrated Confideracy', 'This is a sample description', 'logo', null);
+        return $org;
     }
 }
 ?>
