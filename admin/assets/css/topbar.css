@@ -30,6 +30,8 @@ body {
   position: fixed;
   top: 0;
   right: 0;
+  height: 10%;
+  border-bottom: 1px solid #000;
 }
 
 
