@@ -83,7 +83,25 @@ class Database
 
     //todo:create a fuction that fetches the orders that pending
     public function getPendingOrders($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at 
+                                        FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
+                                        JOIN products AS p ON op.product_id = p.product_id 
+                                        JOIN users AS u ON o.customer_id = u.user_id 
+                                        WHERE p.organization_id = ?
+                                        AND o.status = 'pending'");
 
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingOrders = [];
+
+        // Fetch each row one by one
+        while ($row = $result->fetch_assoc()) {
+            $pendingOrders[] = $row;
+        }
+
+        // Return the pending orders array, even if theres no pending orders
+        return $pendingOrders;
     }
 }
 ?>
