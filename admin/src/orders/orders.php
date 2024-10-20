@@ -35,7 +35,7 @@
 
         window.onload = function () {
             orders.forEach(order =>{
-                addCard(order['first_name'],order['order_id'],order['created_at'], order['status'])
+                addCard(order['first_name'],"Order ID: "+order['order_id'],order['created_at'], "Status: "+ order['status'])
             })
         };
 
