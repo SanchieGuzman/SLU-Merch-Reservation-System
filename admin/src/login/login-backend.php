@@ -10,6 +10,7 @@
     $userID = $db->login($username, $password);
     if ($userID > 0) {
         $_SESSION['USER_ID'] = $userID;
+        $_SESSION['action'] = 'dashboard';
         header("Location: ../dashboard/dashboard.php");
         exit();
     } else {

@@ -8,19 +8,23 @@
     <link rel="stylesheet" href="../../assets/css/globals.css">
 </head>
 <body>
-    <aside class="sidebar">
+    <aside class="sidebar"> 
         <div class="profile">
             <?php echo  "<img src=\"$imageSource\" alt=\"\">" ?>
             <?php echo  "<h2>$orgName</h2>" ?>
         </div>
-        <div class="buttons-container">
-            <button class="dashboard-button"><img class="side-icons" src="../../assets/images/sidenav-icons/DASHBOARD.svg" alt="Dashboard icon">Dashboard</button>
-            <button class="order-button"><img class="side-icons" src="../../assets/images/sidenav-icons/ORDERS.svg" alt="Orders icon">Orders</button>
-            <button class="products-button"><img class="side-icons" src="../../assets/images/sidenav-icons/PRODUCTS.svg" alt="Products icon">Products</button>
-            <section class="spacer"> </section>
-            <button class="log-out-button"><img class="side-icons" src="../../assets/images/sidenav-icons/LOG OUT.svg" alt="Log out icon">Log Out</button>
-            <button class="help-button"><img class="side-icons" src="../../assets/images/sidenav-icons/HELP.svg" alt="Help">Help</button>
-        </div>
+        <form action="../../src/sidenav/side-nav-route.php" method="POST" class="form">
+            <div class="buttons-container">
+                <button type='submit' name="action" value="dashboard" class="<?php echo $_SESSION['action'] === 'dashboard' ? 'active-button' : 'default-button'?>"><img class="<?php echo $_SESSION['action'] === 'dashboard' ? 'active-icon' : 'default-icon'?>" src="../../assets/images/sidenav-icons/DASHBOARD.svg" alt="Dashboard icon">Dashboard</button>
+                <button type='submit' name="action" value="orders" class="<?php echo $_SESSION['action'] === 'orders' ? 'active-button' : 'default-button'?>"><img class="<?php echo $_SESSION['action'] === 'orders' ? 'active-icon' : 'default-icon'?>" src="../../assets/images/sidenav-icons/ORDERS.svg" alt="Orders icon">Orders</button>
+                <button type='submit' name="action" value="products" class="<?php echo $_SESSION['action'] === 'products' ? 'active-button' : 'default-button'?>"><img class="<?php echo $_SESSION['action'] === 'products' ? 'active-icon' : 'default-icon'?>" src="../../assets/images/sidenav-icons/PRODUCTS.svg" alt="Products icon">Products</button>
+                
+                <div class="spacer">
+                    <button type='submit' name="action" value="logout" class="<?php echo $_SESSION['action'] === 'logout' ? 'active-button' : 'default-button'?>"><img class="<?php echo $_SESSION['action'] === 'logout' ? 'active-button' : 'default-icon'?>" src="../../assets/images/sidenav-icons/LOG OUT.svg" alt="Log out icon">Log Out</button>
+                    <button disabled type="submit" class="default-button"><img class="default-icon" src="../../assets/images/sidenav-icons/HELP.svg" alt="Help">Help</button>
+                </div>
+            </div>
+        </form>
     </aside>
 </body>
 </html>
