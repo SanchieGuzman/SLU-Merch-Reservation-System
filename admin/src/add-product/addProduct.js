@@ -27,6 +27,7 @@ function loadUI(){
     form.setAttribute('action', '../../src/add-product/add-product-backend.php');
     form.setAttribute('method', 'POST')
     form.setAttribute('id', 'add-product-form');
+    form.setAttribute('enctype', 'multipart/form-data');
 
     // Product Name
     var labelName = document.createElement('label');
@@ -57,7 +58,7 @@ function loadUI(){
 
     var priceField = document.createElement('input');
     priceField.setAttribute('type', 'text');
-    priceField.setAttribute('id', 'product_price');
+    priceField.setAttribute('name', 'product_price');
     priceField.setAttribute('id', 'price-text-field');
 
     var labelQuantity = document.createElement('label');
@@ -67,7 +68,7 @@ function loadUI(){
 
     var quantityField = document.createElement('input');
     quantityField.setAttribute('type', 'text');
-    quantityField.setAttribute('id', 'product_quantity');
+    quantityField.setAttribute('name', 'product_quantity');
     quantityField.setAttribute('id', 'quantity-text-field');
 
     left.appendChild(labelPrice);
@@ -86,7 +87,7 @@ function loadUI(){
 
     var descriptionField = document.createElement('input');
     descriptionField.setAttribute('type', 'text');
-    descriptionField.setAttribute('id', 'product_description');
+    descriptionField.setAttribute('name', 'product_description');
     descriptionField.setAttribute('id', 'description-text-field');
 
     right.appendChild(labelDescription);

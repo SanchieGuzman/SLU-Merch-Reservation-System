@@ -103,5 +103,12 @@ class Database
         // Return the pending orders array, even if theres no pending orders
         return $pendingOrders;
     }
+
+    // todo: create a function that adds a product to the database. 
+    public function addProduct($product){
+        // this is product $product = new Product(null, $productName, $productDescription, $organizationID, $productPrice, $productQuantity, $productImage, $status );
+        // null yung product ID kase auto increment na yan sa database
+        // if successful return  true, else false
+    }
 }
 ?>
