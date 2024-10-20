@@ -26,4 +26,6 @@
         $imageSource = "data:" . htmlspecialchars($mimeType) . ";base64," . $base64;
     }
     $orgName = $organization->getOrganizationName();
+    $orgID = $organization->getOrganizationID();
+    $_SESSION['ORG_ID'] = $orgID;
 ?>

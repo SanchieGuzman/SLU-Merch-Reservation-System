@@ -20,9 +20,76 @@
         ?>
 
         <main id="orders-content">
-            <h1>THIS IS WHERE THE ORDERS CONTENT GOES</h1>
-            <!-- test your code by pasting this url: {localhost or depebde sa wamp nyo}/admin/src/orders/orders.php -->
+            <div class="orders-container"></div>
         </main>
     </section>
+
+    <script>
+
+        <?php 
+            $db = Database::getInstance();
+            $orders = $db -> getPendingOrders($_SESSION['ORG_ID'])
+        ?>
+
+        const orders = <?php echo json_encode($orders)?>
+
+        window.onload = function () {
+            orders.forEach(order =>{
+                addCard(order['first_name'],order['order_id'],order['created_at'], order['status'])
+            })
+        };
+
+        array.forEach(element => {
+            
+        });
+
+        function addCard(name, orderId, orderDateValue, statusValue) {
+        const container = document.querySelector(".orders-container");
+
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("card");
+
+        const leftCont = document.createElement("div");
+        leftCont.classList.add("left");
+
+        const rightCont = document.createElement("div");
+        rightCont.classList.add("right");
+
+        const vName = document.createElement("h4");
+        vName.classList.add("vendor-name");
+        vName.textContent = name;
+        leftCont.appendChild(vName);
+
+        const orderDate = document.createElement("p");
+        orderDate.classList.add("order-date");
+        orderDate.textContent = orderDateValue;
+        leftCont.appendChild(orderDate);
+
+        const oID = document.createElement("p");
+        oID.classList.add("order-id");
+        oID.textContent = orderId;
+        rightCont.appendChild(oID);
+
+        const status = document.createElement("p");
+        status.classList.add("status");
+        status.textContent = statusValue;
+        rightCont.appendChild(status);
+
+        const button1 = document.createElement("button");
+        button1.classList.add("view-button");
+        button1.textContent = "View Order List";
+        leftCont.appendChild(button1);
+
+        const button2 = document.createElement("button");
+        button2.classList.add("served-button");
+        button2.textContent = "Served";
+        rightCont.appendChild(button2);
+
+        newDiv.appendChild(leftCont);
+        newDiv.appendChild(rightCont);
+
+        container.appendChild(newDiv);
+        }
+    </script>
 </body>
 </html>

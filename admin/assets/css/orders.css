@@ -1,18 +1,67 @@
-body{
-    /* to make sidebar and content-container displayed in flex */
-    /* DO NOT REMOVE */
-    display: flex;
-    position: relative;
+body {
+  /* to make sidebar and content-container displayed in flex */
+  /* DO NOT REMOVE */
+  display: flex;
+  position: relative;
 }
 
-#left-container{
-    border: solid red 5px;
-
-    /* 85% because sidebar in sidenav.css is 15% */
-    width: 85%;
+#left-container {
+  /* 85% because sidebar in sidenav.css is 15% */
+  width: 85%;
+  background-color: #ededeb;
+  padding-top: 10vh;
 }
 
-/* this is where your content should be placed */
-#orders-content{
-    border: solid green 5px;
+.orders-container {
+  padding: 1rem;
+  gap: 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row: auto;
+  height: auto;
+  place-items: center;
+}
+
+.card {
+  border: 1px solid black;
+  width: 90%;
+  height: 30vh;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+}
+
+.card .left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.card .view-button {
+  width: 100%;
+  background-image: linear-gradient(to right, #3a50cb, #15268b);
+  color: white;
+  border: none;
+  height: 2.5rem;
+  font-size: 1rem;
+}
+
+.card .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.card .served-button {
+  width: 100%;
+  background-image: linear-gradient(to right, #3a50cb, #15268b);
+  color: white;
+  border: none;
+  height: 2.5rem;
+  font-size: 1rem;
 }
