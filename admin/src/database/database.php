@@ -80,5 +80,10 @@ class Database
             return null;
         }
     }
+
+    //todo:create a fuction that fetches the orders that pending
+    public function getPendingOrders($organizationID){
+
+    }
 }
 ?>
