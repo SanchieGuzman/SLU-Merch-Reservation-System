@@ -80,5 +80,31 @@ class Database
             return null;
         }
     }
+
+    //todo: Create a function that fetches the number of pending orders of the organization a user is a part of
+    public function getTotalPendingOrders($userID) {
+        // kinukuha lng ung total pending orders
+    }
+
+    //todo: Create a function that fetches the sales data of the organization a user is part of
+    public function getSales($userID) {
+        // kinukuha lng ung total sales ng org
+    }
+
+    //todo: Create a function that fetches the top 5 or 10? most ordered product of an organization a user is a part of
+    public function getMostOrderedProducts($userID) {
+        // not sure kung up to 5 or up to 10 ba ang ididisplay sa most ordered 
+        // products natin kaya for now ikaw bahala sa number.
+
+        // pwede mo din ba ireturn dito ung parang hashmap na style? example <sold, product>
+        // wala kasi sa products database kung ilan na ang nabenta sa isang product kaya di ko alam kung paano approach
+        // natin dun. kung di mo sure pwede natin pag usapan tommorrow.
+
+        // sorry din sa grammar, tinatamad na ako mag ayos, pero ang daming sinasabi 'no?
+        // yapper talaga
+
+        // anyways tank u :)
+    }
+
 }
 ?>

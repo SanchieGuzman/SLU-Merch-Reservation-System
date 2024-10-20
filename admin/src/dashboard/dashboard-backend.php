@@ -4,7 +4,7 @@
     require_once('../database/database.php');
     $db = Database::getInstance();
 
-    // $pending_orders = $db->getSales($_SESSION['USER_ID']);
+    // $pending_orders = $db->getTotalPendingOrders($_SESSION['USER_ID']);
 
     // $time = $db->getTime();
 
