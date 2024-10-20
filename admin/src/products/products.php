@@ -6,6 +6,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="../../assets/css/globals.css">
     <link rel="stylesheet" href="../../assets/css/products.css">
+    <link rel="stylesheet" href="../../assets/css/add-product-popup.css">
 </head>
 <body>
     <?php
@@ -20,9 +21,13 @@
         ?>
 
         <main id="products-content">
-            <h1>THIS IS WHERE THE PRODUCTS CONTENT GOES</h1>
+            <button id="add-product-button">
+                <img src="../../assets/images/add-logo.svg" alt="add logo">
+                <h2>Add Product</h2>
+            </button>
             <!-- test your code by pasting this url: {localhost or depebde sa wamp nyo}/admin/src/products/products.php -->
         </main>
+        <script src="../add-product/addProduct.js"></script>
     </section>
 </body>
 </html>

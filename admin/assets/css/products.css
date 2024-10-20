@@ -15,4 +15,13 @@ body{
 /* this is where your content should be placed */
 #products-content{
     border: solid green 5px;
+    padding: 1rem;
+    /* DO NOT TOUCH THIS */
+    margin-top: 10vh; 
+}
+
+/* TEMPORARY */
+#add-product-button > img{
+    height: 20px;
+    width: 20px;;
 }
