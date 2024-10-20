@@ -25,14 +25,18 @@
     </section>
 
     <script>
+
+        <?php 
+            $db = Database::getInstance();
+            $orders = $db -> getPendingOrders($_SESSION['ORG_ID'])
+        ?>
+
+        const orders = <?php echo json_encode($orders)?>
+
         window.onload = function () {
-  
-            addCard(
-                "Jerwin Ramos",
-                "Order ID: " + 12345,
-                "Ordered at: Date Here",
-                "Status: Pending"
-            );
+            orders.forEach(order =>{
+                addCard(order['first_name'],order['order_id'],order['created_at'], order['status'])
+            })
         };
 
         array.forEach(element => {

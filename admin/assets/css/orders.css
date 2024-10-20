@@ -6,21 +6,15 @@ body {
 }
 
 #left-container {
-  border: solid red 5px;
-
   /* 85% because sidebar in sidenav.css is 15% */
   width: 85%;
-}
-
-/* this is where your content should be placed */
-#orders-content {
   background-color: #ededeb;
+  padding-top: 10vh;
 }
 
 .orders-container {
   padding: 1rem;
   gap: 2rem 0;
-  border: 1px solid black;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-row: auto;
