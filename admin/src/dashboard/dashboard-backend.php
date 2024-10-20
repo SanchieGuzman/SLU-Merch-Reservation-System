@@ -2,7 +2,7 @@
     //fetching dashboard data to be used in dashboard.php
 
     require_once('../database/database.php');
-    // $db = Database::getInstance();
+    $db = Database::getInstance();
 
     // $pending_orders = $db->getSales($_SESSION['USER_ID']);
 

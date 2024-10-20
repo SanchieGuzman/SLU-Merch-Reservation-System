@@ -30,7 +30,8 @@
                         <img></img>
                         <h1>Pending Orders</h1>
                     </div>
-                    <span><?php echo "$pending_orders"; ?></span> <!-- todo: use echo $pending_orders to display the value -->
+                    <span><?php echo "$pending_orders"; ?></span>
+                    <!-- todo: use echo $pending_orders to display the value -->
                     <div>
                         <span><?php echo "As of $time"; ?></span> <!-- todo: use echo $time to display the time -->
                     </div>
@@ -49,9 +50,16 @@
             </div>
 
             <!-- MOST ORDERED PRODCUTS CONTAINER -->
-            <div id="most-ordered-container">
+            <div id="most-ordered-products-container">
                 <!-- todo: display the most ordered products -->
+
             </div>
+
+            <script src="most-ordered-product-card.js"></script>
+            <script>
+                const products = <?php echo json_encode($most_ordered_products); ?>
+                displayProducts(products);
+            </script>
         </main>
     </section>
 </body>
