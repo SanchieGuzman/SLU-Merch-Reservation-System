@@ -36,6 +36,7 @@ function loadUI(){
     
     var nameField = document.createElement('input');
     nameField.setAttribute('type', 'text');
+    nameField.setAttribute('name', 'product_name');
     nameField.setAttribute('id', 'name-text-field');
     
     form.appendChild(labelName);
@@ -56,6 +57,7 @@ function loadUI(){
 
     var priceField = document.createElement('input');
     priceField.setAttribute('type', 'text');
+    priceField.setAttribute('id', 'product_price');
     priceField.setAttribute('id', 'price-text-field');
 
     var labelQuantity = document.createElement('label');
@@ -65,6 +67,7 @@ function loadUI(){
 
     var quantityField = document.createElement('input');
     quantityField.setAttribute('type', 'text');
+    quantityField.setAttribute('id', 'product_quantity');
     quantityField.setAttribute('id', 'quantity-text-field');
 
     left.appendChild(labelPrice);
@@ -83,6 +86,7 @@ function loadUI(){
 
     var descriptionField = document.createElement('input');
     descriptionField.setAttribute('type', 'text');
+    descriptionField.setAttribute('id', 'product_description');
     descriptionField.setAttribute('id', 'description-text-field');
 
     right.appendChild(labelDescription);
@@ -102,6 +106,7 @@ function loadUI(){
 
     var imageUpload = document.createElement('input');
     imageUpload.setAttribute('type', 'file');
+    imageUpload.setAttribute('name', 'product_image');
     imageUpload.setAttribute('id', 'image-upload');
     imageUpload.setAttribute('accept', 'image/*');
 
@@ -116,6 +121,37 @@ function loadUI(){
     addButton.textContent = 'ADD';
 
     form.appendChild(addButton);
+
+    // Message Element
+    var message = document.createElement('div');
+    message.setAttribute('id', 'message');
+    message.style.color = 'red';  // Style the message (optional)
+    message.style.display = 'none'; // Hide the message by default
+    form.appendChild(message);
+    
+    // Form Submit Event Listener
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+        
+        // Check for empty fields
+        var fields = [nameField, priceField, quantityField, descriptionField, imageUpload];
+        var allFilled = true;
+
+        fields.forEach(function(field) {
+            if (!field.value) {
+                allFilled = false;
+            }
+        });
+
+        // Display message if not all fields are filled
+        if (!allFilled) {
+            message.textContent = 'Please fill out all fields before adding a product.';
+            message.style.display = 'block'; // Show the message
+        } else {
+            message.style.display = 'none'; // Hide the message if all fields are filled
+            form.submit(); // Proceed with form submission if all fields are filled
+        }
+    });
 
     // append top and form
     popUpContainer.appendChild(top);
