@@ -109,6 +109,7 @@ class Database
         // this is product $product = new Product(null, $productName, $productDescription, $organizationID, $productPrice, $productQuantity, $productImage, $status );
         // null yung product ID kase auto increment na yan sa database
         // if successful return  true, else false
+        return true;
     }
 }
 ?>

@@ -18,7 +18,7 @@
     $db = Database::getInstance();
 
     if($db->addProduct($product)){
-        
+        header("Location: ../products/products.php");
     }
     ;
 ?>
