@@ -27,7 +27,30 @@
             </button>
             <!-- test your code by pasting this url: {localhost or depebde sa wamp nyo}/admin/src/products/products.php -->
         </main>
-        <script src="../add-product/addProduct.js"></script>
+
+        <div id="popup-success">
+            <?php 
+               if (isset($_SESSION['add_success_message'])) {
+                    echo $_SESSION['add_success_message']; 
+                    unset($_SESSION['add_success_message']);
+                }
+            ?>
+        </div>
     </section>
+
+    <script>
+        // Show the pop-up if there's a success message
+        window.onload = function() {
+            var popup = document.getElementById('popup-success');
+            if (popup.textContent.trim() !== '') {
+                popup.style.display = 'block';
+                setTimeout(function() {
+                    popup.style.display = 'none';
+                }, 5000); // Hide after 3 seconds
+            }
+        };
+    </script>
+    <script src="../add-product/addProduct.js"></script>
+    
 </body>
 </html>

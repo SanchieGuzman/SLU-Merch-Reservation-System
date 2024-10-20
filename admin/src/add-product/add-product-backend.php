@@ -18,7 +18,9 @@
     $db = Database::getInstance();
 
     if($db->addProduct($product)){
+        $_SESSION['add_success_message'] = "Product added";
         header("Location: ../products/products.php");
+        exit();
     }
     ;
 ?>

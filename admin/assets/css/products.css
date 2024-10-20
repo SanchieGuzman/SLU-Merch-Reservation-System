@@ -10,6 +10,7 @@ body{
 
     /* 85% because sidebar in sidenav.css is 15% */
     width: 85%;
+    position: relative;
 }
 
 /* this is where your content should be placed */
@@ -24,4 +25,20 @@ body{
 #add-product-button > img{
     height: 20px;
     width: 20px;;
+}
+
+/* Simple CSS for pop-up */
+#left-container > #popup-success {
+    /* ine edit yung display neto through javascript */
+    display: none; 
+    position: fixed;
+    bottom: 20px;
+    right: 0;
+    transform: translateX(-20px);
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 1000; 
 }
