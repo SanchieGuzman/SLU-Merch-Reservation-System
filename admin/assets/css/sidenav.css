@@ -24,21 +24,18 @@
   width: 20%;
 }
 
+.form{
+  height: 90%;
+}
+
 .buttons-container {
   padding-top: 2.7rem;
   display: flex;
   flex-flow: column nowrap;
-  height: 90%;
+  height: 100%;
 }
 
-.buttons-container .side-icons {
-  width: 1.5rem;
-  height: 1.5rem;
-  filter: invert(38%) sepia(96%) saturate(3241%) hue-rotate(233deg)
-    brightness(0%) contrast(88%);
-}
-
-.buttons-container button {
+.default-button {
   background-color: transparent;
   border: none;
   height: 4rem;
@@ -50,19 +47,38 @@
   padding-left: 18%;
 }
 
-.buttons-container .spacer {
-  height: 40%;
+.default-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: invert(38%) sepia(96%) saturate(3241%) hue-rotate(233deg)
+    brightness(0%) contrast(88%);
 }
 
-.buttons-container button:active,
-.buttons-container button:focus {
+.active-button{
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+  text-align: left;
+  padding-left: 18%;
+
   background-color: #2235a2;
   border: 1px solid black;
   color: white;
   border-radius: 0 2rem 2rem 0;
 }
 
-.buttons-container button:active .side-icons,
-.buttons-container button:focus .side-icons {
+.active-icon{
+  width: 1.5rem;
+  height: 1.5rem;
   filter: none;
+}
+
+.spacer{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  padding-bottom: 10%;
 }
