@@ -107,6 +107,24 @@ class Database
     //todo: Create a function that fetches the sales data of the organization a user is part of
     public function getSales($userID) {
         // kinukuha lng ung total sales ng org
+            $stmt = $this->mysqli->prepare( "SELECT SUM(o.total) AS total_sales FROM orders AS o where o.order_id IN(
+            Select DISTINCT(o.order_id) FROM orders AS o JOIN order_products AS op USING(order_id) 
+            JOIN products AS p USING (product_id) 
+            WHERE p.organization_id IN (
+                SELECT organization_id 
+                FROM organization_members AS om
+                JOIN vendors AS v USING (vendor_id)
+                JOIN users AS u USING (user_id)
+                where u.user_id =1) 
+            AND o.status = 'claimed'");
+
+            $stmt->bind_param('i', $userID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+
+            return (int)$row['total_sales'];    
+        
     }
 
     //todo: Create a function that fetches the top 5 or 10? most ordered product of an organization a user is a part of
