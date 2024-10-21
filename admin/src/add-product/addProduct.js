@@ -85,8 +85,9 @@ function loadUI(){
     labelDescription.classList.add('label');
     labelDescription.textContent = 'Product Description';
 
-    var descriptionField = document.createElement('input');
-    descriptionField.setAttribute('type', 'text');
+    // var descriptionField = document.createElement('input');
+    var descriptionField = document.createElement('textarea');
+    // descriptionField.setAttribute('type', 'text');
     descriptionField.setAttribute('name', 'product_description');
     descriptionField.setAttribute('id', 'description-text-field');
 
