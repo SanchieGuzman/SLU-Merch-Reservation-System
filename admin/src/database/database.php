@@ -109,7 +109,24 @@ class Database
         // this is product $product = new Product(null, $productName, $productDescription, $organizationID, $productPrice, $productQuantity, $productImage, $status );
         // null yung product ID kase auto increment na yan sa database
         // if successful return  true, else false
-        return true;
+        $stmt = $this->mysqli->prepare("INSERT INTO products(product_name, product_description, organization_id, price, quantity, product_image, status)
+                                        VALUES (?,?,?,?,?,?,?)");
+
+        $stmt->bind_param('ssidibs', 
+        $product->getProductName(), 
+        $product->getProductDescription(),
+        $product->getOrganizationID(),  
+        $product->getPrice(),          
+        $product->getQuantity(),       
+        $product->getProductImage(),          
+        $product->getStatus()); 
+        
+        
+        if ($stmt->execute()) {
+            return true; 
+        } else {
+            return false;
+        }
     }
 }
 ?>
