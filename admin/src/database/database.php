@@ -111,16 +111,26 @@ class Database
         // if successful return  true, else false
         $stmt = $this->mysqli->prepare("INSERT INTO products(product_name, product_description, organization_id, price, quantity, product_image, status)
                                         VALUES (?,?,?,?,?,?,?)");
+     
+        $productName = $product->getProductName(); 
+        $productDescription = $product->getProductDescription();
+        $productOrganizationID = $product->getOrganizationID();
+        $productPrice = $product->getPrice();
+        $productQuantity = $product->getQuantity();
+        $productImage = $product->getProductImage();
+        $productStatus = $product->getStatus();
 
         $stmt->bind_param('ssidibs', 
-        $product->getProductName(), 
-        $product->getProductDescription(),
-        $product->getOrganizationID(),  
-        $product->getPrice(),          
-        $product->getQuantity(),       
-        $product->getProductImage(),          
-        $product->getStatus()); 
-        
+        $productName, 
+        $productDescription,
+        $productOrganizationID,
+        $productPrice,
+        $productQuantity,       
+        $nullBlob,
+        $productStatus);
+
+         // Send binary data (BLOB) in chunks
+        $stmt->send_long_data(5, $productImage);
         
         if ($stmt->execute()) {
             return true; 
