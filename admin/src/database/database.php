@@ -114,7 +114,7 @@ class Database
 
     // todo: create a function that gets the neccessary data for the order details popup card
     public function getProductsOfOrderID($orderID){
-        $stmt = $this->mysqli->prepare("SELECT o.order_id,u.user_id,u.first_name, u.last_name, op.quantity, op.total, p.product_name, p.product_id, o.status
+        $stmt = $this->mysqli->prepare("SELECT o.order_id,u.user_id,u.first_name, u.last_name, op.quantity, op.total, p.product_name, p.product_id, o.status, p.product_image,
                                     FROM users AS u 
 									JOIN orders AS o ON o.customer_id = u.user_id
                                     JOIN order_products AS op USING (order_id)

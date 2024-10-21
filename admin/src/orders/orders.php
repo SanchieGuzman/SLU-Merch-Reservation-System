@@ -25,25 +25,21 @@
         </main>
     </section>
 
+    <script src="../order-details-popup/order-details.js"></script>
 
-    <script>
-
+    <script type="module">
         <?php 
             $db = Database::getInstance();
-            $orders = $db -> getPendingOrders($_SESSION['ORG_ID'])
+            $orders = $db -> getPendingOrders($_SESSION['ORG_ID']);
+            
         ?>
-
-        const orders = <?php echo json_encode($orders)?>
+        const orders = <?php echo json_encode($orders)?> 
 
         window.onload = function () {
             orders.forEach(order =>{
                 addCard(order['first_name'],"Order ID: "+order['order_id'],order['created_at'], "Status: "+ order['status'])
             })
         };
-
-        array.forEach(element => {
-            
-        });
 
         function addCard(name, orderId, orderDateValue, statusValue) {
         const container = document.querySelector(".orders-container");
@@ -77,24 +73,69 @@
         status.textContent = statusValue;
         rightCont.appendChild(status);
 
-        const button1 = document.createElement("button");
-        button1.classList.add("view-button");
-        button1.textContent = "View Order List";
+        const viewButton = document.createElement("button");
+        viewButton.classList.add("view-button");
+        viewButton.textContent = "View Order List";
         
         //get the card element
         const popUpCard = document.querySelector('.order-details');
+        
+
+        //THIS IS ONLY FOR DEMONSTRATION
+       const data = [
+    {
+        order_id: 4,
+        user_id: 101,
+        first_name: 'Jerwin',
+        last_name: 'Ramos',
+        quantity: 2,
+        total: 500.00,
+        product_name: 'Product A',
+        product_id: 201,
+        status: 'Pending',
+        product_image: '../../assets/images/johncena.jpeg'
+    },
+    {
+        order_id: 4,
+        user_id: 101,
+        first_name: 'Jerwin',
+        last_name: 'Ramos',
+        quantity: 1,
+        total: 250.00,
+        product_name: 'Product B',
+        product_id: 202,
+        status: 'Pending',
+        product_image: '../../assets/images/johncena.jpeg'
+    },
+    {
+        order_id: 4,
+        user_id: 101,
+        first_name: 'Jerwin',
+        last_name: 'Ramos',
+        quantity: 1,
+        total: 250.00,
+        product_name: 'Product C',
+        product_id: 202,
+        status: 'Pending',
+        product_image: '../../assets/images/johncena.jpeg'
+    },];
 
         //show the card/ center the card
-        button1.addEventListener('click', ()=> popUpCard.classList.add('active'))
-        leftCont.appendChild(button1); 
+        viewButton.addEventListener('click', function(){ 
+            popUpCard.classList.add('active');
+            //query using javascript here 
+            showOrderDetails(orderId, data[0].first_name,  data)
+        })
 
-        const button2 = document.createElement("button");
-        button2.classList.add("served-button");
-        button2.textContent = "Served";
-        button2.addEventListener('click', function() { /* ============================= */
+        leftCont.appendChild(viewButton); 
+
+        const serveButton = document.createElement("button");
+        serveButton.classList.add("served-button");
+        serveButton.textContent = "Served";
+        serveButton.addEventListener('click', function() { 
             serveButton(this);
         });
-        rightCont.appendChild(button2);
+        rightCont.appendChild(serveButton);
 
         newDiv.appendChild(leftCont);
         newDiv.appendChild(rightCont);
@@ -102,11 +143,9 @@
         container.appendChild(newDiv);
         }
 
-        function serveButton(button){ /* ==================================== */
+        function serveButton(button){ 
             button.closest('.card').remove();
         }
-
-        
     </script>
 </body>
 </html>

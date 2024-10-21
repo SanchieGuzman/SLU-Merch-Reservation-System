@@ -8,9 +8,9 @@
 </head>
 <body>
 
-    <main class="order-details">
-        <button class="add">add</button>
-    </main>
+
+    <main class="order-details"></main>
+
     <script src="../order-details-popup/order-details.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@ button.addEventListener("click", () =>
   )
 );
 
-function showOrderDetails(orderID, name, imgsrc, productName, quantity, total) {
+function showOrderDetails(orderID, name, data) {
   const orderDetailsPopUp = document.querySelector(".order-details");
 
   //Upper container
@@ -24,9 +24,10 @@ function showOrderDetails(orderID, name, imgsrc, productName, quantity, total) {
 
   const close = document.createElement("button");
   close.classList.add("close-button");
-  close.addEventListener("click", () =>
-    orderDetailsPopUp.classList.remove("active")
-  );
+  close.addEventListener("click", function () {
+    orderDetailsPopUp.classList.remove("active"),
+      orderDetailsPopUp.replaceChildren();
+  });
   upperCont.appendChild(close);
 
   //lower container
@@ -38,14 +39,15 @@ function showOrderDetails(orderID, name, imgsrc, productName, quantity, total) {
   custName.textContent = name + " Order List";
   cardsContainer.appendChild(custName);
 
-  const addButton = document.createElement("button");
-  addButton.classList.add("add");
-  addButton.textContent = "Add";
-  addButton.addEventListener("click", () =>
-    createCards(imgsrc, productName, quantity, total, cardsContainer)
-  );
-
-  cardsContainer.appendChild(addButton);
+  data.forEach((element) => {
+    createCards(
+      element["product_image"],
+      element["product_name"],
+      element["quantity"],
+      element["total"],
+      cardsContainer
+    );
+  });
 
   orderDetailsPopUp.appendChild(upperCont);
   orderDetailsPopUp.appendChild(cardsContainer);
@@ -87,11 +89,3 @@ function createCards(
 
   cardContainer.appendChild(card);
 }
-
-// //for queries, add them here
-// function addCards(imgsrc, productName, quantity, total) {
-//   products.forEach((product) => {
-//     createCards();
-//   });
-
-// }
