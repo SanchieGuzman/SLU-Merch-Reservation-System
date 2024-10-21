@@ -111,5 +111,10 @@ class Database
         // if successful return  true, else false
         return true;
     }
+
+    // todo: create a function that gets the neccessary data for the order details popup card
+    public function getProductsOfOrderID($orderID){
+
+    }
 }
 ?>
