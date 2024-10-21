@@ -12,6 +12,7 @@
         include('../orders/orders-backend.php');
         include('../sidenav/side-nav-backend.php');
         include('../sidenav/side-nav.php');
+        include('../order-details/order-details.php');
     ?>
 
     <section id="left-container">
@@ -23,6 +24,7 @@
             <div class="orders-container"></div>
         </main>
     </section>
+
 
     <script>
 
@@ -78,11 +80,20 @@
         const button1 = document.createElement("button");
         button1.classList.add("view-button");
         button1.textContent = "View Order List";
-        leftCont.appendChild(button1);
+        
+        //get the card element
+        const popUpCard = document.querySelector('.order-details');
+
+        //show the card/ center the card
+        button1.addEventListener('click', ()=> popUpCard.classList.add('active'))
+        leftCont.appendChild(button1); 
 
         const button2 = document.createElement("button");
         button2.classList.add("served-button");
         button2.textContent = "Served";
+        button2.addEventListener('click', function() { /* ============================= */
+            serveButton(this);
+        });
         rightCont.appendChild(button2);
 
         newDiv.appendChild(leftCont);
@@ -90,6 +101,12 @@
 
         container.appendChild(newDiv);
         }
+
+        function serveButton(button){ /* ==================================== */
+            button.closest('.card').remove();
+        }
+
+        
     </script>
 </body>
 </html>
