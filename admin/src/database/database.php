@@ -138,5 +138,38 @@ class Database
             return false;
         }
     }
+
+    // method that returns  the products information
+    // needed: Product ID, Product Name, qty, price, status
+    // other fields must be null to save data 
+    // use the product class
+    public function getAllProducts($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT product_id, product_name, quantity, price, status FROM `products` WHERE organization_id = ?;");
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $allProducts = [];
+
+        // Fetch each row and instantiate Product objects
+        while ($row = $result->fetch_assoc()) {
+            // Instantiate the Product object, passing null for fields not in the result
+            $product = new Product(
+                $row['product_id'],              // productID
+                $row['product_name'],            // productName
+                null,                            // productDescription (set to null)
+                $organizationID,                 // organizationID (you have this available)
+                $row['price'],                   // price
+                $row['quantity'],                // quantity
+                null,                            // productImage (set to null)
+                $row['status']                   // status
+            );
+            
+            $allProducts[] = $product;
+        }
+
+        // Return the array of Product objects
+        return $allProducts;
+    }
 }
 ?>

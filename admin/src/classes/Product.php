@@ -1,5 +1,5 @@
 <?php
-class Product
+class Product implements JsonSerializable
 {
     private $productID;
     private $productName;
@@ -20,6 +20,20 @@ class Product
         $this->productImage = $productImage;
         $this->status = $status;
 
+    }
+
+    // Implement jsonSerialize to control what is included in the JSON
+    public function jsonSerialize(): mixed {
+        return [
+            'id' => $this->productID,
+            'name' => $this->productName,
+            'description' => $this->productDescription,
+            'organizationID' => $this->organizationID,
+            'price' => $this->price,
+            'quantity' => $this->quantity,
+            'image' => $this->productImage,
+            'status' => $this->status
+        ];
     }
 
     public function getProductID(){
