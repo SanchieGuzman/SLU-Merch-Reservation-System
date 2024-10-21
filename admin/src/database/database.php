@@ -114,7 +114,20 @@ class Database
 
     // todo: create a function that gets the neccessary data for the order details popup card
     public function getProductsOfOrderID($orderID){
-
+        $stmt = $this->mysqli->prepare("SELECT o.order_id,u.user_id,u.first_name, u.last_name, op.quantity, op.total, p.product_name, p.product_id, o.status
+                                    FROM users AS u 
+									JOIN orders AS o ON o.customer_id = u.user_id
+                                    JOIN order_products AS op USING (order_id)
+                                    JOIN products AS p USING (product_id)
+                                    WHERE o.order_id = ?");
+        $stmt->bind_param("i", $orderID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $products = [];
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row; //todo: return objects instead of just array.
+        }
+        return $products;
     }
 }
 ?>
