@@ -81,7 +81,7 @@ class Database
         }
     }
 
-    //todo: Create a function that fetches the number of pending orders of the organization a user is a part of
+    //todo: Create a function that fetches the number of pending orders of the organization using the orgID
     public function getTotalPendingOrders($userID) {
         // kinukuha lng ung total pending orders
         $stmt = $this->mysqli->prepare( "SELECT COUNT(DISTINCT(o.order_id)) AS total_pending 
@@ -102,9 +102,11 @@ class Database
         $row = $result->fetch_assoc();
 
         return (int)$row['total_pending'];
+
+        // ERROR: ARGUMENT COUNT ERROR
     }
 
-    //todo: Create a function that fetches the sales data of the organization a user is part of
+    //todo: Create a function that fetches the sales data of the organization using the orgID
     public function getSales($userID) {
         // kinukuha lng ung total sales ng org
             $stmt = $this->mysqli->prepare( "SELECT SUM(o.total) AS total_sales FROM orders AS o where o.order_id IN(
@@ -115,7 +117,7 @@ class Database
                 FROM organization_members AS om
                 JOIN vendors AS v USING (vendor_id)
                 JOIN users AS u USING (user_id)
-                where u.user_id =1) 
+                where u.user_id =1)
             AND o.status = 'claimed'");
 
             $stmt->bind_param('i', $userID);
@@ -125,9 +127,10 @@ class Database
 
             return (int)$row['total_sales'];    
         
+            // ERROR IN THE SQL SYNTAX
     }
 
-    //todo: Create a function that fetches the top 5 or 10? most ordered product of an organization a user is a part of
+    //todo: Create a function that fetches the top 5 or 10? most ordered product of an organization using the orgID
     public function getMostOrderedProducts($userID) {
         // not sure kung up to 5 or up to 10 ba ang ididisplay sa most ordered 
         // products natin kaya for now ikaw bahala sa number.
