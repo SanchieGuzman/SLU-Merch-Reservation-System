@@ -39,6 +39,7 @@ function loadUI(){
     nameField.setAttribute('type', 'text');
     nameField.setAttribute('name', 'product_name');
     nameField.setAttribute('id', 'name-text-field');
+    nameField.setAttribute('placeholder', 'Enter Product Name')
     
     form.appendChild(labelName);
     form.appendChild(nameField);
@@ -57,9 +58,10 @@ function loadUI(){
     labelPrice.textContent = 'Product Price';
 
     var priceField = document.createElement('input');
-    priceField.setAttribute('type', 'text');
+    priceField.setAttribute('type', 'number');
     priceField.setAttribute('name', 'product_price');
     priceField.setAttribute('id', 'price-text-field');
+    priceField.setAttribute('placeholder', 'Enter Product Price (eg.P1000)')
 
     var labelQuantity = document.createElement('label');
     labelQuantity.setAttribute('for', 'quantity-text-field');
@@ -67,9 +69,10 @@ function loadUI(){
     labelQuantity.textContent = 'Initial Quantity';
 
     var quantityField = document.createElement('input');
-    quantityField.setAttribute('type', 'text');
+    quantityField.setAttribute('type', 'number');
     quantityField.setAttribute('name', 'product_quantity');
     quantityField.setAttribute('id', 'quantity-text-field');
+    quantityField.setAttribute('placeholder', 'Enter Quantity (eg.10)')
 
     left.appendChild(labelPrice);
     left.appendChild(priceField);
@@ -90,6 +93,7 @@ function loadUI(){
     // descriptionField.setAttribute('type', 'text');
     descriptionField.setAttribute('name', 'product_description');
     descriptionField.setAttribute('id', 'description-text-field');
+    descriptionField.setAttribute('placeholder', 'Enter Product Description')
 
     right.appendChild(labelDescription);
     right.appendChild(descriptionField);
