@@ -98,9 +98,11 @@
         const serveButton = document.createElement("button");
         serveButton.classList.add("served-button");
         serveButton.textContent = "Served";
+
         serveButton.addEventListener('click', function() {
-            serveButton(this);
+            removeCard(this);
         });
+
         rightCont.appendChild(serveButton);
 
         newDiv.appendChild(leftCont);
@@ -109,10 +111,12 @@
         container.appendChild(newDiv);
         }
 
-        function serveButton(button){
+        //
+        function removeCard(button){
             button.closest('.card').remove();
         }
 
+        //add card 
         function productsCard(data, orderIden){
             const filtered = data.filter(data => data['order_id'] === orderIden);
             console.log(filtered)

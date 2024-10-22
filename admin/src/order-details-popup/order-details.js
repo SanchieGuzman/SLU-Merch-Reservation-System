@@ -7,7 +7,7 @@ function showOrderDetails(orderID, name, data) {
 
   const orderNum = document.createElement("h5");
   orderNum.classList.add("orderNum");
-  orderNum.textContent = orderID;
+  orderNum.textContent = "Order ID: " + orderID;
   upperCont.appendChild(orderNum);
 
   const close = document.createElement("button");
