@@ -81,7 +81,7 @@ class Database
         }
     }
 
-    //todo:create a fuction that fetches the orders that pending
+    //This method fetches all orders that are pending
     public function getPendingOrders($organizationID){
         $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at 
                                         FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
@@ -99,7 +99,7 @@ class Database
         while ($row = $result->fetch_assoc()) {
             $pendingOrders[] = $row;
         }
-
+        $stmt->close();
         // Return the pending orders array, even if theres no pending orders
         return $pendingOrders;
     }
@@ -169,7 +169,43 @@ class Database
         }
 
         // Return the array of Product objects
-        return $allProducts;
+        return $allProducts;   
+    }
+
+    public function getPendingProducts($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, TO_BASE64(p.product_image) AS product_image_base64
+										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
+                                        JOIN products AS p ON op.product_id = p.product_id 
+                                        JOIN users AS u ON o.customer_id = u.user_id 
+                                        WHERE p.organization_id = ?
+                                        AND o.status = 'pending'");
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingProducts = [];
+        while ($row = $result->fetch_assoc()) {
+            $pendingProducts[] = $row;
+        }
+        $stmt->close();
+        return $pendingProducts;
+    }
+
+    // todo: create a function that gets the neccessary data for the order details popup card
+    public function getProductsOfOrderID($orderID){
+        $stmt = $this->mysqli->prepare("SELECT o.order_id,u.user_id,u.first_name, u.last_name, op.quantity, op.total, p.product_name, p.product_id, o.status, p.product_image
+                                    FROM users AS u 
+									JOIN orders AS o ON o.customer_id = u.user_id
+                                    JOIN order_products AS op USING (order_id)
+                                    JOIN products AS p USING (product_id)
+                                    WHERE o.order_id = ?");
+        $stmt->bind_param("i", $orderID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $products = [];
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row; //todo: return objects instead of just array.
+        }
+        return $products;
     }
 }
 ?>

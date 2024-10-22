@@ -12,6 +12,7 @@
         include('../orders/orders-backend.php');
         include('../sidenav/side-nav-backend.php');
         include('../sidenav/side-nav.php');
+        include('../order-details/order-details.php');
     ?>
 
     <section id="left-container">
@@ -24,24 +25,24 @@
         </main>
     </section>
 
-    <script>
+    <script src="../order-details-popup/order-details.js"></script>
 
-        <?php 
+    <script type="module">
+        
+        <?php
             $db = Database::getInstance();
-            $orders = $db -> getPendingOrders($_SESSION['ORG_ID'])
-        ?>
+            $orders = $db -> getPendingOrders($_SESSION['ORG_ID']); 
+            $data = $db -> getPendingProducts($_SESSION['ORG_ID']);     
+        ?>        
 
-        const orders = <?php echo json_encode($orders)?>
+        const orders = <?php echo json_encode($orders);?>;
+        
 
         window.onload = function () {
             orders.forEach(order =>{
-                addCard(order['first_name'],"Order ID: "+order['order_id'],order['created_at'], "Status: "+ order['status'])
+                addCard(order['first_name'],order['order_id'],order['created_at'], "Status: "+ order['status'])
             })
         };
-
-        array.forEach(element => {
-            
-        });
 
         function addCard(name, orderId, orderDateValue, statusValue) {
         const container = document.querySelector(".orders-container");
@@ -67,7 +68,7 @@
 
         const oID = document.createElement("p");
         oID.classList.add("order-id");
-        oID.textContent = orderId;
+        oID.textContent = "Order ID: "+orderId;
         rightCont.appendChild(oID);
 
         const status = document.createElement("p");
@@ -75,20 +76,52 @@
         status.textContent = statusValue;
         rightCont.appendChild(status);
 
-        const button1 = document.createElement("button");
-        button1.classList.add("view-button");
-        button1.textContent = "View Order List";
-        leftCont.appendChild(button1);
+        const viewButton = document.createElement("button");
+        viewButton.classList.add("view-button");
+        viewButton.textContent = "View Order List";
+       
+        const popUpCard = document.querySelector('.order-details');
+       
+        viewButton.addEventListener('click', function(){  
+            popUpCard.classList.add('active');
+            
+            const data = <?php echo json_encode($data);?>
+            
+            console.log(data);
 
-        const button2 = document.createElement("button");
-        button2.classList.add("served-button");
-        button2.textContent = "Served";
-        rightCont.appendChild(button2);
+            productsCard(data, orderId);
+           
+        })
+
+        leftCont.appendChild(viewButton);
+
+        const serveButton = document.createElement("button");
+        serveButton.classList.add("served-button");
+        serveButton.textContent = "Served";
+
+        serveButton.addEventListener('click', function() {
+            removeCard(this);
+        });
+
+        rightCont.appendChild(serveButton);
 
         newDiv.appendChild(leftCont);
         newDiv.appendChild(rightCont);
 
         container.appendChild(newDiv);
+        }
+
+        //
+        function removeCard(button){
+            button.closest('.card').remove();
+        }
+
+        //add card 
+        function productsCard(data, orderIden){
+            const filtered = data.filter(data => data['order_id'] === orderIden);
+            console.log(filtered)
+            showOrderDetails(filtered[0].order_id, filtered[0].first_name, filtered)
+            
         }
     </script>
 </body>
