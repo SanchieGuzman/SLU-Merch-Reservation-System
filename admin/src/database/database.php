@@ -151,10 +151,11 @@ class Database
         $mostOrderedProducts = [];
 
         while ($row = $result->fetch_assoc()) {
-            $mostOrderedProducts[] = [
-                'product_name' => $row['product_name'],
-                'order_count' => (int)$row['order_count']
-            ];
+            // $mostOrderedProducts[] = [
+            //     'product_name' => $row['product_name'],
+            //     'order_count' => (int)$row['order_count']
+            // ];
+            $mostOrderedProducts[] = $row;
         }
 
         // Return the array of most ordered products
