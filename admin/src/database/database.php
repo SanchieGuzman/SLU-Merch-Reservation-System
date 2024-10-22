@@ -81,7 +81,7 @@ class Database
         }
     }
 
-    //todo:create a fuction that fetches the orders that pending
+    //This method fetches all orders that are pending
     public function getPendingOrders($organizationID){
         $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at 
                                         FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
@@ -99,17 +99,29 @@ class Database
         while ($row = $result->fetch_assoc()) {
             $pendingOrders[] = $row;
         }
-
+        
         // Return the pending orders array, even if theres no pending orders
         return $pendingOrders;
     }
+    //This method fetches all products of every orders that are pending
+    public function getPendingOrdersProducts($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total
+										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
+                                        JOIN products AS p ON op.product_id = p.product_id 
+                                        JOIN users AS u ON o.customer_id = u.user_id 
+                                        WHERE p.organization_id = ?
+                                        AND o.status = 'pending'"); //this is just based on the canva page 20
 
-    // todo: create a function that adds a product to the database. 
-    public function addProduct($product){
-        // this is product $product = new Product(null, $productName, $productDescription, $organizationID, $productPrice, $productQuantity, $productImage, $status );
-        // null yung product ID kase auto increment na yan sa database
-        // if successful return  true, else false
-        return true;
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingOrdersProducts = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $pendingOrdersProducts[] = $row;
+        }
+        
+        return $pendingOrdersProducts;
     }
 
     // todo: create a function that gets the neccessary data for the order details popup card
