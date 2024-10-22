@@ -82,6 +82,88 @@ class Database
     }
 
     //This method fetches all orders that are pending
+    //todo: Create a function that fetches the number of pending orders of the organization using the orgID
+    public function getTotalPendingOrders($organizationID) {
+        // kinukuha lng ung total pending orders
+        $stmt = $this->mysqli->prepare( "SELECT COUNT(DISTINCT(o.order_id)) AS total_pending 
+                                    FROM orders AS o 
+                                    JOIN order_products AS op USING (order_id)
+                                    JOIN products AS p USING (product_id)
+                                    WHERE p.organization_id =?
+                                    AND o.status = 'pending'");
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return (int)$row['total_pending'];
+    }
+
+    //todo: Create a function that fetches the sales data of the organization using the orgID
+    public function getSales($organizationID) {
+        // kinukuha lng ung total sales ng org
+            $stmt = $this->mysqli->prepare( "SELECT SUM(o.total) AS total_sales FROM orders AS o where o.order_id IN(
+            Select DISTINCT(o.order_id) FROM orders AS o JOIN order_products AS op USING(order_id) 
+            JOIN products AS p USING (product_id) 
+            WHERE p.organization_id = ?
+            AND o.status = 'claimed')");
+
+            $stmt->bind_param('i', $organizationID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+
+            return (int)$row['total_sales'];    
+        
+            // ERROR IN THE SQL SYNTAX
+    }
+
+    //todo: Create a function that fetches the top 5 or 10? most ordered product of an organization using the orgID
+    public function getMostOrderedProducts($userID) {
+        // not sure kung up to 5 or up to 10 ba ang ididisplay sa most ordered 
+        // products natin kaya for now ikaw bahala sa number.
+
+        // pwede mo din ba ireturn dito ung parang hashmap na style? example <sold, product>
+        // wala kasi sa products database kung ilan na ang nabenta sa isang product kaya di ko alam kung paano approach
+        // natin dun. kung di mo sure pwede natin pag usapan tommorrow.
+
+        // sorry din sa grammar, tinatamad na ako mag ayos, pero ang daming sinasabi 'no?
+        // yapper talaga
+
+        // anyways tank u :)
+    }
+    public function getMostOrderedProducts2($organizationID, $limit) {
+
+        $stmt = $this->mysqli->prepare("SELECT COUNT(op.product_id) AS order_count, p.product_name, p.product_image 
+                                    FROM orders AS o 
+                                    JOIN order_products USING (order_id)
+                                    JOIN products AS p USING (product_id)
+                                    JOIN organizations AS org USING (organization_id)
+                                    WHERE o.status = 'claimed' 
+                                    AND org.organization_id = ? 
+                                    GROUP BY p.product_name 
+                                    ORDER BY order_count DESC
+                                    LIMIT ?"); 
+
+        $stmt->bind_param('ii', $organizationID, $limit);
+        $stmt->execute();
+        
+
+        $result = $stmt->get_result();
+        $mostOrderedProducts = [];
+
+        while ($row = $result->fetch_assoc()) {
+            // $mostOrderedProducts[] = [
+            //     'product_name' => $row['product_name'],
+            //     'order_count' => (int)$row['order_count']
+            // ];
+            $mostOrderedProducts[] = $row;
+        }
+
+        // Return the array of most ordered products
+        return $mostOrderedProducts;
+    }
+
+    //todo:create a fuction that fetches the orders that pending
     public function getPendingOrders($organizationID){
         $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at 
                                         FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
@@ -188,24 +270,6 @@ class Database
         }
         $stmt->close();
         return $pendingProducts;
-    }
-
-    // todo: create a function that gets the neccessary data for the order details popup card
-    public function getProductsOfOrderID($orderID){
-        $stmt = $this->mysqli->prepare("SELECT o.order_id,u.user_id,u.first_name, u.last_name, op.quantity, op.total, p.product_name, p.product_id, o.status, p.product_image
-                                    FROM users AS u 
-									JOIN orders AS o ON o.customer_id = u.user_id
-                                    JOIN order_products AS op USING (order_id)
-                                    JOIN products AS p USING (product_id)
-                                    WHERE o.order_id = ?");
-        $stmt->bind_param("i", $orderID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $products = [];
-        while ($row = $result->fetch_assoc()) {
-            $products[] = $row; //todo: return objects instead of just array.
-        }
-        return $products;
     }
 }
 ?>

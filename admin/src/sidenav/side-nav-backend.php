@@ -1,7 +1,9 @@
 <?php
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
 
-    require('../database/database.php');
+    require_once('../database/database.php');
     require('../classes/Organization.php');
 
     $db = Database::getInstance();
