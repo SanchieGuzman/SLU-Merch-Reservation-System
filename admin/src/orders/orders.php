@@ -32,12 +32,10 @@
         <?php
             $db = Database::getInstance();
             $orders = $db -> getPendingOrders($_SESSION['ORG_ID']); 
-            $data = $db -> getPendingOrdersProducts($_SESSION['ORG_ID']);       
+            $data = $db -> getPendingProducts($_SESSION['ORG_ID']);     
         ?>        
 
         const orders = <?php echo json_encode($orders);?>;
-        
-        const data = <?php echo json_encode($data);?>
         
 
         window.onload = function () {
@@ -82,18 +80,15 @@
         viewButton.classList.add("view-button");
         viewButton.textContent = "View Order List";
        
-        //get the card element
         const popUpCard = document.querySelector('.order-details');
        
-
-        //show the card/ center the card
-        viewButton.addEventListener('click', function(){  //=-=========================---=============================-----============
+        viewButton.addEventListener('click', function(){  
             popUpCard.classList.add('active');
-            console.log("Hello");
             
-            // console.log(data);
+            const data = <?php echo json_encode($data);?>
+            
+            console.log(data);
 
-            //query using javascript here
             productsCard(data, orderId);
            
         })
@@ -118,27 +113,11 @@
             button.closest('.card').remove();
         }
 
-        // function productsCard(details, order_id){
-        //     if (details.length > 0 && details[0].order_id === orderID) {
-        //         showOrderDetails(orderId, details[0].first_name,  details)
-        //     } else {
-        //         console.log("Order ID did not match or data is empty.");
-        //     }
-        // }
-
-
         function productsCard(data, orderIden){
-            data.forEach(datum => {
-                // Check if the order_id matches the given orderIden
-                if (Number(datum.order_id) === Number(orderIden)) {
-                    // If a match is found, print the matching object
-                    console.log("id daw")
-                    // console.log(datum['order_id']);
-                    // console.log(datum['name'])
-   
-                    // showOrderDetails(datum.order_id, datum.first_name,  "../../assets/images/johncena.jpeg", "Magic Pen", 4, 350 )
-                }
-            });
+            const filtered = data.filter(data => data['order_id'] === orderIden);
+            console.log(filtered)
+            showOrderDetails(filtered[0].order_id, filtered[0].first_name, filtered)
+            
         }
     </script>
 </body>

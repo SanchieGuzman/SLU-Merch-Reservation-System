@@ -105,7 +105,7 @@ class Database
     }
 
     public function getPendingProducts($organizationID){
-        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, p.product_image
+        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, TO_BASE64(p.product_image) AS product_image_base64
 										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
                                         JOIN products AS p ON op.product_id = p.product_id 
                                         JOIN users AS u ON o.customer_id = u.user_id 

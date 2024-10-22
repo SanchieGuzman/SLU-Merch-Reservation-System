@@ -1,23 +1,4 @@
-const button = document.querySelector(".add");
-button.addEventListener("click", () =>
-  showOrderDetails(
-    1234,
-    "Jerwin Ramos",
-    "../../assets/images/johncena.jpeg",
-    "Meow",
-    12,
-    250
-  )
-);
-
-function showOrderDetails(
-  orderID,
-  name,
-  image,
-  prodName,
-  prodQuantity,
-  prodTotal
-) {
+function showOrderDetails(orderID, name, data) {
   const orderDetailsPopUp = document.querySelector(".order-details");
 
   //Upper container
@@ -46,23 +27,21 @@ function showOrderDetails(
   custName.textContent = name + " Order List";
   cardsContainer.appendChild(custName);
 
-  // data.forEach((element) => {
-  //   createCards(
-  //     element["product_image"],
-  //     element["product_name"],
-  //     element["quantity"],
-  //     element["order_total"],
-  //     cardsContainer
-  //   );
-
-  //
-  // });
-  createCards(image, prodName, prodQuantity, prodTotal, cardsContainer);
+  data.forEach((element) => {
+    createCards(
+      element["product_image_base64"],
+      element["product_name"],
+      element["quantity"],
+      element["total"],
+      cardsContainer
+    );
+  });
 
   orderDetailsPopUp.appendChild(upperCont);
   orderDetailsPopUp.appendChild(cardsContainer);
 }
 
+//================================================
 function createCards(
   imgsrc,
   productName,
@@ -76,7 +55,8 @@ function createCards(
   //product image
   const image = document.createElement("img");
   image.classList.add("product-image");
-  image.src = imgsrc;
+  image.src = "data:image/png;base64," + imgsrc;
+  console.log("Base64 Image:", imgsrc);
   card.appendChild(image);
 
   //product name
