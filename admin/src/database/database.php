@@ -105,7 +105,7 @@ class Database
     }
     //This method fetches all products of every orders that are pending
     public function getPendingOrdersProducts($organizationID){
-        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total
+        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, p.product_image
 										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
                                         JOIN products AS p ON op.product_id = p.product_id 
                                         JOIN users AS u ON o.customer_id = u.user_id 
@@ -126,7 +126,7 @@ class Database
 
     // todo: create a function that gets the neccessary data for the order details popup card
     public function getProductsOfOrderID($orderID){
-        $stmt = $this->mysqli->prepare("SELECT o.order_id,u.user_id,u.first_name, u.last_name, op.quantity, op.total, p.product_name, p.product_id, o.status, p.product_image,
+        $stmt = $this->mysqli->prepare("SELECT o.order_id,u.user_id,u.first_name, u.last_name, op.quantity, op.total, p.product_name, p.product_id, o.status, p.product_image
                                     FROM users AS u 
 									JOIN orders AS o ON o.customer_id = u.user_id
                                     JOIN order_products AS op USING (order_id)

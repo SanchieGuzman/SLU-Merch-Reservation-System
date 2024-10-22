@@ -28,16 +28,21 @@
     <script src="../order-details-popup/order-details.js"></script>
 
     <script type="module">
-        <?php 
+        
+        <?php
             $db = Database::getInstance();
-            $orders = $db -> getPendingOrders($_SESSION['ORG_ID']);
-            
-        ?>
-        const orders = <?php echo json_encode($orders)?> 
+            $orders = $db -> getPendingOrders($_SESSION['ORG_ID']); 
+            $data = $db -> getPendingOrdersProducts($_SESSION['ORG_ID']);       
+        ?>        
+
+        const orders = <?php echo json_encode($orders);?>;
+        
+        const data = <?php echo json_encode($data);?>
+        
 
         window.onload = function () {
             orders.forEach(order =>{
-                addCard(order['first_name'],"Order ID: "+order['order_id'],order['created_at'], "Status: "+ order['status'])
+                addCard(order['first_name'],order['order_id'],order['created_at'], "Status: "+ order['status'])
             })
         };
 
@@ -65,7 +70,7 @@
 
         const oID = document.createElement("p");
         oID.classList.add("order-id");
-        oID.textContent = orderId;
+        oID.textContent = "Order ID: "+orderId;
         rightCont.appendChild(oID);
 
         const status = document.createElement("p");
@@ -76,63 +81,29 @@
         const viewButton = document.createElement("button");
         viewButton.classList.add("view-button");
         viewButton.textContent = "View Order List";
-        
+       
         //get the card element
         const popUpCard = document.querySelector('.order-details');
-        
-
-        //THIS IS ONLY FOR DEMONSTRATION
-       const data = [
-    {
-        order_id: 4,
-        user_id: 101,
-        first_name: 'Jerwin',
-        last_name: 'Ramos',
-        quantity: 2,
-        total: 500.00,
-        product_name: 'Product A',
-        product_id: 201,
-        status: 'Pending',
-        product_image: '../../assets/images/johncena.jpeg'
-    },
-    {
-        order_id: 4,
-        user_id: 101,
-        first_name: 'Jerwin',
-        last_name: 'Ramos',
-        quantity: 1,
-        total: 250.00,
-        product_name: 'Product B',
-        product_id: 202,
-        status: 'Pending',
-        product_image: '../../assets/images/johncena.jpeg'
-    },
-    {
-        order_id: 4,
-        user_id: 101,
-        first_name: 'Jerwin',
-        last_name: 'Ramos',
-        quantity: 1,
-        total: 250.00,
-        product_name: 'Product C',
-        product_id: 202,
-        status: 'Pending',
-        product_image: '../../assets/images/johncena.jpeg'
-    },];
+       
 
         //show the card/ center the card
-        viewButton.addEventListener('click', function(){ 
+        viewButton.addEventListener('click', function(){  //=-=========================---=============================-----============
             popUpCard.classList.add('active');
-            //query using javascript here 
-            showOrderDetails(orderId, data[0].first_name,  data)
+            console.log("Hello");
+            
+            // console.log(data);
+
+            //query using javascript here
+            productsCard(data, orderId);
+           
         })
 
-        leftCont.appendChild(viewButton); 
+        leftCont.appendChild(viewButton);
 
         const serveButton = document.createElement("button");
         serveButton.classList.add("served-button");
         serveButton.textContent = "Served";
-        serveButton.addEventListener('click', function() { 
+        serveButton.addEventListener('click', function() {
             serveButton(this);
         });
         rightCont.appendChild(serveButton);
@@ -143,8 +114,31 @@
         container.appendChild(newDiv);
         }
 
-        function serveButton(button){ 
+        function serveButton(button){
             button.closest('.card').remove();
+        }
+
+        // function productsCard(details, order_id){
+        //     if (details.length > 0 && details[0].order_id === orderID) {
+        //         showOrderDetails(orderId, details[0].first_name,  details)
+        //     } else {
+        //         console.log("Order ID did not match or data is empty.");
+        //     }
+        // }
+
+
+        function productsCard(data, orderIden){
+            data.forEach(datum => {
+                // Check if the order_id matches the given orderIden
+                if (Number(datum.order_id) === Number(orderIden)) {
+                    // If a match is found, print the matching object
+                    console.log("id daw")
+                    // console.log(datum['order_id']);
+                    // console.log(datum['name'])
+   
+                    // showOrderDetails(datum.order_id, datum.first_name,  "../../assets/images/johncena.jpeg", "Magic Pen", 4, 350 )
+                }
+            });
         }
     </script>
 </body>
