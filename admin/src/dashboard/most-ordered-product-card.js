@@ -3,30 +3,23 @@ function displayProducts(products) {
 
     container.innerHTML = '';
 
-    products.forEach(products => {
+    products.forEach(product => {
         const card = document.createElement("div");
         card.classList.add("most-ordered-product-card");
 
         const img = document.createElement("img");
-        img.src = product.productImage;
+        img.src = product.product_image;
 
-        const detailsDiv = document.createElement("div");
         const productName = document.createElement("span");
-        productName.textContent = product.productName;
-
-        const productDesc = document.createElement("span");
-        productDesc = product.productDescription;
-
-        detailsDiv.appendChild(productName);
-        detailsDiv.appendChild(productDesc);
+        productName.textContent = product.product_name;
 
         const totalOrders = document.createElement("span");
-        // totalOrders.textContent = product. Still don't know how to get this
+        totalOrders.textContent = `${product.order_count}`;
 
         card.appendChild(img);
-        card.appendChild(detailsDiv);
+        card.appendChild(productName);
         card.appendChild(totalOrders);
 
         container.appendChild(card);
-    })
+    });
 }

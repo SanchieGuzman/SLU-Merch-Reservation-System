@@ -6,13 +6,107 @@ body{
 }
 
 #left-container{
-    border: solid red 5px;
-
     /* 85% because sidebar in sidenav.css is 15% */
     width: 85%;
+
+    /* moved the container down by 10vh since it is occupied by the topbar */
+    margin-top: 10vh;
 }
 
 /* this is where your content should be placed */
 #dashboard-content{
-    border: solid green 5px;
+    padding: 3%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+    gap: 3%;
+}
+
+#dashboard-content > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10%;
+    flex: 1;
+}
+
+#pending-orders-container, #sales-container {
+    height: 100%;
+    border: solid #2235a2 2px;
+    border-radius: 12px;
+}
+
+.headingDiv {
+    padding: 2%;
+    height: 25%;
+    align-items: center;
+    border-bottom: solid #2235a2 2px;
+}
+
+#pending-orders-container > strong, #sales-container > strong {
+    font-size: clamp(24px, 4vw, 80px);
+
+    display: block;
+    text-align: center;
+    align-content: center;
+    height: 55%;
+}
+
+#most-ordered-products-container {
+    display: flex;
+    flex-direction: column;
+
+    padding: 2%;
+    background-color: #2235a2;
+    border-radius: 18px;
+}
+
+#products-list {
+    display: flex;
+    flex-direction: column;
+}
+
+#pending-orders-container > div, #sales-container > div {
+    display: flex;
+    flex-direction: row;
+}
+
+#pending-orders-container > div:last-child, #sales-container > div:last-child {
+    padding: 2%;
+    height: 20%;
+
+    background-color: #2235a2;
+
+    border-radius: 0 0 8px 8px;
+}
+
+#time-div > span {
+    color: white;
+    display: block;
+    text-align: center;
+    align-content: center;
+}
+
+#most-ordered-products-container > h1 {
+    color: white;
+}
+
+/* Dynamic Cards */
+
+.card {
+    padding: 4% 4% 4% 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    border-bottom: solid white 4px;
+}
+
+.card > span, .card > strong {
+    font-size: clamp(18px, 2vw, 30px);
+
+    color: white;
 }

@@ -11,9 +11,9 @@
 
 <body>
     <?php
-        include('../dashboard/dashboard-backend.php');
         include('../sidenav/side-nav-backend.php');
         include('../sidenav/side-nav.php');
+        include('../dashboard/dashboard-backend.php');
     ?>
 
     <section id="left-container">
@@ -25,43 +25,81 @@
             <div>
                 <!-- PENDING ORDERS CONTAINER -->
                 <div id="pending-orders-container">
-                    <div>
+                    <div class="headingDiv">
                         <!-- todo: use echo $pending_orders_img to display the image -->
                         <img></img>
                         <h1>Pending Orders</h1>
                     </div>
-                    <span><?php echo "$pending_orders"; ?></span>
+                    <strong><?php echo "$pending_orders"; ?></strong>
                     <!-- todo: use echo $pending_orders to display the value -->
-                    <div>
-                        <span><?php echo "As of $time"; ?></span> <!-- todo: use echo $time to display the time -->
+                    <div id="time-div">
+                        <script>
+                        const container = document.getElementById("time-div");
+                        const t = new Date();
+                        const time = t.toLocaleTimeString();
+
+                        const spanElement = document.createElement("span");
+                        spanElement.textContent = `As of ${time}`;
+
+                        container.appendChild(spanElement);
+                        </script>
                     </div>
                 </div>
 
                 <!-- SALES CONTAINER -->
                 <div id="sales-container">
-                    <div>
+                    <div class="headingDiv">
                         <!-- todo: use echo $sales_img to display the image -->
                         <img></img>
                         <h1>Sales</h1>
                     </div>
-                    <span><?php echo "P $sales"; ?></span> <!-- todo: use echo $sales to display the image -->
-                    <div></div> <!-- an empty div for the bottom design box? -->
+                    <strong><?php echo "P $sales"; ?></strong> <!-- todo: use echo $sales to display the image -->
+                    <div></div>
                 </div>
             </div>
 
             <!-- MOST ORDERED PRODCUTS CONTAINER -->
             <div id="most-ordered-products-container">
-                <!-- todo: display the most ordered products -->
-
+                <h1>Most Ordered</h1>
+                <div id="products-list"></div>
             </div>
 
-            <script src="most-ordered-product-card.js"></script>
             <script>
                 const products = <?php echo json_encode($most_ordered_products); ?>
-                displayProducts(products);
+
+                const productsContainer = document.getElementById("products-list");
+
+                productsContainer.innerHTML = '';
+
+                if (products.length === 0) {
+                    const message = document.createElement("span");
+                    message.textContent = "No products ordered yet.";
+                    productsContainer.appendChild(message);
+                } else {
+                    products.forEach(product => {
+                        const card = document.createElement("div");
+                        card.classList.add("card");
+
+                        const img = document.createElement("img");
+                        img.src = product.product_image;
+                        img.alt = product.product_name;
+                        img.style.width = "clamp(150px, 4vw, 200px)";
+                        img.style.height = "clamp(150px, 4vw, 200px)";
+
+                        const productName = document.createElement("span");
+                        productName.textContent = product.product_name;
+
+                        const totalOrders = document.createElement("strong");
+                        totalOrders.textContent = `${product.order_count}`;
+
+                        card.appendChild(img);
+                        card.appendChild(productName);
+                        card.appendChild(totalOrders);
+                        productsContainer.appendChild(card);
+                    });
+                }
             </script>
         </main>
     </section>
 </body>
-
 </html>
