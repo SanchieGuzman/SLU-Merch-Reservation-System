@@ -25,11 +25,11 @@
                 <div id="top-title">
                     <h1>Product Overview</h1>
                     <button id="add-product-button">
-                        <img src="../../assets/images/add-logo.svg" alt="add logo">
+                        <img class="add-button-icon" src="../../assets/images/add-logo.svg" alt="add logo">
                         <h2>Add Product</h2>
                     </button>
                 </div>
-
+                
                 <?php 
                     require_once('../classes/Product.php');
                     $db = Database::getInstance();
