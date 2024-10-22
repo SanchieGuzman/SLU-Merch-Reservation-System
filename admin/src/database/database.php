@@ -99,29 +99,27 @@ class Database
         while ($row = $result->fetch_assoc()) {
             $pendingOrders[] = $row;
         }
-        
+        $stmt->close();
         // Return the pending orders array, even if theres no pending orders
         return $pendingOrders;
     }
-    //This method fetches all products of every orders that are pending
-    public function getPendingOrdersProducts($organizationID){
-        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total
+    public function getPendingProducts($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, p.product_image
 										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
                                         JOIN products AS p ON op.product_id = p.product_id 
                                         JOIN users AS u ON o.customer_id = u.user_id 
                                         WHERE p.organization_id = ?
-                                        AND o.status = 'pending'"); //this is just based on the canva page 20
-
+                                        AND o.status = 'pending'");
         $stmt->bind_param('i', $organizationID);
         $stmt->execute();
         $result = $stmt->get_result();
-        $pendingOrdersProducts = [];
-
+        $pendingProducts = [];
         while ($row = $result->fetch_assoc()) {
-            $pendingOrdersProducts[] = $row;
+            $pendingProducts[] = $row;
         }
-        
-        return $pendingOrdersProducts;
+        $stmt->close();
+        return $pendingProducts;
+    
     }
 
     // todo: create a function that gets the neccessary data for the order details popup card
