@@ -132,7 +132,7 @@ class Database
     }
     public function getMostOrderedProducts2($organizationID, $limit) {
 
-        $stmt = $this->mysqli->prepare("SELECT COUNT(op.product_id) AS order_count, p.product_name 
+        $stmt = $this->mysqli->prepare("SELECT COUNT(op.product_id) AS order_count, p.product_name, p.product_image 
                                     FROM orders AS o 
                                     JOIN order_products USING (order_id)
                                     JOIN products AS p USING (product_id)
