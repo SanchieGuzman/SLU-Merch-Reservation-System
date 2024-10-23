@@ -14,7 +14,7 @@ body{
 }
 
 /* this is where your content should be placed */
-#dashboard-content{
+#dashboard-content {
     padding: 3%;
     height: 100%;
 
@@ -26,12 +26,12 @@ body{
 #dashboard-content > div {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: 10%;
     flex: 1;
 }
 
-#pending-orders-container, #sales-container {
+#pending-orders-container, 
+#sales-container {
     height: 100%;
     border: solid #2235a2 2px;
     border-radius: 12px;
@@ -44,9 +44,9 @@ body{
     border-bottom: solid #2235a2 2px;
 }
 
-#pending-orders-container > strong, #sales-container > strong {
+#pending-orders-container > strong, 
+#sales-container > strong {
     font-size: clamp(24px, 4vw, 80px);
-
     display: block;
     text-align: center;
     align-content: center;
@@ -54,59 +54,60 @@ body{
 }
 
 #most-ordered-products-container {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-
     padding: 2%;
     background-color: #2235a2;
     border-radius: 18px;
+    max-height: calc(100vh - 21vh);
 }
 
 #products-list {
-    display: flex;
-    flex-direction: column;
+    overflow-y: auto;
 }
 
-#pending-orders-container > div, #sales-container > div {
+#pending-orders-container > div, 
+#sales-container > div {
     display: flex;
     flex-direction: row;
 }
 
-#pending-orders-container > div:last-child, #sales-container > div:last-child {
+#pending-orders-container div:last-child, 
+#sales-container div:last-child {
     padding: 2%;
     height: 20%;
-
     background-color: #2235a2;
-
     border-radius: 0 0 8px 8px;
 }
 
-#time-div > span {
+#time-div span {
     color: white;
-    display: block;
+    width: 100%;
     text-align: center;
     align-content: center;
 }
 
-#most-ordered-products-container > h1 {
+#most-ordered-products-container h1 {
     color: white;
+    margin-bottom: 10px;
 }
 
 /* Dynamic Cards */
 
 .card {
+    margin: 0;
     padding: 4% 4% 4% 0;
-
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    
     border-bottom: solid white 4px;
 }
 
-.card > span, .card > strong {
+.card > span, 
+.card > strong {
     font-size: clamp(18px, 2vw, 30px);
-
     color: white;
 }
