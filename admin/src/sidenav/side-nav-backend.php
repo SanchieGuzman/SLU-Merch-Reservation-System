@@ -1,7 +1,9 @@
 <?php
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
 
-    require('../database/database.php');
+    require_once('../database/database.php');
     require('../classes/Organization.php');
 
     $db = Database::getInstance();
@@ -26,4 +28,6 @@
         $imageSource = "data:" . htmlspecialchars($mimeType) . ";base64," . $base64;
     }
     $orgName = $organization->getOrganizationName();
+    $orgID = $organization->getOrganizationID();
+    $_SESSION['ORG_ID'] = $orgID;
 ?>
