@@ -10,14 +10,14 @@
 3. Copy the folder "Leonardos" inside the "Leonardos-mid" folder into this path **C:\wamp64\www** (assuming that you have WAMP Server installed)
 4. Run the WAMP Server
 5. Click the WAMP server icon in the icons tray, hover "Your VirtualHosts" and click "VirtualHost Management".
-  ![My Image](https://example.com/image.jpg)
+  ![My Image](admin/assets/images/setup/virtualhost.png)
     
 6. Set Up the Virtual Host. Follow what is in the image below. 
-  ![My Image](https://example.com/image.jpg)
+  ![My Image](admin/assets/images/setup/adding.png)
 
 7. Click "Start the Creation..."
 8. Restart the DNS Server by right clicking WAMP Server Icon on icons tray --> Tools --> Restart DNS.
-  ![My Image](https://example.com/image.jpg)
+  ![My Image](admin/assets/images/setup/restart.png)
 
 10. Login to 'phpMyAdmin' into your browser, create a new database and import the sql file 'leonardos_webdev_schema.sql' from the path '/admin/src
 /database/'
@@ -25,6 +25,7 @@
 /config.php'
 12. Go to localhost, click 'leonardos' in the "Your VirtualHost" column, click the 'admin' --> 'src'
 13. Login using this credential: **username: admin, password: admin**
+![My Image](admin/assets/images/setup/admin.png)
 
 ---
 ## Project Contributor:
