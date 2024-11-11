@@ -12,11 +12,16 @@ body {
   padding-top: 10vh;
 }
 
+.top-container {
+  padding: 1rem 0 0 1rem;
+  border: 2px solid green;
+}
+
 .orders-container {
-  padding: 1rem;
+  padding: 0.5rem;
   gap: 2rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-row: auto;
   height: auto;
   place-items: center;
@@ -25,20 +30,27 @@ body {
 .card {
   border: 1px solid black;
   width: 90%;
-  height: 30vh;
-  padding: 2rem;
+  height: 100%;
+  padding: 0.5rem;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   font-size: 1.2rem;
   background-color: white;
   border-radius: 0.5rem;
 }
 
-.card .left {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 40%;
+.card .order-id {
+  margin-bottom: 1rem;
+}
+
+.card p {
+  font-size: 0.8rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .card .view-button {
@@ -48,13 +60,8 @@ body {
   border: none;
   height: 2.5rem;
   font-size: 1rem;
-}
-
-.card .right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 40%;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
 }
 
 .card .served-button {

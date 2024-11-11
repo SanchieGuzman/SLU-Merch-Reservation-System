@@ -21,6 +21,10 @@
         ?>
 
         <main id="orders-content">
+            <div class="top-container">
+                <h2>Orders</h2>
+                <!-- INPUT FOR SEARCH -->
+            </div>
             <div class="orders-container"></div>
         </main>
     </section>
@@ -40,7 +44,7 @@
 
         window.onload = function () {
             orders.forEach(order =>{
-                addCard(order['first_name'],order['order_id'],order['created_at'], "Status: "+ order['status'])
+                addCard(order['first_name'],order['order_id'],order['created_at'], order['status'])
             })
         };
 
@@ -50,31 +54,47 @@
         const newDiv = document.createElement("div");
         newDiv.classList.add("card");
 
-        const leftCont = document.createElement("div");
-        leftCont.classList.add("left");
-
-        const rightCont = document.createElement("div");
-        rightCont.classList.add("right");
-
         const vName = document.createElement("h4");
         vName.classList.add("vendor-name");
         vName.textContent = name;
-        leftCont.appendChild(vName);
-
-        const orderDate = document.createElement("p");
-        orderDate.classList.add("order-date");
-        orderDate.textContent = orderDateValue;
-        leftCont.appendChild(orderDate);
+        newDiv.appendChild(vName);
 
         const oID = document.createElement("p");
         oID.classList.add("order-id");
         oID.textContent = "Order ID: "+orderId;
-        rightCont.appendChild(oID);
+        newDiv.appendChild(oID);
+
+        const gridContainer = document.createElement('div');    /* -------------------------------------------- */
+        gridContainer.classList.add("details-grid");
+            
+        const locationLabel = document.createElement('p');
+        locationLabel.textContent = "Pick up Location";
+        gridContainer.appendChild(locationLabel);
+
+        /* for location */
+        const location = document.createElement('p');
+        location.textContent="Sample location mahaba"
+        gridContainer.appendChild(location);
+
+        const dateLabel = document.createElement('p');
+        dateLabel.textContent = "Ordered at";
+        gridContainer.appendChild(dateLabel);
+
+        const orderDate = document.createElement("p");
+        orderDate.classList.add("order-date");
+        orderDate.textContent = orderDateValue;
+        gridContainer.appendChild(orderDate);
+
+        const statusLabel = document.createElement('p');
+        statusLabel.textContent = "Status";
+        gridContainer.appendChild(statusLabel);
 
         const status = document.createElement("p");
         status.classList.add("status");
         status.textContent = statusValue;
-        rightCont.appendChild(status);
+        gridContainer.appendChild(status);
+
+        newDiv.appendChild(gridContainer)/* -------------------------------------------- */
 
         const viewButton = document.createElement("button");
         viewButton.classList.add("view-button");
@@ -93,7 +113,7 @@
            
         })
 
-        leftCont.appendChild(viewButton);
+        newDiv.appendChild(viewButton);
 
         const serveButton = document.createElement("button");
         serveButton.classList.add("served-button");
@@ -103,10 +123,7 @@
             removeCard(this);
         });
 
-        rightCont.appendChild(serveButton);
-
-        newDiv.appendChild(leftCont);
-        newDiv.appendChild(rightCont);
+        newDiv.appendChild(serveButton);
 
         container.appendChild(newDiv);
         }
