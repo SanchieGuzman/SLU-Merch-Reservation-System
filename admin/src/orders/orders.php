@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dashboard</title>
+        <title>Orders</title>
         <link rel="stylesheet" href="../../assets/css/globals.css">
         <link rel="stylesheet" href="../../assets/css/orders.css">
     </head>
@@ -24,15 +24,15 @@
                 <div class="top-container">
                     <h2>Orders</h2>
                     <!-- INPUT FOR SEARCH -->
-                    <input type="text" id="order-search" placeholder="Search by Order ID">
+                    <div class="search-container">
+                        <input type="text" id="order-search" placeholder="Search by Order ID">
+                        <img class="filter" src="../../assets/images/orders-icons/filter-horizontal-svgrepo-com.svg" alt="">
+                    </div>
                 </div>
                 <div class="orders-container"></div>
                 <div class="page-number">
                     <button class="previous-button">Prev</button>
-                    <div class="pages-container">
-                        <button>1</button> <!-- sample buttons -->
-                        <button>2</button> <!-- sample buttons -->
-                    </div>
+                    <div class="pages-container"></div>
                     <button class="next-button">Next</button>
                 </div>
             </main>
@@ -61,40 +61,32 @@
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"}, 
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"}, 
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"}, 
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 4, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"}, 
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 3, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"}, 
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 3, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
@@ -109,6 +101,14 @@
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"}, 
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 3, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
@@ -116,7 +116,7 @@
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"}, 
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 2, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
@@ -133,7 +133,7 @@
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 3, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
@@ -159,7 +159,7 @@
                             {first_name: "Sanchie", order_id: 14, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 16, created_at: "11/12/2024", status: "Pending", location: "Sample Last"}, 
+                            {first_name: "Sanchie", order_id: 17, created_at: "11/12/2024", status: "Pending", location: "Sample Last"}, 
                         ]
             
 
@@ -291,7 +291,7 @@
                 function renderButtons(currentPageNumber) {
                     pagesContainer.innerHTML = '';
                     let startPage = 1;
-                    let endPage =totalPages;
+                    let endPage = totalPages;
                     if(totalPages>maxButtons){
                         if(currentPageNumber<=6){ //page 1-6 show 1-9 buttons
                         startPage = 1;
@@ -332,6 +332,7 @@
                         pageButton.addEventListener('click', () => {
                             displayOrdersForPage(i, ordersSample);
                             renderButtons(i);
+                            pageButton.classList.add('active');/* -------------- */
                         });
 
                         pagesContainer.appendChild(pageButton);

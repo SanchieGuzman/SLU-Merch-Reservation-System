@@ -13,17 +13,43 @@ body {
 }
 
 .top-container {
+  display: flex;
+  justify-content: space-between;
   padding: 0.5rem 1rem;
   /* border: 2px solid green; */
+}
+
+.top-container .search-container {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.search-container .filter {
+  width: 2rem;
+  filter: invert(21%) sepia(100%) saturate(6000%) hue-rotate(200deg)
+    brightness(55%) contrast(85%);
+}
+
+.search-container #order-search {
+  background-image: url("../images/orders-icons/search-alt-1-svgrepo-com.svg");
+  background-size: 1rem;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.2rem;
+  border: 2px solid #15268b;
 }
 
 .orders-container {
   padding: 0.5rem 1rem 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
   gap: 1rem;
-  height: auto;
+  height: 70%;
+  /* border: 2px solid gold; */
 }
 
 .card {
@@ -87,6 +113,7 @@ body {
   height: 2.5rem;
   border-radius: 0.2rem;
   margin-right: 1rem;
+  border: none;
 }
 
 .page-number .pages-container > button {
@@ -95,4 +122,16 @@ body {
   margin-right: 1rem;
   border: 1px solid #15268b;
   border-radius: 0.2rem;
+}
+
+.page-number .pages-container .active {
+  background-color: #fecb41;
+  color: white;
+  border: none;
+}
+
+.pages-container .ellipsis {
+  width: 2.5rem;
+  font-size: 1.5rem;
+  margin-right: 1rem;
 }
