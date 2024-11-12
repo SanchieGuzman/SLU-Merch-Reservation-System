@@ -1,3 +1,10 @@
+body {
+    /* to make sidebar and content-container displayed in flex */
+    /* DO NOT REMOVE */
+    display: flex;
+    position: relative;
+}
+
 #left-container{
     /* 85% because sidebar in sidenav.css is 15% */
     width: 85%;
@@ -6,7 +13,51 @@
     margin-top: 10vh;
 }
 
+/* main container of the whole schedules page */
 #schedules-container {
     border: solid 2px green;
-    /* margin-top: 10vh; */
+    padding: 2%;
+}
+
+/* top part of the schedules page containing the heading and the create schedule button */
+#top-border {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+
+/* table containing the list of schedules of an organization */
+#schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#schedule-table, th, td {
+    border: 1px solid;
+}
+
+
+/* design template of the popup goes here */
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    
+}
+
+
+#left-container > #popup-success {
+    /* ine edit yung display neto through javascript */
+    display: none; 
+    position: fixed;
+    bottom: 20px;
+    right: 0;
+    transform: translateX(-20px);
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 1000; 
 }

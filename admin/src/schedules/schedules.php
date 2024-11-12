@@ -9,7 +9,7 @@
 </head>
 <body>
     <?php 
-        include('../schedule/schedule-backend.php');
+        include('../schedules/schedules-backend.php');
         include('../sidenav/side-nav-backend.php');
         include('../sidenav/side-nav.php');
     ?>
@@ -20,9 +20,12 @@
         ?>
 
         <main id="schedules-container">
-            <div>
+            <div id="top-border">
                 <h1>Product Overview</h1>
-                <button id="create-schedule-button">Create Schedule</button>
+                <button id="create-schedule-button">
+                    <img src="" alt="ADD IMAGE">
+                    Create Schedule
+                </button>
             </div>
             <div>
                 <table id="schedule-table">
@@ -38,10 +41,11 @@
         </main>
 
         <script>
+            const container = document.getElementById('schedules-container');
             const table = document.getElementById('schedule-table');
             const scheduleList = <?php echo json_encode($scheduleList) ?>;
 
-            scheduleList.foreach(schedule => {
+            scheduleList.forEach(schedule => {
                 // add the row details and append to the table
                 const tr = document.createElement("tr");
 
@@ -82,6 +86,8 @@
                 table.appendChild(tr);
             });
         </script>
+
+        <script src="../schedules/createSchedule.js"></script>
     </section>
 </body>
 </html>

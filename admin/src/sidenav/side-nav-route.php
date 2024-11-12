@@ -12,9 +12,9 @@
         $_SESSION['action'] = 'products';
         header("Location: ../products/products.php");
         exit();
-    } elseif ($_POST['action'] === 'schedule') {
+    } elseif ($_POST['action'] === 'schedules') {
         $_SESSION['action'] = 'schedule';
-        header("Location: ../schedule/schedule.php");
+        header("Location: ../schedules/schedules.php");
         exit();
     } elseif($_POST['action'] === 'logout') {
         $_SESSION['action'] = null;
