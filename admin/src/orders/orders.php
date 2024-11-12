@@ -24,6 +24,7 @@
                 <div class="top-container">
                     <h2>Orders</h2>
                     <!-- INPUT FOR SEARCH -->
+                    <input type="text" id="order-search" placeholder="Search by Order ID">
                 </div>
                 <div class="orders-container"></div>
                 <div class="page-number">
@@ -72,7 +73,6 @@
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"}, 
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
@@ -146,20 +146,20 @@
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"}, 
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 8, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 9, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 10, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 11, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
+                            {first_name: "Sanchie", order_id: 14, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
                             {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Devesse Lobby"},
-                            {first_name: "Sanchie", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "Sample Last"}, 
+                            {first_name: "Sanchie", order_id: 16, created_at: "11/12/2024", status: "Pending", location: "Sample Last"}, 
                         ]
             
 
@@ -168,15 +168,18 @@
                 //     addCard(order['first_name'],order['order_id'],order['created_at'], order['status'], order['location'])
                 // })
 
-                displayOrdersForPage(1); // Display the first page onload
+                displayOrdersForPage(1,orders); // Display the first page onload
                 addPageButtons(orders)
+                const searchInput = document.getElementById('order-search');
+                searchInput.addEventListener('input', filterOrders); 
             };
-            function displayOrdersForPage(page) {
+
+            function displayOrdersForPage(pageNumber, orders) {
                 const ordersContainer = document.querySelector('.orders-container');
                 ordersContainer.innerHTML = '';  // Clear previous orders
 
                 const ordersPerPage = 8;
-                const start = (page - 1) * ordersPerPage; //determines the first index of the array to be shown
+                const start = (pageNumber - 1) * ordersPerPage; //determines the first index of the array to be shown
                 const end = start + ordersPerPage; //determines the last index of the array that is not going to be shown
 
                 const pageOrders = orders.slice(start, end);//splits the orders into necessary starting and ending point 
@@ -279,10 +282,10 @@
             }
 
             //todo: create a function that will add buttons with their corresponding page numbers based on the queried content
-            function addPageButtons(orders){
+            function addPageButtons(ordersSample){
                 const pagesContainer = document.querySelector('.pages-container');
                 const ordersPerPage = 8;
-                const totalPages = Math.ceil(orders.length / ordersPerPage);
+                const totalPages = Math.ceil(ordersSample.length / ordersPerPage);
                 const maxButtons =11;
                
                 function renderButtons(currentPageNumber) {
@@ -293,7 +296,7 @@
                         if(currentPageNumber<=6){ //page 1-6 show 1-9 buttons
                         startPage = 1;
                         endPage = 9;
-                        }else if(currentPageNumber>= totalPages - 5){ //16 buttons, in 20th it shows 8-16
+                        }else if(currentPageNumber>= totalPages - 5){ //16 buttons, in 16th it shows 8-16
                             startPage =totalPages-8;
                             endPage =totalPages;
 
@@ -308,7 +311,7 @@
                         const firstButton = document.createElement('button');
                         firstButton.textContent = '1';
                         firstButton.addEventListener('click', () => {
-                            displayOrdersForPage(1);
+                            displayOrdersForPage(1, ordersSample);
                             renderButtons(1);
                         });
                         pagesContainer.appendChild(firstButton);
@@ -327,7 +330,7 @@
                         if (i === currentPageNumber) pageButton.classList.add('active');
                         
                         pageButton.addEventListener('click', () => {
-                            displayOrdersForPage(i);
+                            displayOrdersForPage(i, ordersSample);
                             renderButtons(i);
                         });
 
@@ -346,7 +349,7 @@
                         const lastButton = document.createElement('button');
                         lastButton.textContent = totalPages;
                         lastButton.addEventListener('click', () => {
-                            displayOrdersForPage(totalPages);
+                            displayOrdersForPage(totalPages, ordersSample);
                             renderButtons(totalPages);
                         });
                         pagesContainer.appendChild(lastButton);
@@ -355,6 +358,27 @@
                 }
                 renderButtons(1);  // Initialize buttons for the first page
             }
+           
+            let filteredOrders = []; 
+            
+            function filterOrders() {
+                const searchTerm = document.getElementById('order-search').value.toLowerCase();
+             
+                console.log("Search Term:", searchTerm);
+                //filter based on search
+                filteredOrders = orders.filter(order => {
+                    const orderIdMatch = order.order_id.toString().includes(searchTerm);
+                    if (orderIdMatch) {
+                        console.log("Matched Order:", order);  // Debug statement for matched order
+                    }
+                    return orderIdMatch;
+                });
+
+                console.log("Filtered Orders:", filteredOrders);
+                displayOrdersForPage(1, filteredOrders);  
+                addPageButtons(filteredOrders);  
+            }
+
         </script>
     </body>
     </html>
