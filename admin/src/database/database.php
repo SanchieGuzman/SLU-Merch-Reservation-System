@@ -219,7 +219,23 @@ class Database
             return false;
         }
     }
+    public function addSchedule($schedule){
+        $stmt = $this->mysqli->prepare("INSERT INTO organization_schedules(date, organization_id, start_time, end_time, location)
+        VALUES (?,?,?,?,?)");
 
+        $date = $schedule-> getDate();
+        $organizationID = $schedule-> getOrganizationID();
+        $startTime = $schedule->getStartTime();
+        $endTime = $schedule->getEndTime();
+        $location = $schedule->getLocation();
+
+        $stmt->bind_param("sisss", $date, $organizationID,$startTime, $endTime, $location);
+        if ($stmt->execute()) {
+            return true; 
+        } else {
+            return false;
+        }
+    }
     // method that returns  the products information
     // needed: Product ID, Product Name, qty, price, status
     // other fields must be null to save data 
@@ -270,5 +286,6 @@ class Database
         $stmt->close();
         return $pendingProducts;
     }
+    
 }
 ?>
