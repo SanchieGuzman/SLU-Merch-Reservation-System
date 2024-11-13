@@ -58,9 +58,8 @@ class Database
     //todo: create a function that fetches organization data based on the given userID
     public function getOrganizationData($userID){
         // make use of the Organization class, pero i null mo lang other fields. ang important lang is OrgID, OrgName, Org Logo, then return mo object na Organization
-        $stmt = $this->mysqli->prepare("SELECT o.organization_id, o.organization_name, o.organization_description, o.logo FROM organizations AS o 
-                                        JOIN organization_members om ON o.organization_id = om.organization_id 
-                                        JOIN vendors v ON v.vendor_id = om.vendor_id WHERE user_id = ?");
+        $stmt = $this->mysqli->prepare("SELECT o.organization_id, o.organization_name, o.organization_description, o.logo FROM organizations AS o
+                                        JOIN vendors AS v USING (organization_id) WHERE v.user_id = ?");
         
         $stmt->bind_param('i', $userID);
         $stmt->execute();
@@ -220,7 +219,23 @@ class Database
             return false;
         }
     }
+    public function addSchedule($schedule){
+        $stmt = $this->mysqli->prepare("INSERT INTO organization_schedules(date, organization_id, start_time, end_time, location)
+        VALUES (?,?,?,?,?)");
 
+        $date = $schedule-> getDate();
+        $organizationID = $schedule-> getOrganizationID();
+        $startTime = $schedule->getStartTime();
+        $endTime = $schedule->getEndTime();
+        $location = $schedule->getLocation();
+
+        $stmt->bind_param("sisss", $date, $organizationID,$startTime, $endTime, $location);
+        if ($stmt->execute()) {
+            return true; 
+        } else {
+            return false;
+        }
+    }
     // method that returns  the products information
     // needed: Product ID, Product Name, qty, price, status
     // other fields must be null to save data 
@@ -271,5 +286,6 @@ class Database
         $stmt->close();
         return $pendingProducts;
     }
+    
 }
 ?>
