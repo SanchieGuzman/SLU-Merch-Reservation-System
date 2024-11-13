@@ -15,9 +15,6 @@
         if (!empty($product['product_image'])) {
             // Convert BLOB to Base64
             $product['product_image'] = 'data:image/jpeg;base64,' . base64_encode($product['product_image']);
-        } else {
-            // Provide a fallback if no image is available
-            $product['product_image'] = 'data:image/png;base64,' . base64_encode(file_get_contents('path/to/default/image.png')); // Update with a default image path
         }
     }
 ?>
