@@ -7,7 +7,7 @@ class Schedule{
     private $endTime;
     private $location;
 
-    public function __construct($scheduleID, $date, $organizationID, $startTime, $location){
+    public function __construct($scheduleID, $date, $organizationID, $startTime, $endTime, $location){
         $this->scheduleID = $scheduleID;
         $this->date = $date;
         $this->organizationID = $organizationID;
