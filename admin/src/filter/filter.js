@@ -108,14 +108,14 @@ function showFilter(){
   const applyButton = document.createElement('button');
   applyButton.classList.add('apply-button');
   applyButton.textContent = "Apply";
-  applyButton.addEventListener('click', () =>{
-    const selectedRadio = document.querySelector('input[name="dateRange"]:checked').value;
-    console.log(selectedRadio);
-    const selectedLocation = pickUpLocationDropdown.value;
-    console.log(selectedLocation);
-    showFilterOptions.classList.add('hidden');
-  });
-
+  // applyButton.addEventListener('click', () =>{
+  //   const selectedRadio = document.querySelector('input[name="dateRange"]:checked').value;
+  //   console.log(selectedRadio);
+  //   const selectedLocation = pickUpLocationDropdown.value;
+  //   console.log(selectedLocation);
+  //   showFilterOptions.classList.add('hidden');
+  // });
+  applyButton.addEventListener('click', showPrint);
   // const clearAllButton = document.createElement('button');
   // clearAllButton.classList.add('clear-all-button');
   // clearAllButton.textContent = "Clear All";

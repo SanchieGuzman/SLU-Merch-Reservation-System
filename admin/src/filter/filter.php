@@ -10,5 +10,19 @@
 <body>
   <div id="filter-container" class="hidden"></div>
   <script src="../filter/filter.js"></script>
+  <script>
+    
+    function showPrint(){
+      console.log('hello');
+      console.log(new Date());
+      const selectedRadio = document.querySelector('input[name="dateRange"]:checked').value;
+      console.log(selectedRadio);
+      const selectedLocation = pickUpLocationDropdown.value;
+      console.log(selectedLocation);
+      showFilterOptions.classList.add('hidden');
+     
+
+    }
+  </script>
 </body>
 </html>

@@ -173,7 +173,7 @@
                 displayOrdersForPage(1,orders); // Display the first page onload
                 addPageButtons(orders)
                 const searchInput = document.getElementById('order-search');
-                searchInput.addEventListener('input', filterOrders); 
+                searchInput.addEventListener('input', searchOrders); 
             };
 
             function displayOrdersForPage(pageNumber, orders) {
@@ -362,14 +362,14 @@
                 renderButtons(1);  // Initialize buttons for the first page
             }
            
-            let filteredOrders = []; 
+            let searchedOrders = []; 
             
-            function filterOrders() {
+            function searchOrders() {
                 const searchTerm = document.getElementById('order-search').value.toLowerCase();
              
                 console.log("Search Term:", searchTerm);
                 //filter based on search
-                filteredOrders = orders.filter(order => {
+                searchedOrders = orders.filter(order => {
                     const orderIdMatch = order.order_id.toString().includes(searchTerm);
                     if (orderIdMatch) {
                         console.log("Matched Order:", order);  // Debug statement for matched order
@@ -377,9 +377,9 @@
                     return orderIdMatch;
                 });
 
-                console.log("Filtered Orders:", filteredOrders);
-                displayOrdersForPage(1, filteredOrders);  
-                addPageButtons(filteredOrders);  
+                console.log("Filtered Orders:", searchedOrders);
+                displayOrdersForPage(1, searchedOrders);  
+                addPageButtons(searchedOrders);  
             }
 
         </script>

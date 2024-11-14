@@ -275,8 +275,32 @@ class Database
     }
 
     //TODO: create a query that will fetch all of the pending based on the chosen filter options
-    public function getFilteredPendingOrders(){
-        ///////
+    public function getFilteredPendingOrders($organizationID, $filters = []){
+        $sql = "SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location
+                    FROM organization_schedules AS os
+                    JOIN orders AS o USING (schedule_id)
+                    JOIN order_products AS op USING (order_id)
+                    JOIN products AS p USING (product_id)
+                    JOIN users AS u ON o.customer_id = u.user_id
+                    WHERE p.organization_id = ? AND o.status = 'pending'";
+
+        $params = [$organizationID];
+        $types = 'i';
+
+        if(isset($filters[o])){
+
+            $location = $filters[0];
+            $sql .= " AND os.location LIKE ?";
+            $params[] = "%$location%";
+            $types .= 's';
+
+        }
+        // if (isset($filters[1])){
+        //     $dateRange = strtolower($filters[1]);
+        //     if(strpos($dateRange, 'last 7 days') !== false){
+        //         $dateFrom = date('Y-m-d', strtotime('-7 days'));
+        //     }else if($date)
+        // }
     }
 }
 ?>
