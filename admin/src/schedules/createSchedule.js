@@ -3,6 +3,46 @@ function display(value) {
     popup.style.display = value ? "block" : "none";
 }
 
+function validateDate() {
+    const scheduledDate = new Date(document.getElementById('date').value);
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+
+    if (scheduledDate < currentDate) {
+        alert('The chosen date has already elapsed, please choose another date');
+        return false;
+    }
+
+    if (scheduledDate.toDateString() === currentDate.toDateString()) {
+        console.log('if condition accepted');
+
+        const startTime = document.getElementById('start-time').value;
+        const [startingHour, startingMinute] = startTime.split(':').map(Number);
+
+        const currentHour = new Date().getHours();
+        const currentMinute = new Date().getMinutes();
+
+        if (startingHour < currentHour || (startingHour === currentHour && startingMinute < currentMinute)) {
+            alert('The current time is already past the start time, please choose a later time');
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function validateTime() {
+    const startTime = document.getElementById('start-time').value;
+    const endTime = document.getElementById('end-time').value;
+
+    if (endTime < startTime) {
+        alert('End time cannot be earlier than the start time.');
+        return false;
+    }
+
+    return true;
+}
+
 // main container
 const mainContainer = document.getElementById('left-container');
 
@@ -27,7 +67,10 @@ h1.textContent = 'Create Schedule';
 // buttons
 const closeButton = document.createElement('button');
 closeButton.setAttribute('id', 'close-popup-button');
-closeButton.onclick = () => display(false);
+closeButton.onclick = () => {
+    display(false);
+    form.reset();
+};
 
 const createButton = document.getElementById('create-schedule-button');
 createButton.onclick = () => display(true);
@@ -48,22 +91,41 @@ const dateInput = document.createElement('input');
 dateLabel.textContent = "Date";
 dateLabel.setAttribute('for', 'date');
 
-dateInput.setAttribute('type', 'date');
 dateInput.setAttribute('id', 'date');
+dateInput.setAttribute('type', 'date');
 dateInput.setAttribute('name', 'date');
 dateInput.setAttribute('required', '');
 
 // location input
 const locationLabel = document.createElement('label');
-const locationInput = document.createElement('input');
+const locationInput = document.createElement('select');
 
 locationLabel.textContent = 'Location'
-locationLabel.setAttribute('for', 'location');
+locationLabel.setAttribute('for', 'locations');
 
-locationInput.setAttribute('type', 'text');
-locationInput.setAttribute('id', 'location');
-locationInput.setAttribute('name', 'location');
+locationInput.setAttribute('id', 'locations');
+locationInput.setAttribute('name', 'locations');
 locationInput.setAttribute('required', '');
+
+const defaultOption = document.createElement('option');
+defaultOption.textContent = 'Choose One';
+defaultOption.setAttribute('value', '');
+defaultOption.setAttribute('disabled', '');
+defaultOption.setAttribute('selected', '');
+
+const option1 = document.createElement('option');
+option1.textContent = 'Main Campus Lobby';
+option1.setAttribute('value', 'Main Campus Lobby');
+
+const option2 = document.createElement('option');
+option2.textContent = 'Maryheights Campus Lobby';
+option2.setAttribute('value', 'Maryheights Campus Lobby');
+
+locationInput.appendChild(defaultOption);
+locationInput.appendChild(option1);
+locationInput.appendChild(option2);
+
+locationInput.selectedIndex = 0;
 
 // start time input
 const startTimeLabel = document.createElement('label');
@@ -72,8 +134,8 @@ const startTimeInput = document.createElement('input');
 startTimeLabel.textContent = 'From'
 startTimeLabel.setAttribute('for', 'start-time');
 
-startTimeInput.setAttribute('type', 'time');
 startTimeInput.setAttribute('id', 'start-time');
+startTimeInput.setAttribute('type', 'time');
 startTimeInput.setAttribute('name', 'from');
 startTimeInput.setAttribute('required', '');
 
@@ -84,8 +146,8 @@ const endTimeInput = document.createElement('input');
 endTimeLabel.textContent = 'To'
 endTimeLabel.setAttribute('for', 'end-time');
 
-endTimeInput.setAttribute('type', 'time');
 endTimeInput.setAttribute('id', 'end-time');
+endTimeInput.setAttribute('type', 'time');
 endTimeInput.setAttribute('name', 'to');
 endTimeInput.setAttribute('required', '');
 
@@ -93,10 +155,30 @@ endTimeInput.setAttribute('required', '');
 const addButton = document.createElement('button');
 
 addButton.textContent = 'ADD';
+addButton.setAttribute('id', 'add-button');
 addButton.setAttribute('type', 'submit');
 addButton.setAttribute('name', 'add');
-addButton.setAttribute('id', 'add-button');
 
+addButton.addEventListener('click', (event) => {
+    // start the validation check if all fields are populated
+    const date = document.getElementById('date').value;
+    const location = document.getElementById('locations').value;
+    const startTime = document.getElementById('start-time').value;
+    const endTime = document.getElementById('end-time').value;
+
+    if (date && location && startTime && endTime) {
+        // validates the specified starting and ending time
+        if (!validateDate()) {
+            event.preventDefault();
+            return;
+        }
+        
+        if (!validateTime()) {
+            event.preventDefault();
+            return;
+        }
+    }
+});
 
 // append elements to its respective parent elements
 
