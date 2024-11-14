@@ -15,18 +15,18 @@ function loadUIForDeleteEntry(productId) {
     deleteMessage.setAttribute('id', 'delete-message');
     deleteMessage.textContent = 'Are you sure you want to delete this product? Customer won\t be able to buy it.'
 
-    let buttonContainer = document.createElement('div');
-    buttonContainer.setAttribute('id', 'button-container-cancel-delete');
-
     // FORM
     let form = document.createElement("form");
     form.setAttribute("action", "../../src/product-action/delete-product/delete-product-backend.php");
     form.setAttribute("method", "POST");
     form.setAttribute("id", "delete-product-form");
 
+    let buttonContainer = document.createElement('div');
+    buttonContainer.setAttribute('id', 'button-container-cancel-delete');
+    
     //cancel 
     var cancelButton = document.createElement("button");
-    cancelButton.setAttribute("id", "cancel-button");
+    cancelButton.setAttribute("id", "cancel-button-delete-popup");
     cancelButton.addEventListener("click", closeUIForDeleteEntry);
     cancelButton.textContent = "Cancel";
 
@@ -38,11 +38,9 @@ function loadUIForDeleteEntry(productId) {
     deleteButton.setAttribute("id", "delete-button");
     deleteButton.textContent = "Delete";
 
-    console.log(deleteButton.name);
+    buttonContainer.append(cancelButton, deleteButton)
 
-
-    form.append(cancelButton);
-    form.append(deleteButton);
+    form.append(buttonContainer);
 
     //appending to main container
     popUpContainer.append(confirmDeleteTitle, deleteMessage, form);
