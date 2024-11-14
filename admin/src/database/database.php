@@ -282,39 +282,31 @@ class Database
                 JOIN products AS p USING (product_id)
                 JOIN users AS u ON o.customer_id = u.user_id
                 WHERE p.organization_id = ? AND o.status = 'pending'";
-        
+    
         $params = [$organizationID];
         $types = 'i'; // Initial type for $organizationID is integer.
     
         // Location filter (first element in $filters array)
         if (isset($filters[0])) {
             $location = $filters[0];
-            $sql .= " AND os.location LIKE Devesse Plaza"; //todo: change to actual location
+            $sql .= " AND os.location LIKE ?";
             // $params[] = "%$location%";
-            // $types .= 's'; // String type for location filter
+            $params[]= "Devesse Plaza";
+            $types .= 's'; // String type for location filter
         }
     
-        // Date range filter (second element in $filters array)
+        // Date range filter (second element in $filters array, now an integer)
         if (isset($filters[1])) {
-            $dateRange = strtolower($filters[1]);
-            
-            // Determine the date range based on the input string
-            if (strpos($dateRange, 'last 7 days') !== false) {
-                $dateFrom = date('Y-m-d H:i:s', strtotime('-7 days'));
+            $dateRange = $filters[1]; // Now $filters[1] is an integer (e.g., 7, 14, 3)
+    
+            // Check if $dateRange is a valid integer for the number of days
+            if (is_int($dateRange)) {
+                // Handle dynamic date range based on the integer (e.g., last 7 days)
+                $dateFrom = date('Y-m-d H:i:s', strtotime("-$dateRange days"));
                 $sql .= " AND o.created_at >= ?";
                 $params[] = $dateFrom;
-                $types .= 's';
-            } elseif (strpos($dateRange, 'last 14 days') !== false) {
-                $dateFrom = date('Y-m-d H:i:s', strtotime('-14 days'));
-                $sql .= " AND o.created_at >= ?";
-                $params[] = $dateFrom;
-                $types .= 's';
-            } elseif(strpos($dateRange, 'last 3 days') !== false) {
-                $dateFrom = date('Y-m-d H:i:s', strtotime('-3 days'));
-                $sql .= " AND o.created_at >= ?";
-                $params[] = $dateFrom;
-                $types .= 's';
-            }elseif ($dateRange === 'yesterday') {
+                $types .= 's'; // String type for dateFrom
+            } elseif ($dateRange === 'yesterday') {
                 // Calculate yesterday's date range (from 00:00:00 to 23:59:59)
                 $dateFrom = date('Y-m-d', strtotime('-1 day')) . ' 00:00:00';
                 $dateTo = date('Y-m-d', strtotime('-1 day')) . ' 23:59:59';
@@ -322,12 +314,7 @@ class Database
                 $params[] = $dateFrom;
                 $params[] = $dateTo;
                 $types .= 'ss'; // Two string types for date range
-            }elseif(strpos($dateRange, 'last 5 days') !== false) {
-                $dateFrom = date('Y-m-d H:i:s', strtotime('-5 days'));
-                $sql .= " AND o.created_at >= ?";
-                $params[] = $dateFrom;
-                $types .= 's';
-            }elseif ($dateRange === 'today') {
+            } elseif ($dateRange === 'today') {
                 $dateFrom = date('Y-m-d') . ' 00:00:00';
                 $dateTo = date('Y-m-d') . ' 23:59:59';
                 $sql .= " AND o.created_at BETWEEN ? AND ?";
@@ -336,7 +323,7 @@ class Database
                 $types .= 'ss'; // Two string types for date range
             }
         }
-    
+
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
@@ -352,5 +339,6 @@ class Database
         // Return the filtered pending orders array
         return $pendingOrders;
     }
+    
 }
 ?>

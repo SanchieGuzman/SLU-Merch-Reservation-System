@@ -9,6 +9,6 @@
 </head>
 <body> 
   <div id="filter-container" class="hidden"></div>
-  <script src="filter.js"></script>
+  <script src="../filter/filter.js"></script>
 </body>
 </html>

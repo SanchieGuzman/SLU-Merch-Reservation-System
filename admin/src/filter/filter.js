@@ -73,16 +73,19 @@ function showFilter() {
 
   checkboxContainer.appendChild(dateRangeHeader);
 
-  const dateRange = ["All Time", "Today", "Yesterday", "Last 3 Days", "Last 5 Days", "Last 7 Days"];
-  
-  dateRange.forEach((range, index) => {
+  const dateRange = ["All Time", "Today","Yesterday","Last 3 Days","Last 5 Days","Last 7 Days"];
+  const dateRangeValue = ["All Time", "Today","1","3","5","7"];
+
+  dateRange.forEach((range,index) => {
     const radioButton = document.createElement('input');
     radioButton.classList.add('radio-button');
     radioButton.type = "radio";
-    radioButton.name = "dateRange";
+    radioButton.name = "dateRange"
     radioButton.id = `dateRange${index}`; 
     radioButton.value = range;
+    radioButton.value = dateRangeValue[index];
 
+    //Makes the first index (All Time) the default option
     if (index === 0) { 
       radioButton.checked = true;
     }
@@ -90,10 +93,11 @@ function showFilter() {
     const dateRangeLabel = document.createElement('label');
     dateRangeLabel.setAttribute('for', radioButton.id);
     dateRangeLabel.textContent = range;
+    // dateRangeLabel.textContent = 'hello';
 
     checkboxContainer.appendChild(radioButton);
     checkboxContainer.appendChild(dateRangeLabel);
-  });
+  })
 
   lowerContainer.appendChild(checkboxContainer);
 

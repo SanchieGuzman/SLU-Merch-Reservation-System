@@ -47,26 +47,23 @@
         <script type="module">
             
             <?php
+                
                 $db = Database::getInstance();
+               
                 $orders = $db -> getPendingOrders($_SESSION['ORG_ID']); 
                 $data = $db -> getPendingProducts($_SESSION['ORG_ID']); 
-                
-                
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $selectedRadio = isset($_POST['selectedRadio']) ? $_POST['selectedRadio'] : 'All Time';
                     $selectedLocation = isset($_POST['selectedLocation']) ? $_POST['selectedLocation'] : 'All';
                     
-                    $filtersArray = [
-                        'dateRange' => $selectedRadio,
-                        'location' => $selectedLocation
-                    ];
-                    $orders = $db->getPendingOrders($_SESSION['ORG_ID'], $filtersArray); 
+                    $filtersArray = [$selectedRadio,$selectedLocation];
+                    $orders = $db->getPendingOrdersFiltered($_SESSION['ORG_ID'], $filtersArray); 
                     $data = $db->getPendingProducts($_SESSION['ORG_ID']);
                 }    
             ?>        
-
+;
             const orders = <?php echo json_encode($orders);?>;
-            console.log(orders)
+            console.log(orders);
 
             //sample data, you can modify it to simulate certain cases
             // const orders = [{first_name: "One", order_id: 1, created_at: "11/12/2024", status: "Pending", location: "First"},
