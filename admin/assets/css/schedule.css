@@ -43,21 +43,32 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    
+    transform: translate(-50%, -50%);
+    height: 80%;
+    width: 80%;
+    background-color: white;
+    border-radius: 14px;
+    padding: 10%;
 }
 
+#header {
+    background-color: #fecb41;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-#left-container > #popup-success {
-    /* ine edit yung display neto through javascript */
-    display: none; 
-    position: fixed;
-    bottom: 20px;
-    right: 0;
-    transform: translateX(-20px);
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    border-radius: 5px;
-    z-index: 1000; 
+#form {
+    display: flex;
+    flex-direction: column;
+}
+
+#left-form-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#right-form-container {
+    display: flex;
+    flex-direction: row;
 }
