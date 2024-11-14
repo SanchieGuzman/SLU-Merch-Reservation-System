@@ -13,6 +13,7 @@
             include('../sidenav/side-nav-backend.php');
             include('../sidenav/side-nav.php');
             include('../order-details/order-details.php');
+            include('../filter/filter.php');
         ?>
 
         <section id="left-container">
@@ -25,8 +26,10 @@
                     <h2>Orders</h2>
                     <!-- INPUT FOR SEARCH -->
                     <div class="search-container">
+
                         <input type="text" id="order-search" size="30" placeholder="Search by Order ID">
-                        <img class="filter" src="../../assets/images/orders-icons/filter-horizontal-svgrepo-com.svg" alt="">
+                        <img class="filter" id="filter-image" src="../../assets/images/orders-icons/filter-horizontal-svgrepo-com.svg" alt="">
+
                     </div>
                 </div>
                 <div class="orders-container"></div>
@@ -39,6 +42,7 @@
         </section>
 
         <script src="../order-details-popup/order-details.js"></script>
+        <script src="../filter/filter.js"></script>
 
         <script type="module">
             
