@@ -1,0 +1,95 @@
+#filter-container{
+  position: absolute;
+  top: 17%;
+  left: 80%;
+  width: 19%;
+  height: auto;
+  background-color: #ffff;
+  border: 2px solid #15268b;
+}
+
+.hidden{
+  visibility: hidden;
+}
+
+/* ====== Filter Header ========= */
+
+.filter-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid #15268b;
+}
+
+.filter-header h1, button{
+  font-size: 1.2rem;
+}
+
+.filter-header button{
+  border: none;
+  background: transparent;
+  color: red;
+}
+
+/* ====== Filter Dropdown  ========= */
+
+.filter-options h2{
+  font-size: 1rem;
+  padding-bottom: 1rem ;
+}
+
+.dropdown-container{
+  padding: 0.8rem 1rem;
+  border-bottom: 2px solid #15268b;
+}
+
+.pickup-location-dropdown{
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.2rem;
+  padding: 0 0.3rem;
+  font-size: 1.1rem;
+}
+
+/* ====== Filter Checkbox ========= */
+.checkbox-container{
+  display: grid;
+  grid-template-columns: 25px 1fr 25px 1fr;
+  padding: 0.8rem 1rem;
+  border-bottom: 2px solid #15268b;
+}
+
+.checkbox-container input[type="radio"] {
+  transform: scale(0.5); 
+}
+
+.checkbox-container h2{
+  grid-column: span 4;
+}
+
+/* ====== Filter buttons ========= */
+
+.button-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0.8rem 1rem;
+}
+
+.button-container .clear-all-button, 
+.button-container .apply-button {
+  height: 2.5rem;
+  width: 6rem;
+  font-size: 1rem;
+  border-radius: 1rem;
+  background-color: white;
+  border: 2px solid#15268b;
+}
+
+.button-container .clear-all-button:hover,
+.button-container .apply-button:hover{
+  color: white;
+  background-color: #15268b;
+}
+

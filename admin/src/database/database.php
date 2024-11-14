@@ -116,22 +116,7 @@ class Database
             // ERROR IN THE SQL SYNTAX
     }
 
-    //todo: Create a function that fetches the top 5 or 10? most ordered product of an organization using the orgID
-    public function getMostOrderedProducts($userID) {
-        // not sure kung up to 5 or up to 10 ba ang ididisplay sa most ordered 
-        // products natin kaya for now ikaw bahala sa number.
-
-        // pwede mo din ba ireturn dito ung parang hashmap na style? example <sold, product>
-        // wala kasi sa products database kung ilan na ang nabenta sa isang product kaya di ko alam kung paano approach
-        // natin dun. kung di mo sure pwede natin pag usapan tommorrow.
-
-        // sorry din sa grammar, tinatamad na ako mag ayos, pero ang daming sinasabi 'no?
-        // yapper talaga
-
-        // anyways tank u :)
-    }
-    public function getMostOrderedProducts2($organizationID, $limit) {
-
+    public function getMostOrderedProducts($organizationID, $limit) {
         $stmt = $this->mysqli->prepare("SELECT COUNT(op.product_id) AS order_count, p.product_name, p.product_image 
                                 FROM orders AS o 
                                 JOIN order_products AS op USING (order_id)
@@ -164,9 +149,11 @@ class Database
 
     //todo:create a fuction that fetches the orders that pending
     public function getPendingOrders($organizationID){
-        $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at 
-                                        FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
-                                        JOIN products AS p ON op.product_id = p.product_id 
+        $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location 
+                                        FROM organization_schedules AS os
+                                        JOIN orders AS o USING (schedule_id)
+                                        JOIN order_products AS op USING (order_id) 
+                                        JOIN products AS p USING (product_id) 
                                         JOIN users AS u ON o.customer_id = u.user_id 
                                         WHERE p.organization_id = ?
                                         AND o.status = 'pending'");
@@ -286,6 +273,33 @@ class Database
         $stmt->close();
         return $pendingProducts;
     }
-    
+    //TODO: create a query that will fetch all of the pending based on the chosen filter options
+    public function getFilteredPendingOrders($organizationID, $filters = []){
+        $sql = "SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location
+                    FROM organization_schedules AS os
+                    JOIN orders AS o USING (schedule_id)
+                    JOIN order_products AS op USING (order_id)
+                    JOIN products AS p USING (product_id)
+                    JOIN users AS u ON o.customer_id = u.user_id
+                    WHERE p.organization_id = ? AND o.status = 'pending'";
+
+        $params = [$organizationID];
+        $types = 'i';
+
+        // if(isset($filters[o])){
+
+        //     $location = $filters[0];
+        //     $sql .= " AND os.location LIKE ?";
+        //     $params[] = "%$location%";
+        //     $types .= 's';
+
+        // }
+        // if (isset($filters[1])){
+        //     $dateRange = strtolower($filters[1]);
+        //     if(strpos($dateRange, 'last 7 days') !== false){
+        //         $dateFrom = date('Y-m-d', strtotime('-7 days'));
+        //     }else if($date)
+        // }
+    }
 }
 ?>
