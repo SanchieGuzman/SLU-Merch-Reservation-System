@@ -273,5 +273,10 @@ class Database
         $stmt->close();
         return $pendingProducts;
     }
+
+    //TODO: create a query that will fetch all of the pending based on the chosen filter options
+    public function getFilteredPendingOrders(){
+        ///////
+    }
 }
 ?>

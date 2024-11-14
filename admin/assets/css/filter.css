@@ -19,7 +19,7 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  border: 2px solid #15268b;
+  border-bottom: 2px solid #15268b;
 }
 
 .filter-header h1, button{
@@ -41,7 +41,7 @@
 
 .dropdown-container{
   padding: 0.8rem 1rem;
-  border: 2px solid #15268b;
+  border-bottom: 2px solid #15268b;
 }
 
 .pickup-location-dropdown{
@@ -50,7 +50,6 @@
   border-radius: 0.2rem;
   padding: 0 0.3rem;
   font-size: 1.1rem;
-  border: 2px solid #15268b;
 }
 
 /* ====== Filter Checkbox ========= */
@@ -58,7 +57,7 @@
   display: grid;
   grid-template-columns: 25px 1fr 25px 1fr;
   padding: 0.8rem 1rem;
-  border: 2px solid #15268b;
+  border-bottom: 2px solid #15268b;
 }
 
 .checkbox-container input[type="radio"] {
@@ -74,9 +73,8 @@
 .button-container{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0.8rem 1rem;
-  border: 2px solid #15268b;
 }
 
 .button-container .clear-all-button, 
@@ -87,5 +85,11 @@
   border-radius: 1rem;
   background-color: white;
   border: 2px solid#15268b;
+}
+
+.button-container .clear-all-button:hover,
+.button-container .apply-button:hover{
+  color: white;
+  background-color: #15268b;
 }
 

@@ -43,17 +43,19 @@ function showFilter(){
   pickUpLocationDropdown.classList.add('pickup-location-dropdown');
 
   const defaultPickUpLocation = document.createElement('option');
-  defaultPickUpLocation.value = "all";
+  defaultPickUpLocation.value = "All";
   defaultPickUpLocation.textContent = "All";
-  defaultPickUpLocation.selected = true;
+  defaultPickUpLocation.selected = true; //Make this option the default
 
   const pickUpLocationOptions1 = document.createElement('option');
-  pickUpLocationOptions1.value = "all";
-  pickUpLocationOptions1.textContent = "Devesse Lobby (Bakakeng)";
+  const lobby1 = "Devesse Lobby (Bakakeng)"
+  pickUpLocationOptions1.value = lobby1;
+  pickUpLocationOptions1.textContent = lobby1;
 
   const pickUpLocationOptions2 = document.createElement('option');
-  pickUpLocationOptions2.value = "all";
-  pickUpLocationOptions2.textContent = "Lobby (Main)";
+  const lobby2 = "Lobby (Main)"
+  pickUpLocationOptions2.value = lobby2;
+  pickUpLocationOptions2.textContent = lobby2;
 
   pickUpLocationDropdown.appendChild(defaultPickUpLocation);
   pickUpLocationDropdown.appendChild(pickUpLocationOptions1);
@@ -73,20 +75,25 @@ function showFilter(){
   checkboxContainer.appendChild(dateRangeHeader);
 
   const dateRange = ["All Time", "Today","Yesterday","Last 3 Days","Last 5 Days","Last 7 Days"];
+  // const dateRangeValue = ["All Time", "Today","Yesterday","Last 3 Days","Last 5 Days","Last 7 Days"];
 
   dateRange.forEach((range,index) => {
     const radioButton = document.createElement('input');
+    radioButton.classList.add('radio-button');
     radioButton.type = "radio";
     radioButton.name = "dateRange"
     radioButton.id = `dateRange${index}`; 
+    radioButton.value = range;
 
-    if (index === 0) {
+    //Makes the first index (All Time) the default option
+    if (index === 0) { 
       radioButton.checked = true;
     }
   
     const dateRangeLabel = document.createElement('label');
-    dateRangeLabel.setAttribute('for',radioButton.id);
+    dateRangeLabel.setAttribute('for', radioButton.id);
     dateRangeLabel.textContent = range;
+    // dateRangeLabel.textContent = 'hello';
 
     checkboxContainer.appendChild(radioButton);
     checkboxContainer.appendChild(dateRangeLabel);
@@ -98,18 +105,24 @@ function showFilter(){
   const buttonContainer = document.createElement('div');
   buttonContainer.classList.add('button-container');
 
-  const clearAllButton = document.createElement('button');
-  clearAllButton.classList.add('clear-all-button');
-  clearAllButton.textContent = "Clear All";
-
   const applyButton = document.createElement('button');
   applyButton.classList.add('apply-button');
   applyButton.textContent = "Apply";
+  applyButton.addEventListener('click', () =>{
+    const selectedRadio = document.querySelector('input[name="dateRange"]:checked').value;
+    console.log(selectedRadio);
+    const selectedLocation = pickUpLocationDropdown.value;
+    console.log(selectedLocation);
+    showFilterOptions.classList.add('hidden');
+  });
 
-  buttonContainer.appendChild(clearAllButton);
+  // const clearAllButton = document.createElement('button');
+  // clearAllButton.classList.add('clear-all-button');
+  // clearAllButton.textContent = "Clear All";
+
   buttonContainer.appendChild(applyButton);
   lowerContainer.appendChild(buttonContainer);
-
+  // buttonContainer.appendChild(clearAllButton);
 
   showFilterOptions.appendChild(upperContainer);
   showFilterOptions.appendChild(lowerContainer);
