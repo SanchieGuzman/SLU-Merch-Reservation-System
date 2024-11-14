@@ -56,16 +56,15 @@
                     // echo "Request Method: " . $_SERVER['REQUEST_METHOD'] . "<br>";
                     $selectedRadio = isset($_POST['selectedRadio']) ? $_POST['selectedRadio'] : 'All Time';
                     $selectedLocation = isset($_POST['selectedLocation']) ? $_POST['selectedLocation'] : 'All';
-                    // echo "Selected Radio: " . $selectedRadio . "<br>";
-                    // echo $selectedLocation;
-                    $filtersArray = [$selectedRadio,$selectedLocation];
+            
+                    $filtersArray = [$selectedLocation,$selectedRadio];
 
-                    // echo $filtersArray;
+                
                     $orders = $db->getPendingOrdersFiltered($_SESSION['ORG_ID'], $filtersArray); 
                     $data = $db->getPendingProducts($_SESSION['ORG_ID']);
                 }    
             ?>        
-;
+
             const orders = <?php echo json_encode($orders);?>;
             console.log(orders);
 

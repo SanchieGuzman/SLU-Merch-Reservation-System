@@ -290,21 +290,22 @@ class Database
         if (isset($filters[0]) & $filters[0] != "All") {
             $location = $filters[0];
             $sql .= " AND os.location LIKE ?";
-            // $params[] = "%$location%";
+            $params[] = "%$location%";
             // $params[]= "Devesse Plaza";
-            $params[]= "Amphitheatre";
+            // $params[]= "Amphitheatre";
+            // $params[]= "4th Floor Balcony Right Wing";
             $types .= 's'; 
         }
-
+        //todo fix date calculation
         if (isset($filters[1])) {
             $dateRange = $filters[1]; 
             if (is_int($dateRange)) {
-              
+                
                 $dateFrom = date('Y-m-d H:i:s', strtotime("-$dateRange days"));
                 $sql .= " AND o.created_at >= ?";
                 $params[] = $dateFrom;
                 $types .= 's'; 
-            } elseif ($dateRange === 'yesterday') {
+            } elseif ($dateRange === 'Yesterday') {
                 
                 $dateFrom = date('Y-m-d', strtotime('-1 day')) . ' 00:00:00';
                 $dateTo = date('Y-m-d', strtotime('-1 day')) . ' 23:59:59';
@@ -312,7 +313,7 @@ class Database
                 $params[] = $dateFrom;
                 $params[] = $dateTo;
                 $types .= 'ss'; 
-            } elseif ($dateRange === 'today') {
+            } elseif ($dateRange === 'Today') {
                 $dateFrom = date('Y-m-d') . ' 00:00:00';
                 $dateTo = date('Y-m-d') . ' 23:59:59';
                 $sql .= " AND o.created_at BETWEEN ? AND ?";
@@ -321,13 +322,15 @@ class Database
                 $types .= 'ss'; 
             }
         }
-        // echo $sql;
+        
         $stmt = $this->mysqli->prepare($sql);
+        
         $stmt->bind_param($types, ...$params);
+        
         $stmt->execute();
         $result = $stmt->get_result();
         $pendingOrders = [];
-    
+        
         // Fetch each row
         while ($row = $result->fetch_assoc()) {
             $pendingOrders[] = $row;

@@ -47,18 +47,24 @@ function showFilter() {
   defaultPickUpLocation.selected = true; //Make this option the default
 
   const pickUpLocationOptions1 = document.createElement('option');
-  const lobby1 = "Devesse Lobby (Bakakeng)";
+  const lobby1 = "Devesse Plaza";
   pickUpLocationOptions1.value = lobby1;
   pickUpLocationOptions1.textContent = lobby1;
 
   const pickUpLocationOptions2 = document.createElement('option');
-  const lobby2 = "Lobby (Main)";
+  const lobby2 = "Amphitheatre";
   pickUpLocationOptions2.value = lobby2;
   pickUpLocationOptions2.textContent = lobby2;
+
+  const pickUpLocationOptions3 = document.createElement('option');
+  const lobby3 = "4th Floor Balcony Right Wing";
+  pickUpLocationOptions3.value = lobby3;
+  pickUpLocationOptions3.textContent = lobby3;
 
   pickUpLocationDropdown.appendChild(defaultPickUpLocation);
   pickUpLocationDropdown.appendChild(pickUpLocationOptions1);
   pickUpLocationDropdown.appendChild(pickUpLocationOptions2);
+  pickUpLocationDropdown.appendChild(pickUpLocationOptions3);
   dropdownContainer.appendChild(pickUpLocationHeader);
   dropdownContainer.appendChild(pickUpLocationDropdown);
 
@@ -74,7 +80,7 @@ function showFilter() {
   checkboxContainer.appendChild(dateRangeHeader);
 
   const dateRange = ["All Time", "Today","Yesterday","Last 3 Days","Last 5 Days","Last 7 Days"];
-  const dateRangeValue = ["All Time", "0","1","3","5","30"];
+  const dateRangeValue = ["All Time", "Today",1,3,5,"300"];
 
   dateRange.forEach((range,index) => {
     const radioButton = document.createElement('input');
