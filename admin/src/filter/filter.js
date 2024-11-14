@@ -74,7 +74,7 @@ function showFilter() {
   checkboxContainer.appendChild(dateRangeHeader);
 
   const dateRange = ["All Time", "Today","Yesterday","Last 3 Days","Last 5 Days","Last 7 Days"];
-  const dateRangeValue = ["All Time", "Today","1","3","5","7"];
+  const dateRangeValue = ["All Time", "0","1","3","5","30"];
 
   dateRange.forEach((range,index) => {
     const radioButton = document.createElement('input');
@@ -116,6 +116,7 @@ function showFilter() {
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = 'orders.php'; // Target PHP file for processing
+    form.autocomplete='off';
 
     // Add hidden inputs for the filter values
     const radioInput = document.createElement('input');
@@ -132,6 +133,9 @@ function showFilter() {
     form.appendChild(locationInput);
 
     document.body.appendChild(form);
+    console.log(selectedLocation, selectedRadio)
+    console.log(selectedLocation, selectedRadio)
+    console.log(selectedLocation, selectedRadio)
     console.log(selectedLocation, selectedRadio)
     form.submit(); // Submit the form to `filter.php`
     

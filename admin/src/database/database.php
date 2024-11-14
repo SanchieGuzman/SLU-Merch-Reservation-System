@@ -287,11 +287,12 @@ class Database
         $types = 'i'; 
     
 
-        if (isset($filters[0])) {
+        if (isset($filters[0]) & $filters[0] != "All") {
             $location = $filters[0];
             $sql .= " AND os.location LIKE ?";
             // $params[] = "%$location%";
-            $params[]= "Devesse Plaza";
+            // $params[]= "Devesse Plaza";
+            $params[]= "Amphitheatre";
             $types .= 's'; 
         }
 
@@ -320,7 +321,7 @@ class Database
                 $types .= 'ss'; 
             }
         }
-
+        // echo $sql;
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param($types, ...$params);
         $stmt->execute();

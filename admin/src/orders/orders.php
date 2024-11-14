@@ -53,10 +53,14 @@
                 $orders = $db -> getPendingOrders($_SESSION['ORG_ID']); 
                 $data = $db -> getPendingProducts($_SESSION['ORG_ID']); 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    // echo "Request Method: " . $_SERVER['REQUEST_METHOD'] . "<br>";
                     $selectedRadio = isset($_POST['selectedRadio']) ? $_POST['selectedRadio'] : 'All Time';
                     $selectedLocation = isset($_POST['selectedLocation']) ? $_POST['selectedLocation'] : 'All';
-                    
+                    // echo "Selected Radio: " . $selectedRadio . "<br>";
+                    // echo $selectedLocation;
                     $filtersArray = [$selectedRadio,$selectedLocation];
+
+                    // echo $filtersArray;
                     $orders = $db->getPendingOrdersFiltered($_SESSION['ORG_ID'], $filtersArray); 
                     $data = $db->getPendingProducts($_SESSION['ORG_ID']);
                 }    
