@@ -284,43 +284,40 @@ class Database
                 WHERE p.organization_id = ? AND o.status = 'pending'";
     
         $params = [$organizationID];
-        $types = 'i'; // Initial type for $organizationID is integer.
+        $types = 'i'; 
     
-        // Location filter (first element in $filters array)
+
         if (isset($filters[0])) {
             $location = $filters[0];
             $sql .= " AND os.location LIKE ?";
             // $params[] = "%$location%";
             $params[]= "Devesse Plaza";
-            $types .= 's'; // String type for location filter
+            $types .= 's'; 
         }
-    
-        // Date range filter (second element in $filters array, now an integer)
+
         if (isset($filters[1])) {
-            $dateRange = $filters[1]; // Now $filters[1] is an integer (e.g., 7, 14, 3)
-    
-            // Check if $dateRange is a valid integer for the number of days
+            $dateRange = $filters[1]; 
             if (is_int($dateRange)) {
-                // Handle dynamic date range based on the integer (e.g., last 7 days)
+              
                 $dateFrom = date('Y-m-d H:i:s', strtotime("-$dateRange days"));
                 $sql .= " AND o.created_at >= ?";
                 $params[] = $dateFrom;
-                $types .= 's'; // String type for dateFrom
+                $types .= 's'; 
             } elseif ($dateRange === 'yesterday') {
-                // Calculate yesterday's date range (from 00:00:00 to 23:59:59)
+                
                 $dateFrom = date('Y-m-d', strtotime('-1 day')) . ' 00:00:00';
                 $dateTo = date('Y-m-d', strtotime('-1 day')) . ' 23:59:59';
                 $sql .= " AND o.created_at BETWEEN ? AND ?";
                 $params[] = $dateFrom;
                 $params[] = $dateTo;
-                $types .= 'ss'; // Two string types for date range
+                $types .= 'ss'; 
             } elseif ($dateRange === 'today') {
                 $dateFrom = date('Y-m-d') . ' 00:00:00';
                 $dateTo = date('Y-m-d') . ' 23:59:59';
                 $sql .= " AND o.created_at BETWEEN ? AND ?";
                 $params[] = $dateFrom;
                 $params[] = $dateTo;
-                $types .= 'ss'; // Two string types for date range
+                $types .= 'ss'; 
             }
         }
 
@@ -336,7 +333,7 @@ class Database
         }
         $stmt->close();
     
-        // Return the filtered pending orders array
+        
         return $pendingOrders;
     }
     
