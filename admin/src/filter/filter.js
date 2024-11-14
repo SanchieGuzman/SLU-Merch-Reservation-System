@@ -80,7 +80,7 @@ function showFilter() {
   checkboxContainer.appendChild(dateRangeHeader);
 
   const dateRange = ["All Time", "Today","Yesterday","Last 3 Days","Last 5 Days","Last 7 Days"];
-  const dateRangeValue = ["All Time", "Today",1,3,5,"300"];
+  const dateRangeValue = ["All Time", 0,1,3,5,30]; //todo: change to 7
 
   dateRange.forEach((range,index) => {
     const radioButton = document.createElement('input');
