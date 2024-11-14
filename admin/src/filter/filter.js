@@ -1,20 +1,19 @@
-document.addEventListener('DOMContentLoaded',() =>{
+document.addEventListener('DOMContentLoaded', () => {
   const filterImage = document.getElementById('filter-image');
   filterImage.addEventListener('click', () => {
     showFilter();
     const filterContainer = document.getElementById('filter-container');
-    filterContainer.classList.remove('hidden'); 
-  })
-})
+    filterContainer.classList.remove('hidden');
+  });
+});
 
-function showFilter(){
-  const showFilterOptions = document.querySelector('#filter-container')
-
+function showFilter() {
+  const showFilterOptions = document.querySelector('#filter-container');
   showFilterOptions.innerHTML = '';
 
   // Upper Container
   const upperContainer = document.createElement('div');
-  upperContainer.classList.add('filter-header')
+  upperContainer.classList.add('filter-header');
 
   const filter_title = document.createElement('h1');
   filter_title.textContent = "Filter";
@@ -23,9 +22,9 @@ function showFilter(){
   close_button.textContent = "X";
   close_button.addEventListener('click', () => {
     showFilterOptions.classList.add('hidden');
-  })
+  });
 
-  upperContainer.appendChild(filter_title)
+  upperContainer.appendChild(filter_title);
   upperContainer.appendChild(close_button);
 
   // Lower Container
@@ -48,12 +47,12 @@ function showFilter(){
   defaultPickUpLocation.selected = true; //Make this option the default
 
   const pickUpLocationOptions1 = document.createElement('option');
-  const lobby1 = "Devesse Lobby (Bakakeng)"
+  const lobby1 = "Devesse Lobby (Bakakeng)";
   pickUpLocationOptions1.value = lobby1;
   pickUpLocationOptions1.textContent = lobby1;
 
   const pickUpLocationOptions2 = document.createElement('option');
-  const lobby2 = "Lobby (Main)"
+  const lobby2 = "Lobby (Main)";
   pickUpLocationOptions2.value = lobby2;
   pickUpLocationOptions2.textContent = lobby2;
 
@@ -74,18 +73,16 @@ function showFilter(){
 
   checkboxContainer.appendChild(dateRangeHeader);
 
-  const dateRange = ["All Time", "Today","Yesterday","Last 3 Days","Last 5 Days","Last 7 Days"];
-  // const dateRangeValue = ["All Time", "Today","Yesterday","Last 3 Days","Last 5 Days","Last 7 Days"];
-
-  dateRange.forEach((range,index) => {
+  const dateRange = ["All Time", "Today", "Yesterday", "Last 3 Days", "Last 5 Days", "Last 7 Days"];
+  
+  dateRange.forEach((range, index) => {
     const radioButton = document.createElement('input');
     radioButton.classList.add('radio-button');
     radioButton.type = "radio";
-    radioButton.name = "dateRange"
+    radioButton.name = "dateRange";
     radioButton.id = `dateRange${index}`; 
     radioButton.value = range;
 
-    //Makes the first index (All Time) the default option
     if (index === 0) { 
       radioButton.checked = true;
     }
@@ -93,11 +90,10 @@ function showFilter(){
     const dateRangeLabel = document.createElement('label');
     dateRangeLabel.setAttribute('for', radioButton.id);
     dateRangeLabel.textContent = range;
-    // dateRangeLabel.textContent = 'hello';
 
     checkboxContainer.appendChild(radioButton);
     checkboxContainer.appendChild(dateRangeLabel);
-  })
+  });
 
   lowerContainer.appendChild(checkboxContainer);
 
@@ -108,21 +104,38 @@ function showFilter(){
   const applyButton = document.createElement('button');
   applyButton.classList.add('apply-button');
   applyButton.textContent = "Apply";
-  // applyButton.addEventListener('click', () =>{
-  //   const selectedRadio = document.querySelector('input[name="dateRange"]:checked').value;
-  //   console.log(selectedRadio);
-  //   const selectedLocation = pickUpLocationDropdown.value;
-  //   console.log(selectedLocation);
-  //   showFilterOptions.classList.add('hidden');
-  // });
-  applyButton.addEventListener('click', showPrint);
-  // const clearAllButton = document.createElement('button');
-  // clearAllButton.classList.add('clear-all-button');
-  // clearAllButton.textContent = "Clear All";
+  applyButton.addEventListener('click', () => {
+    const selectedRadio = document.querySelector('input[name="dateRange"]:checked').value;
+    const selectedLocation = pickUpLocationDropdown.value;
+    
+    // Create form and submit
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'orders.php'; // Target PHP file for processing
+
+    // Add hidden inputs for the filter values
+    const radioInput = document.createElement('input');
+    radioInput.type = 'hidden';
+    radioInput.name = 'selectedRadio';
+    radioInput.value = selectedRadio;
+
+    const locationInput = document.createElement('input');
+    locationInput.type = 'hidden';
+    locationInput.name = 'selectedLocation';
+    locationInput.value = selectedLocation;
+
+    form.appendChild(radioInput);
+    form.appendChild(locationInput);
+
+    document.body.appendChild(form);
+    console.log(selectedLocation, selectedRadio)
+    form.submit(); // Submit the form to `filter.php`
+    
+    showFilterOptions.classList.add('hidden');
+  });
 
   buttonContainer.appendChild(applyButton);
   lowerContainer.appendChild(buttonContainer);
-  // buttonContainer.appendChild(clearAllButton);
 
   showFilterOptions.appendChild(upperContainer);
   showFilterOptions.appendChild(lowerContainer);
