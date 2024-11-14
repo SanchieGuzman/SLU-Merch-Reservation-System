@@ -381,112 +381,32 @@
                 addPageButtons(filteredOrders);  
             }
 
-            
             let currentPage = 1;
 
-            // display orders for the current page
-            function updatePagination(orders) {
-                displayOrdersForPage(currentPage, orders);
-                addPageButtons(orders);
-            }
+            //logic for pagination updates
+            function updatePagination(orders, direction = null) {
+                const totalPages = Math.ceil(orders.length / 8);
 
-            // previous event listener
-            const previousButton = document.querySelector('.previous-button');
-            previousButton.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    updatePagination(filteredOrders.length ? filteredOrders : orders); 
-                }
-            });
-
-            // next event listener 
-            const nextButton = document.querySelector('.next-button');
-            nextButton.addEventListener('click', () => {
-                const totalPages = Math.ceil((filteredOrders.length ? filteredOrders : orders).length / 8);
-                if (currentPage < totalPages) {
+                if (direction === 'next' && currentPage < totalPages) {
                     currentPage++;
-                    updatePagination(filteredOrders.length ? filteredOrders : orders); // Use filteredOrders if available
-                }
-            });
-
-            // highlight the active button
-            function renderButtons(currentPageNumber) {
-                const pagesContainer = document.querySelector('.pages-container');
-                pagesContainer.innerHTML = '';
-                const ordersPerPage = 8;
-                const totalPages = Math.ceil((filteredOrders.length ? filteredOrders : orders).length / ordersPerPage);
-                const maxButtons = 11;
-
-                let startPage = 1;
-                let endPage = totalPages;
-
-                if (totalPages > maxButtons) {
-                    if (currentPageNumber <= 6) {
-                        startPage = 1;
-                        endPage = 9;
-                    } else if (currentPageNumber >= totalPages - 5) {
-                        startPage = totalPages - 8;
-                        endPage = totalPages;
-                    } else {
-                        startPage = currentPageNumber - 4;
-                        endPage = currentPageNumber + 4;
-                    }
+                } else if (direction === 'previous' && currentPage > 1) {
+                    currentPage--;
                 }
 
-                if (startPage > 1) {
-                    const firstButton = document.createElement('button');
-                    firstButton.textContent = '1';
-                    firstButton.addEventListener('click', () => {
-                        currentPage = 1;
-                        updatePagination(filteredOrders.length ? filteredOrders : orders);
-                    });
-                    pagesContainer.appendChild(firstButton);
-
-                    if (startPage > 2) {
-                        const ellipsis = document.createElement('span');
-                        ellipsis.textContent = '...';
-                        pagesContainer.appendChild(ellipsis);
-                    }
-                }
-
-                for (let i = startPage; i <= endPage; i++) {
-                    const pageButton = document.createElement('button');
-                    pageButton.textContent = i;
-                    if (i === currentPageNumber) pageButton.classList.add('active');
-
-                    pageButton.addEventListener('click', () => {
-                        currentPage = i;
-                        updatePagination(filteredOrders.length ? filteredOrders : orders);
-                    });
-
-                    pagesContainer.appendChild(pageButton);
-                }
-
-                if (endPage < totalPages) {
-                    if (endPage < totalPages - 1) {
-                        const ellipsis = document.createElement('span');
-                        ellipsis.textContent = '...';
-                        pagesContainer.appendChild(ellipsis);
-                    }
-
-                    const lastButton = document.createElement('button');
-                    lastButton.textContent = totalPages;
-                    lastButton.addEventListener('click', () => {
-                        currentPage = totalPages;
-                        updatePagination(filteredOrders.length ? filteredOrders : orders);
-                    });
-                    pagesContainer.appendChild(lastButton);
-                }
-            }
-
-            // initial load
-            window.onload = function () {
                 displayOrdersForPage(currentPage, orders);
                 addPageButtons(orders);
+            }
 
-                const searchInput = document.getElementById('order-search');
-                searchInput.addEventListener('input', filterOrders);
-            }; 
+            // event listeners for next and previous buttons
+            document.querySelector('.previous-button').addEventListener('click', () => {
+                const ordersToDisplay = filteredOrders.length ? filteredOrders : orders;
+                updatePagination(ordersToDisplay, 'previous');
+            });
+
+            document.querySelector('.next-button').addEventListener('click', () => {
+                const ordersToDisplay = filteredOrders.length ? filteredOrders : orders;
+                updatePagination(ordersToDisplay, 'next');
+            });
 
         </script>
     </body>
