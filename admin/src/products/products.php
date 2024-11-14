@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../assets/css/products.css">
     <link rel="stylesheet" href="../../assets/css/add-product-popup.css">
     <link rel="stylesheet" href="../../assets/css/delete-product-popup.css">
+    <link rel="stylesheet" href="../../assets/css/edit-product-popup.css">
 </head>
 <body>
     <?php
@@ -106,7 +107,16 @@
         tbody.addEventListener('click', (event) => {
             if (event.target.classList.contains('edit-btn')) {
                 const productId = event.target.id.split('-')[1]; // Get the ID from the button ID
-                editEntry(productId); // Call the edit function
+
+                // Get the parent row of the clicked button
+                 const row = event.target.closest('tr');
+
+                // Extract product details from the table cells
+                const productName = row.cells[1].textContent;
+                const productQuantity = row.cells[2].textContent;
+                const productPrice = row.cells[3].textContent;
+
+                loadUIForEditEntry(productId, productName, productQuantity, productPrice)
             } else if (event.target.classList.contains('delete-btn')) {
                 const productId = event.target.id.split('-')[1]; // Get the ID from the button ID
                 loadUIForDeleteEntry(productId); // Call the delete function

@@ -154,6 +154,8 @@ function loadUIForAddEntry() {
     var allFilled = true;
 
     fields.forEach(function (field) {
+      console.log();
+      
       if (!field.value) {
         allFilled = false;
       }
