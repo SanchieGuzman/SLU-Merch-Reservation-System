@@ -6,7 +6,7 @@ class Database
 
     public function __construct()
     {
-        $config = require('../database/config.php'); // Adjust the path if necessary
+        $config = require('config.php'); // Adjust the path if necessary
         $this->mysqli = new mysqli(
             $config['HOST'],
             $config['USERNAME'],
@@ -228,8 +228,8 @@ class Database
     // other fields must be null to save data 
     // use the product class
     public function getAllProducts($organizationID){
-        $stmt = $this->mysqli->prepare("SELECT product_id, product_name, quantity, price, status FROM `products` WHERE organization_id = ?;");
-        $stmt->bind_param('i', $organizationID);
+        $stmt = $this->mysqli->prepare("SELECT product_id, product_name, quantity, price, status FROM `products` WHERE organization_id = ? AND status NOT LIKE 'deleted';");
+        $stmt->bind_param('i', $organizationID); 
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -300,6 +300,20 @@ class Database
         //         $dateFrom = date('Y-m-d', strtotime('-7 days'));
         //     }else if($date)
         // }
+    }
+
+    //todo: method name: deleteProduct, params: productId
+    //create a query that marks the status of the product in the PRODUCTS table as deleted. do not delete the product
+    public function deleteProduct($productID){
+        $stmt = $this->mysqli->prepare("UPDATE products SET status = 'deleted' WHERE product_id = ?");
+     
+        $stmt->bind_param('i', $productID);
+        
+        if ($stmt->execute()) {
+            return true; 
+        } else {
+            return false;
+        }
     }
 }
 ?>

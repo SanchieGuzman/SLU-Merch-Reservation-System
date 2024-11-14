@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../assets/css/globals.css">
     <link rel="stylesheet" href="../../assets/css/products.css">
     <link rel="stylesheet" href="../../assets/css/add-product-popup.css">
+    <link rel="stylesheet" href="../../assets/css/delete-product-popup.css">
 </head>
 <body>
     <?php
@@ -43,13 +44,21 @@
                if (isset($_SESSION['add_success_message'])) {
                     echo $_SESSION['add_success_message']; 
                     unset($_SESSION['add_success_message']);
+                }elseif(isset($_SESSION['edit_success_message'])){
+                    echo $_SESSION['edit_success_message']; 
+                    unset($_SESSION['edit_success_message']);
+                }elseif(isset($_SESSION['delete_success_message'])){
+                    echo $_SESSION['delete_success_message']; 
+                    unset($_SESSION['delete_success_message']);
                 }
+        
             ?>
         </div>
     </section>
 
-    <script src="../add-product/addProduct.js"></script>
-    <script src="modify.js"></script>
+    <script src="../product-action/add-product/addProduct.js"></script>
+    <script src="../product-action/edit-product/editProduct.js"></script>
+    <script src="../product-action/delete-product/deleteProduct.js"></script>
     
     <script>
         // load na natin yung table
@@ -100,7 +109,7 @@
                 editEntry(productId); // Call the edit function
             } else if (event.target.classList.contains('delete-btn')) {
                 const productId = event.target.id.split('-')[1]; // Get the ID from the button ID
-                deleteEntry(productId); // Call the delete function
+                loadUIForDeleteEntry(productId); // Call the delete function
             }
         });
     </script>
@@ -112,7 +121,7 @@
                 popup.style.display = 'block';
                 setTimeout(function() {
                     popup.style.display = 'none';
-                }, 5000); // Hide after 3 seconds
+                }, 5000); // Hide after 5 seconds
             }
         };
 

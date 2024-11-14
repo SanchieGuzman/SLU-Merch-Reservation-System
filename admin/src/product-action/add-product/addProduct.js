@@ -1,11 +1,11 @@
-function closeUI() {
-  var popUpContainer = document.getElementById("pop-up-container");
+function closeUIForAddEntry() {
+  var popUpContainer = document.getElementById("add-product-pop-up-container");
   popUpContainer.remove();
 }
 
-function loadUI() {
+function loadUIForAddEntry() {
   var popUpContainer = document.createElement("div");
-  popUpContainer.setAttribute("id", "pop-up-container");
+  popUpContainer.setAttribute("id", "add-product-pop-up-container");
 
   // TOP TITLE AND BUTTON
   var top = document.createElement("div");
@@ -17,14 +17,14 @@ function loadUI() {
 
   var closeButton = document.createElement("button");
   closeButton.setAttribute("id", "close-button");
-  closeButton.addEventListener("click", closeUI);
+  closeButton.addEventListener("click", closeUIForAddEntry);
 
   top.appendChild(title);
   top.appendChild(closeButton);
 
   // FORM
   var form = document.createElement("form");
-  form.setAttribute("action", "../../src/add-product/add-product-backend.php");
+  form.setAttribute("action", "../../src/product-action/add-product/add-product-backend.php");
   form.setAttribute("method", "POST");
   form.setAttribute("id", "add-product-form");
   form.setAttribute("enctype", "multipart/form-data");
@@ -179,4 +179,4 @@ function loadUI() {
 }
 
 var addProductButton = document.getElementById("add-product-button");
-addProductButton.addEventListener("click", loadUI);
+addProductButton.addEventListener("click", loadUIForAddEntry);

@@ -1,0 +1,12 @@
+#delete-product-pop-up-container{
+    position: absolute;
+    top: 50%; /* Move down 50% of the viewport height */
+            left: 50%; /* Move right 50% of the viewport width */
+            transform: translate(-50%, -50%); /* Offset by half its own width and height */
+    height: 520px;
+    width: 800px;
+    background-color: rgb(235, 235, 235);
+    border: solid #2235a2 3px;
+    border-radius: 10px;
+    padding: 1rem;
+}
