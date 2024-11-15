@@ -307,7 +307,23 @@ class Database
         $stmt->close();
         return $pendingProducts;
     }
-
+    public function getClaimedProducts($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, TO_BASE64(p.product_image) AS product_image_base64
+										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
+                                        JOIN products AS p ON op.product_id = p.product_id 
+                                        JOIN users AS u ON o.customer_id = u.user_id 
+                                        WHERE p.organization_id = ?
+                                        AND o.status = 'Claimed'");
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingProducts = [];
+        while ($row = $result->fetch_assoc()) {
+            $pendingProducts[] = $row;
+        }
+        $stmt->close();
+        return $pendingProducts;
+    }
     //TODO: create a query that will fetch all of the pending based on the chosen filter options
     public function getPendingOrdersFiltered($organizationID, $filters = []) {
         $sql = "SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location
