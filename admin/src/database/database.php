@@ -223,6 +223,23 @@ class Database
             return false;
         }
     }
+    public function getSchedule($organizationID){
+        $stmt = $this->mysqli->prepare("Select os.schedule_id, os.date, os.start_time, os.end_time, os.location 
+                                                From organization_schedules AS os WHERE organization_id = ?");
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $schedules = [];
+
+        // Fetch each row and instantiate Product objects
+        while ($row = $result->fetch_assoc()) {
+            $schedules[] = $row;
+        }
+
+        // Return the array of Product objects
+        return $schedules;   
+    }
     // method that returns  the products information
     // needed: Product ID, Product Name, qty, price, status
     // other fields must be null to save data 
