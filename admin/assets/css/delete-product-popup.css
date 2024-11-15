@@ -1,12 +1,80 @@
-#delete-product-pop-up-container{
-    position: absolute;
-    top: 50%; /* Move down 50% of the viewport height */
-            left: 50%; /* Move right 50% of the viewport width */
-            transform: translate(-50%, -50%); /* Offset by half its own width and height */
-    height: 520px;
-    width: 800px;
-    background-color: rgb(235, 235, 235);
-    border: solid #2235a2 3px;
-    border-radius: 10px;
-    padding: 1rem;
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-Bold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+#delete-product-pop-up-container {
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    background-color: #fff;
+    border: 2px solid #2235a2;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    font-family: 'Poppins', Arial, sans-serif;
+    z-index: 1000;
+    text-align: center;
+}
+
+#delete-product-pop-up-container h1 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+#delete-product-pop-up-container p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+#button-container-cancel-delete {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#cancel-button-delete-popup, #delete-button {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#cancel-button-delete-popup {
+    background-color: #f3f4f6;
+    color: #000;
+}
+
+#cancel-button-delete-popup:hover {
+    background-color: #e2e3e5;
+    transform: scale(1.05);
+}
+
+#delete-button {
+    background: linear-gradient(to right, #2235a2, #4266ff);
+    color: #fff;
+}
+
+#delete-button:hover {
+    background: linear-gradient(to right, #1b2d85, #3558e0);
+    transform: scale(1.05);
 }
