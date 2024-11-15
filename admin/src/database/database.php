@@ -172,6 +172,11 @@ class Database
         return $pendingOrders;
     }
 
+    //TODO: create a funciton that updates the status of an order from pending to claimed
+    public function getClaimedOrders($organizationID){
+        
+    }
+
     // todo: create a function that adds a product to the database. 
     public function addProduct($product){
         // this is product $product = new Product(null, $productName, $productDescription, $organizationID, $productPrice, $productQuantity, $productImage, $status );

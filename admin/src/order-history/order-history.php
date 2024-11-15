@@ -1,9 +1,9 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Orders</title>
+        <title>Order History</title>
         <link rel="stylesheet" href="../../assets/css/globals.css">
         <link rel="stylesheet" href="../../assets/css/orders.css">
     </head>
@@ -27,7 +27,7 @@
                     <!-- INPUT FOR SEARCH -->
                     <div class="search-container">
 
-                        <input type="text" id="order-search" size="30" placeholder="Search by Order ID">
+                        <input type="text" id="order-search" size="30" placeholder="Search by Name or Order ID">
                         <img class="filter" id="filter-image" src="../../assets/images/orders-icons/filter-horizontal-svgrepo-com.svg" alt="">
 
                     </div>
@@ -50,8 +50,10 @@
                 
                 $db = Database::getInstance();
                
-                $orders = $db -> getPendingOrders($_SESSION['ORG_ID']); 
+                // $orders = $db -> getPendingOrders($_SESSION['ORG_ID']); 
+                $orders = $db -> getClaimedOrders($_SESSION['ORG_ID']); 
                 $data = $db -> getPendingProducts($_SESSION['ORG_ID']); 
+                
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // echo "Request Method: " . $_SERVER['REQUEST_METHOD'] . "<br>";
                     $selectedRadio = isset($_POST['selectedRadio']) ? $_POST['selectedRadio'] : 'All Time';
@@ -60,8 +62,9 @@
                     $filtersArray = [$selectedLocation,$selectedRadio];
 
                 
-                    $orders = $db->getPendingOrdersFiltered($_SESSION['ORG_ID'], $filtersArray); 
+                    $orders = $db->getPendingOrdersFiltered($_SESSION['ORG_ID'], $filtersArray); //idk if need to palitan
                     $data = $db->getPendingProducts($_SESSION['ORG_ID']);
+                    // $data = $db->getClaimedProducts($_SESSION['ORG_ID']);
                 }    
             ?>        
 
@@ -271,34 +274,9 @@
             
             })
 
-            newDiv.appendChild(viewButton);
-
-            const serveButton = document.createElement("button");
-            serveButton.classList.add("served-button");
-            serveButton.textContent = "Served";
-
-            serveButton.addEventListener('click', function() {
-                removeCard(this);
-            });
-
-            newDiv.appendChild(serveButton);
+            newDiv.appendChild(viewButton); 
 
             container.appendChild(newDiv);
-            }
-
-            //function to remove a card
-            function removeCard(button){
-                const card = button.closest('.card');
-
-                const orderIdElement = Array.from(card.querySelectorAll('p')).find(p => p.textContent.includes("Order ID:"));
-
-                const orderId = orderIdElement ? orderIdElement.textContent.split("Order ID: ")[1].trim() : null;
-            
-                console.log(orderId);
-
-                //TODO: call a function that will mark the order as claimed in the data base, user the orderId variable
-                
-                card.remove();
             }
 
             //add card 
