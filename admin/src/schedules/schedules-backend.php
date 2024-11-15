@@ -7,6 +7,5 @@
     require_once('../database/database.php');
     $db = Database::getInstance();
 
-    $scheduleList;
-    // $schedules = $db->getListOfSchedules($SESSION['ORG_ID']);
+    $scheduleList = $db->getSchedule($_SESSION['ORG_ID']);
 ?>

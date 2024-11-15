@@ -62,9 +62,11 @@
 
                 const editButton = document.createElement("button");
                 editButton.className = "edit-button";
+                editButton.textContent = "edit";
 
                 const deleteButton = document.createElement("button");
-                editButton.className = "delete-button";
+                deleteButton.className = "delete-button";
+                deleteButton.textContent = "delete";
 
                 editButton.addEventListener("click", () => {
                     console.log("Edit clicked for:", schedule.schedule_id);
@@ -86,8 +88,9 @@
                 table.appendChild(tr);
             });
         </script>
-
+        
         <script src="../schedules/createSchedule.js"></script>
+
     </section>
 </body>
 </html>

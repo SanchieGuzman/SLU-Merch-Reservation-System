@@ -80,9 +80,13 @@ const closeButtonImg = document.createElement('img');
 closeButtonImg.setAttribute('src', '');
 closeButtonImg.setAttribute('alt', 'Add CLOSE BUTTON IMG');
 
+
 // form
 const form = document.createElement('form');
 form.setAttribute('id', 'form');
+form.setAttribute('action', '../schedules/add-schedule.php');
+form.setAttribute('method', 'POST');
+form.setAttribute("enctype", "multipart/form-data");
 
 // date input
 const dateLabel = document.createElement('label');
@@ -104,7 +108,7 @@ locationLabel.textContent = 'Location'
 locationLabel.setAttribute('for', 'locations');
 
 locationInput.setAttribute('id', 'locations');
-locationInput.setAttribute('name', 'locations');
+locationInput.setAttribute('name', 'location');
 locationInput.setAttribute('required', '');
 
 const defaultOption = document.createElement('option');
@@ -136,7 +140,7 @@ startTimeLabel.setAttribute('for', 'start-time');
 
 startTimeInput.setAttribute('id', 'start-time');
 startTimeInput.setAttribute('type', 'time');
-startTimeInput.setAttribute('name', 'from');
+startTimeInput.setAttribute('name', 'start_time');
 startTimeInput.setAttribute('required', '');
 
 // end time input
@@ -148,7 +152,7 @@ endTimeLabel.setAttribute('for', 'end-time');
 
 endTimeInput.setAttribute('id', 'end-time');
 endTimeInput.setAttribute('type', 'time');
-endTimeInput.setAttribute('name', 'to');
+endTimeInput.setAttribute('name', 'end_time');
 endTimeInput.setAttribute('required', '');
 
 // add button input
