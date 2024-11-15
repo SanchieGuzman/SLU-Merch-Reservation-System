@@ -389,10 +389,14 @@
                 //filter based on search
                 searchedOrders = orders.filter(order => {
                     const orderIdMatch = order.order_id.toString().includes(searchTerm);
-                    if (orderIdMatch) {
-                        console.log("Matched Order:", order);  // Debug statement for matched order
+                    const orderBuyer = order.first_name.toLowerCase().includes(searchTerm);
+                    const searchedOrder = orderIdMatch || orderBuyer;
+                    if (searchedOrder) {
+                        // console.log("Order buyer: ", orderBuyer);
+                        // console.log("Matched Order:", order);  // Debug statement for matched order
+                        console.log(searchedOrder);
                     }
-                    return orderIdMatch;
+                    return searchedOrder;
                 });
 
                 console.log("Filtered Orders:", searchedOrders);
