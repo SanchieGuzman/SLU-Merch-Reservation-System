@@ -9,10 +9,10 @@
 
     $db = Database::getInstance();
 
-    // if($db->editProduct($productId, $productName, $productPrice, $productQuantity)){
-    //     $_SESSION['eidt_success_message'] = "Product edited";
-    //     header("Location: ../../products/products.php");
-    //     exit();
-    // }
-    // ;
+    if($db->editProduct($productId, $productName, $productPrice, $productQuantity)){
+        $_SESSION['edit_success_message'] = "Product edited";
+        header("Location: ../../products/products.php");
+        exit();
+    }
+    ;
 ?>
