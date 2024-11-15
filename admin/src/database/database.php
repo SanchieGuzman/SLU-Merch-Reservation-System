@@ -325,9 +325,11 @@ class Database
           // Check if the second filter (date range) is set and is an integer
         if (isset($filters[1])) {
             $dateRange = $filters[1];
+            if($dateRange>=0){
             $sql .= " AND o.created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)";
             $params[] = $dateRange;
             $types .= 'i';
+            }
         }
 
         
