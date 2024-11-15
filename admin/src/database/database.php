@@ -317,12 +317,12 @@ class Database
         $stmt->bind_param('i', $organizationID);
         $stmt->execute();
         $result = $stmt->get_result();
-        $pendingProducts = [];
+        $claimedProducts = [];
         while ($row = $result->fetch_assoc()) {
-            $pendingProducts[] = $row;
+            $claimedProducts[] = $row;
         }
         $stmt->close();
-        return $pendingProducts;
+        return $claimedProducts;
     }
     //TODO: create a query that will fetch all of the pending based on the chosen filter options
     public function getPendingOrdersFiltered($organizationID, $filters = []) {

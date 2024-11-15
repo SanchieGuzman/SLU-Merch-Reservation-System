@@ -50,21 +50,18 @@
                 
                 $db = Database::getInstance();
                
-                // $orders = $db -> getPendingOrders($_SESSION['ORG_ID']); 
                 $orders = $db -> getClaimedOrders($_SESSION['ORG_ID']); 
-                $data = $db -> getPendingProducts($_SESSION['ORG_ID']); 
+                $data = $db -> getClaimedProducts($_SESSION['ORG_ID']); 
                 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    // echo "Request Method: " . $_SERVER['REQUEST_METHOD'] . "<br>";
                     $selectedRadio = isset($_POST['selectedRadio']) ? $_POST['selectedRadio'] : 'All Time';
                     $selectedLocation = isset($_POST['selectedLocation']) ? $_POST['selectedLocation'] : 'All';
             
                     $filtersArray = [$selectedLocation,$selectedRadio];
 
                 
-                    $orders = $db->getPendingOrdersFiltered($_SESSION['ORG_ID'], $filtersArray); //idk if need to palitan
-                    $data = $db->getPendingProducts($_SESSION['ORG_ID']);
-                    // $data = $db->getClaimedProducts($_SESSION['ORG_ID']);
+                    $orders = $db->getPendingOrdersFiltered($_SESSION['ORG_ID'], $filtersArray);
+                    $data = $db->getClaimedProducts($_SESSION['ORG_ID']);
                 }    
             ?>        
 
@@ -185,10 +182,6 @@
             
 
             window.onload = function () {
-                // orders.forEach(order =>{
-                //     addCard(order['first_name'],order['order_id'],order['created_at'], order['status'], order['location'])
-                // })
-
                 displayOrdersForPage(1,orders); // Display the first page onload
                 addPageButtons(orders)
                 const searchInput = document.getElementById('order-search');
@@ -226,7 +219,7 @@
             newDiv.appendChild(oID);
 
             // a grid for the details of an order
-            const gridContainer = document.createElement('div');    /* -------------------------------------------- */
+            const gridContainer = document.createElement('div');    
             gridContainer.classList.add("details-grid");
                 
             const locationLabel = document.createElement('p');
@@ -255,7 +248,7 @@
             status.textContent = statusValue;
             gridContainer.appendChild(status);
 
-            newDiv.appendChild(gridContainer)/* -------------------------------------------- */
+            newDiv.appendChild(gridContainer)
 
             const viewButton = document.createElement("button");
             viewButton.classList.add("view-button");
@@ -278,8 +271,7 @@
 
             container.appendChild(newDiv);
             }
-
-            //add card 
+  
             function productsCard(data, orderIden){
                 const filtered = data.filter(data => data['order_id'] === orderIden);
                 console.log(filtered)
@@ -287,7 +279,6 @@
                 
             }
 
-            //todo: create a function that will add buttons with their corresponding page numbers based on the queried content
             function addPageButtons(ordersSample){
                 const pagesContainer = document.querySelector('.pages-container');
                 const ordersPerPage = 8;
