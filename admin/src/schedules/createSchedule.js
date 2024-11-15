@@ -55,10 +55,16 @@ popup.style.display = "none";
 const header = document.createElement('div');
 const leftFormContainer = document.createElement('div');
 const rightFormContainer = document.createElement('div');
+const timeRangeContainer= document.createElement('div'); // ====== Created new subcontainer =====
+const timeRangeContainerLeft = document.createElement('div'); // ====== Created new subcontainer =====
+const timeRangeContainerRight = document.createElement('div'); // ====== Created new subcontainer =====
 
 header.setAttribute('id', 'header');
 leftFormContainer.setAttribute('id', 'left-form-container');
 rightFormContainer.setAttribute('id', 'right-form-container');
+timeRangeContainer.setAttribute('id', 'time-range-container');// ====== Created new subcontainer =====
+timeRangeContainerLeft.setAttribute('id', 'time-range-container-left');// ====== Created new subcontainer =====
+timeRangeContainerRight.setAttribute('id', 'time-range-container-right');// ====== Created new subcontainer =====
 
 // heading
 const h1 = document.createElement('h1');
@@ -77,7 +83,7 @@ createButton.onclick = () => display(true);
 
 // close button img
 const closeButtonImg = document.createElement('img');
-closeButtonImg.setAttribute('src', '');
+closeButtonImg.setAttribute('src', '../../assets/images/close-logo.svg');
 closeButtonImg.setAttribute('alt', 'Add CLOSE BUTTON IMG');
 
 // form
@@ -194,10 +200,14 @@ leftFormContainer.appendChild(dateInput);
 
 rightFormContainer.appendChild(locationLabel);
 rightFormContainer.appendChild(locationInput);
-rightFormContainer.appendChild(startTimeLabel);
-rightFormContainer.appendChild(startTimeInput);
-rightFormContainer.appendChild(endTimeLabel);
-rightFormContainer.appendChild(endTimeInput);
+timeRangeContainerLeft.appendChild(startTimeLabel);
+timeRangeContainerLeft.appendChild(startTimeInput);
+timeRangeContainerRight.appendChild(endTimeLabel);
+timeRangeContainerRight.appendChild(endTimeInput);
+timeRangeContainer.appendChild(timeRangeContainerLeft);
+timeRangeContainer.appendChild(timeRangeContainerRight);  
+rightFormContainer.appendChild(timeRangeContainer);
+
 rightFormContainer.appendChild(addButton);
 
 // form

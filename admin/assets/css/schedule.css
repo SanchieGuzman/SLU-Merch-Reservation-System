@@ -64,6 +64,6 @@ body {
 }
 
 #schedule-table, th, td {
-    height: 40vh;
+    /* height: 40vh; */
     border: 1px solid;
 }
