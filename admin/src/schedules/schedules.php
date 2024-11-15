@@ -6,6 +6,7 @@
     <title>Create Schedule</title>
     <link rel="stylesheet" href="../../assets/css/globals.css">
     <link rel="stylesheet" href="../../assets/css/schedule.css">
+    <link rel="stylesheet" href="../../assets/css/schedule-popup.css">
 </head>
 <body>
     <?php 
@@ -21,13 +22,13 @@
 
         <main id="schedules-container">
             <div id="top-border">
-                <h1>Product Overview</h1>
+                <h1>View Schedules</h1>
                 <button id="create-schedule-button">
-                    <img src="" alt="ADD IMAGE">
-                    Create Schedule
+                    <img class="add-button-icon" src="../../assets/images/add-logo.svg" alt="add logo">
+                    <h2>Create Schedule</h2>
                 </button>
             </div>
-            <div>
+            <div id="schedule-list">
                 <table id="schedule-table">
                     <tr>
                         <th>Location</th>
@@ -38,6 +39,8 @@
                     </tr>
                 </table>
             </div>
+            
+
         </main>
 
         <div id="message-container">

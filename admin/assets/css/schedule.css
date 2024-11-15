@@ -15,8 +15,11 @@ body {
 
 /* main container of the whole schedules page */
 #schedules-container {
-    border: solid 2px green;
-    padding: 2%;
+    border: solid 3px #2235a2;
+    margin: 1rem 1rem;
+    max-height: 85vh;
+    overflow-y: hidden;
+    border-radius: 0.3rem;
 }
 
 /* top part of the schedules page containing the heading and the create schedule button */
@@ -24,7 +27,34 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 2%;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: solid 3px #2235a2;
+}
+
+#schedules-container #top-border img{
+    height: 1.5rem;
+    width: 2rem;
+}
+
+#schedules-container #top-border #create-schedule-button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 22%;
+    padding: 1rem 1rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #2235a2;
+    border: none;
+    border-radius: 0.3rem;
+}
+
+#schedules-container #schedule-list{
+    height: 80vh;
+    overflow-y: scroll;
+    padding: 1rem 4rem 1rem 4rem;
 }
 
 /* table containing the list of schedules of an organization */
@@ -34,41 +64,6 @@ body {
 }
 
 #schedule-table, th, td {
+    /* height: 40vh; */
     border: 1px solid;
-}
-
-
-/* design template of the popup goes here */
-#popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 80%;
-    width: 80%;
-    background-color: white;
-    border-radius: 14px;
-    padding: 2%;
-}
-
-#header {
-    background-color: #fecb41;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-#form {
-    display: flex;
-    flex-direction: row;
-}
-
-#left-form-container {
-    display: flex;
-    flex-direction: column;
-}
-
-#right-form-container {
-    display: flex;
-    flex-direction: column;
 }
