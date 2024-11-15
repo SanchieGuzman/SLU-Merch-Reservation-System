@@ -171,12 +171,41 @@ class Database
         // Return the pending orders array, even if theres no pending orders
         return $pendingOrders;
     }
-
-    //TODO: create a funciton that updates the status of an order from pending to claimed
     public function getClaimedOrders($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location 
+                                        FROM organization_schedules AS os
+                                        JOIN orders AS o USING (schedule_id)
+                                        JOIN order_products AS op USING (order_id) 
+                                        JOIN products AS p USING (product_id) 
+                                        JOIN users AS u ON o.customer_id = u.user_id 
+                                        WHERE p.organization_id = ?
+                                        AND o.status = 'Claimed'");
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingProducts = [];
+        while ($row = $result->fetch_assoc()) {
+            $pendingProducts[] = $row;
+        }
+        $stmt->close();
+        return $pendingProducts;
         
     }
-
+    //TODO: create a function that updates the status of an order from pending to claimed
+    public function updateProductStatus($orderID){
+        $stmt = $this->mysqli->prepare("UPDATE orders SET status = 'Claimed', claimed_at = NOW() WHERE order_id =?; ");
+        $stmt->bind_param('i', $orderID);
+        
+        $stmt->execute();
+            
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+   
     // todo: create a function that adds a product to the database. 
     public function addProduct($product){
         // this is product $product = new Product(null, $productName, $productDescription, $organizationID, $productPrice, $productQuantity, $productImage, $status );
@@ -278,6 +307,7 @@ class Database
         $stmt->close();
         return $pendingProducts;
     }
+
     //TODO: create a query that will fetch all of the pending based on the chosen filter options
     public function getPendingOrdersFiltered($organizationID, $filters = []) {
         $sql = "SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location

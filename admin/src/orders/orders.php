@@ -40,7 +40,10 @@
                 </div>
             </main>
         </section>
-
+         <!-- Hidden form for updating order status -->
+        <form id="update-status-form" method="POST" action="../orders/orders-backend.php" style="display: none;">
+            <input type="hidden" name="order_id" id="order-id-input">
+        </form>
         <script src="../order-details-popup/order-details.js"></script>
         <script src="../filter/filter.js"></script>
 
@@ -274,6 +277,7 @@
             newDiv.appendChild(viewButton);
 
             const serveButton = document.createElement("button");
+            
             serveButton.classList.add("served-button");
             serveButton.textContent = "Served";
 
@@ -295,9 +299,12 @@
                 const orderId = orderIdElement ? orderIdElement.textContent.split("Order ID: ")[1].trim() : null;
             
                 console.log(orderId);
-
-                //TODO: call a function that will mark the order as claimed in the data base, user the orderId variable
-                
+                if(orderId){
+                    const form = document.getElementById('update-status-form');
+                    const orderIdInput = document.getElementById('order-id-input');
+                    orderIdInput.value = orderId;
+                    form.submit();
+                }
                 card.remove();
             }
 
