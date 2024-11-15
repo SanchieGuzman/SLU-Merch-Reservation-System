@@ -40,6 +40,20 @@
             </div>
         </main>
 
+        <div id="message-container">
+            <!-- adds the message retrieved to the message container -->
+            <?php 
+                if (isset($_SESSION['create-schedule-successful'])) {
+                    echo $_SESSION['create-schedule-successful']; 
+                    unset($_SESSION['create-schedule-successful']);
+                } else if (isset($_SESSION['create-schedule-failed'])) {
+                    echo $_SESSION['create-schedule-failed']; 
+                    unset($_SESSION['create-schedule-failed']);
+                }
+            ?>
+        </div>
+
+        <!-- adds the list of schedules to the table -->
         <script>
             const container = document.getElementById('schedules-container');
             const table = document.getElementById('schedule-table');
@@ -88,9 +102,22 @@
                 table.appendChild(tr);
             });
         </script>
-        
+
+        <!-- external js file for the create schedule popup -->
         <script src="../schedules/createSchedule.js"></script>
 
+        <!-- adds the function of displaying or hiding the message-container -->
+        <script>
+            window.onload = () => {
+                const messageContainer = document.getElementById('message-container');
+                if (messageContainer.textContent.trim() !== '') {
+                    messageContainer.style.display = 'block';
+                    setTimeout(() => {
+                        messageContainer.style.display = 'none';
+                    }, 5000);
+                }
+            }
+        </script>
     </section>
 </body>
 </html>
