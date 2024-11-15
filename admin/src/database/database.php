@@ -315,5 +315,15 @@ class Database
             return false;
         }
     }
+    //create a query that edits the name, price, and quantity of the product.
+    public function editProduct($productID, $name, $qty, $price){
+        $stmt = $this->mysqli->prepare("UPDATE products SET product_name = ?, price =?, quantity = ? WHERE product_id =?;");
+        $stmt->bind_param('sdii', $name, $price, $quantity, $productID);
+        if ($stmt->execute()) {
+            return true; 
+        } else {
+            return false;
+        }
+    }
 }
 ?>
