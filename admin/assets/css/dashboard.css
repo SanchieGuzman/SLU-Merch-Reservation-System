@@ -3,6 +3,7 @@ body {
   /* DO NOT REMOVE */
   display: flex;
   position: relative;
+  overflow-y: scroll;
 }
 
 #left-container {

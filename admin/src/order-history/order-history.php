@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Order History</title>
         <link rel="stylesheet" href="../../assets/css/globals.css">
-        <link rel="stylesheet" href="../../assets/css/orders.css">
+        <link rel="stylesheet" href="../../assets/css/order-history.css">
     </head>
     <body>
         <?php

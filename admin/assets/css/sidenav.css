@@ -35,16 +35,25 @@
   height: 100%;
 }
 
-.default-button {
-  background-color: transparent;
-  border: none;
+.default-button,
+.active-button {
   height: 4rem;
+  padding-left: 18%;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-size: 1.2rem;
   text-align: left;
-  padding-left: 18%;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.active-button {
+  background-color: #2235a2;
+  color: white;
+  border-radius: 0 2rem 2rem 0;
 }
 
 .default-icon {
@@ -52,21 +61,6 @@
   height: 1.5rem;
   filter: invert(38%) sepia(96%) saturate(3241%) hue-rotate(233deg)
     brightness(0%) contrast(88%);
-}
-
-.active-button {
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 1.2rem;
-  text-align: left;
-  padding-left: 18%;
-
-  background-color: #2235a2;
-  border: 1px solid black;
-  color: white;
-  border-radius: 0 2rem 2rem 0;
 }
 
 .active-icon {
