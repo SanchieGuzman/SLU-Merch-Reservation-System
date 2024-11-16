@@ -238,6 +238,16 @@ class Database
         // Return the array of Product objects
         return $schedules;   
     }
+    public function editSchedule($scheduleID,$date, $startTime, $endTime, $location){
+        $stmt = $this->mysqli->prepare("UPDATE organization_schedules SET date = ?, 
+                                                start_time =?, end_time = ?, location =? WHERE schedule_id =?;");
+        $stmt->bind_param('ssssi', $date, $startTime, $endTime, $location, $scheduleID);
+        if ($stmt->execute()) {
+            return true; 
+        } else {
+            return false;
+        }
+    }
     // method that returns  the products information
     // needed: Product ID, Product Name, qty, price, status
     // other fields must be null to save data 
