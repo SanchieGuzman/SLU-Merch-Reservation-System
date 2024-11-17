@@ -19,6 +19,7 @@ body {
     margin: 1rem 1rem;
     max-height: 85vh;
     overflow-y: hidden;
+    overflow-y: scroll;
     border-radius: 0.3rem;
 }
 
@@ -29,6 +30,9 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    background-color: white;
     border-bottom: solid 3px #2235a2;
 }
 
@@ -53,7 +57,6 @@ body {
 
 #schedules-container #schedule-list{
     height: 80vh;
-    overflow-y: scroll;
     padding: 1rem 4rem 1rem 4rem;
 }
 
@@ -64,6 +67,42 @@ body {
 }
 
 #schedule-table, th, td {
-    /* height: 40vh; */
     border: 1px solid;
+}
+
+#schedule-table,
+#schedule-table th:nth-child(5),
+#schedule-table td:nth-child(5){
+    border: none;
+}
+
+#schedule-table td{
+    text-align: center;
+    height: 50px;
+}
+
+#schedule-table td:nth-child(5){
+    width: 15%;
+}
+
+.edit-button, .delete-button{
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.delete-button:last-child {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.edit-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
 }

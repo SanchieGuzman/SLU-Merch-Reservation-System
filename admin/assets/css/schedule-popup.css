@@ -122,3 +122,19 @@
   cursor: pointer;
   background-image: linear-gradient(to right, #3a50cb, #15268b);
 }
+
+/* ======= Popup Add Button ========== */
+
+#message-container{
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 0;
+  transform: translateX(-20px);
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  border-radius: 5px;
+  z-index: 1000; 
+}
