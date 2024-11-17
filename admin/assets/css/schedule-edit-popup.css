@@ -1,17 +1,66 @@
 #edit-schedule-popup {
     position: absolute;
-    right: 19%;
-    top: 14%;
+    left: 47%;
+    right: 53%;
+    top: 19%;
     background-color: rgb(235, 235, 235);
     z-index: 500;
-    width: 50%;
-    height: 65%;
+    width: 23%;
+    height: 71%;
     padding: 1rem 1rem;
     border-radius: 0.3rem;
     border: 3px solid #2235a2;
-  }
+}
 
-#edit-schedule-form, 
+#edit-schedule-header{
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.3rem;
+  background-color: #fecb41;
+  color: #2235a2;
+  margin-bottom: 2%;
+}
+
+#input-container{
+    display: flex;
+    flex-direction: column;
+    padding: 2% 2%;
+}
+
+#input-container input,
+#input-container select{
+    font-size: 1.2rem;
+    padding: 0 1rem;
+    margin-bottom: 4%;
+    height: 7vh;
+    border-radius: 0.3rem;
+}
+
+#input-container label{
+  font-size: 1rem;
+}
+
+#action-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10%;
+    padding: 0 2%;
+}
+
+#action-container button{
+    width: 100%;
+    margin-top: 0.5rem; 
+    height: 2.4rem;
+    border-radius: 0.3rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+    background-image: linear-gradient(to right, #3a50cb, #15268b); 
+}
+
+
+/* #edit-schedule-form, 
 #input-container {
     display: flex;
     flex-direction: column;
@@ -20,4 +69,4 @@
 #action-container {
     display: flex;
     flex-direction: row;
-}
+} */

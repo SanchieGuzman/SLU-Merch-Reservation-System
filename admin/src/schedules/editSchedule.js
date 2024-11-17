@@ -81,7 +81,7 @@ function initEditPopup() {
     const h1 = document.createElement('h1');
     h1.textContent = 'Edit Schedule';
 
-    // button
+    // CANCEL Button
     const closeButton = document.createElement('button');
     closeButton.textContent = 'CANCEL';
     closeButton.setAttribute('id', 'close-edit-schedule-popup');
@@ -168,8 +168,8 @@ function initEditPopup() {
     endTimeInput.setAttribute('name', 'new_end_time');
     endTimeInput.setAttribute('required', '');
 
+    // CONFIRM Button
     const confirmButton = document.createElement('button');
-
     confirmButton.textContent = 'CONFIRM';
     confirmButton.setAttribute('id', 'confirm-edit-button');
     confirmButton.setAttribute('type', 'submit');
