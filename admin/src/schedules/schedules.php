@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../assets/css/globals.css">
     <link rel="stylesheet" href="../../assets/css/schedule.css">
     <link rel="stylesheet" href="../../assets/css/schedule-popup.css">
+    <link rel="stylesheet" href="../../assets/css/schedule-edit-popup.css">
 </head>
 <body>
     <?php 
@@ -56,6 +57,12 @@
             ?>
         </div>
 
+        <!-- external js file for the create schedule popup -->
+        <script src="../schedules/createSchedule.js"></script>
+
+        <!-- external js file for the edit schedule popup -->
+        <script src="../schedules/editSchedule.js"></script>
+
         <!-- adds the list of schedules to the table -->
         <script>
             const container = document.getElementById('schedules-container');
@@ -87,10 +94,12 @@
 
                 editButton.addEventListener("click", () => {
                     console.log("Edit clicked for:", schedule.schedule_id);
+                    showEditSchedulePopup(schedule);
                 });
 
                 deleteButton.addEventListener("click", () => {
                     console.log("Delete clicked for: ", schedule.schedule_id);
+                    // showEditPopup(schedule); TODO
                 });
 
                 td5.appendChild(editButton);
@@ -105,9 +114,6 @@
                 table.appendChild(tr);
             });
         </script>
-
-        <!-- external js file for the create schedule popup -->
-        <script src="../schedules/createSchedule.js"></script>
 
         <!-- adds the function of displaying or hiding the message-container -->
         <script>

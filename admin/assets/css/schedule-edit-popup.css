@@ -1,0 +1,23 @@
+#edit-schedule-popup {
+    position: absolute;
+    right: 19%;
+    top: 14%;
+    background-color: rgb(235, 235, 235);
+    z-index: 500;
+    width: 50%;
+    height: 65%;
+    padding: 1rem 1rem;
+    border-radius: 0.3rem;
+    border: 3px solid #2235a2;
+  }
+
+#edit-schedule-form, 
+#input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#action-container {
+    display: flex;
+    flex-direction: row;
+}
