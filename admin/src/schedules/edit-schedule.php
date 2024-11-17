@@ -4,15 +4,22 @@
         session_start();
     }
 
-    require_once('../classes/Schedule.php');
     require_once('../database/database.php');
     $db = Database::getInstance();
 
+    $scheduleID = $_POST['schedule_id'];
     $date = $_POST['new_date'];
-    $organizationID = $_SESSION['ORG_ID'];
     $startTime = $_POST['new_start_time'];
     $endTime = $_POST['new_end_time'];
     $location = $_POST['new_location'];
 
-    $editedSchedule = new Schedule(null, $date, $organizationID, $startTime, $endTime, $location);
+    if ($db->editSchedule($scheduleID, $date, $startTime, $endTime, $location)) {
+        $_SESSION['edit-schedule-successful'] = "Schedule edited successfully";
+        header("Location: ../schedules/schedules.php");
+        exit();
+    } else {
+        $_SESSION['edit-schedule-failed'] = "Failed to make changes";
+        header("Location: ../schedules/schedules.php");
+        exit();
+    }
 ?>

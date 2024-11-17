@@ -44,11 +44,13 @@ function validateNewTime() {
 }
 
 function showEditSchedulePopup(schedule) {
+    const scheduleID = document.getElementById('schedule-id');
     const dateInput = document.getElementById('edit-date');
     const locationInput = document.getElementById('edit-location');
     const startTimeInput = document.getElementById('edit-start-time');
     const endTimeInput = document.getElementById('edit-end-time');
 
+    scheduleID.value = schedule.schedule_id;
     dateInput.value = new Date(schedule.date).toISOString().split('T')[0];
     locationInput.value = schedule.location;
     startTimeInput.value = schedule.start_time;
@@ -94,6 +96,12 @@ function initEditPopup() {
     form.setAttribute('action', '../schedules/edit-schedule.php');
     form.setAttribute('method', 'POST');
     form.setAttribute('enctype', 'multipart/form-data');
+    
+    // hidden schedule ID
+    const scheduleID = document.createElement('input');
+    scheduleID.setAttribute('id', 'schedule-id');
+    scheduleID.setAttribute('type', 'hidden');
+    scheduleID.setAttribute('name', 'schedule_id');
 
     // date input
     const dateLabel = document.createElement('label');
@@ -104,7 +112,7 @@ function initEditPopup() {
 
     dateInput.setAttribute('id', 'edit-date');
     dateInput.setAttribute('type', 'date');
-    dateInput.setAttribute('name', 'date');
+    dateInput.setAttribute('name', 'new_date');
     dateInput.setAttribute('required', '');
 
     // location input
@@ -115,7 +123,7 @@ function initEditPopup() {
     locationLabel.setAttribute('for', 'edit-location');
 
     locationInput.setAttribute('id', 'edit-location');
-    locationInput.setAttribute('name', 'location');
+    locationInput.setAttribute('name', 'new_location');
     locationInput.setAttribute('required', '');
 
     const defaultOption = document.createElement('option');
@@ -145,7 +153,7 @@ function initEditPopup() {
 
     startTimeInput.setAttribute('id', 'edit-start-time');
     startTimeInput.setAttribute('type', 'time');
-    startTimeInput.setAttribute('name', 'start_time');
+    startTimeInput.setAttribute('name', 'new_start_time');
     startTimeInput.setAttribute('required', '');
 
     // end time input
@@ -157,7 +165,7 @@ function initEditPopup() {
 
     endTimeInput.setAttribute('id', 'edit-end-time');
     endTimeInput.setAttribute('type', 'time');
-    endTimeInput.setAttribute('name', 'end_time');
+    endTimeInput.setAttribute('name', 'new_end_time');
     endTimeInput.setAttribute('required', '');
 
     const confirmButton = document.createElement('button');
@@ -209,6 +217,7 @@ function initEditPopup() {
     // form
     form.appendChild(inputContainer);
     form.appendChild(actionContainer);
+    form.appendChild(scheduleID);
 
     // popup
     popup.appendChild(header);

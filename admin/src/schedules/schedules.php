@@ -53,6 +53,12 @@
                 } else if (isset($_SESSION['create-schedule-failed'])) {
                     echo $_SESSION['create-schedule-failed']; 
                     unset($_SESSION['create-schedule-failed']);
+                } else if (isset($_SESSION['edit-schedule-successful'])) {
+                    echo $_SESSION['edit-schedule-successful'];
+                    unset($_SESSION['edit-schedule-successful']);
+                } else if (isset($_SESSION['edit-schedule-failed'])) {
+                    echo $_SESSION['edit-schedule-failed'];
+                    unset($_SESSION['edit-schedule-failed']);
                 }
             ?>
         </div>
@@ -93,7 +99,6 @@
                 deleteButton.textContent = "delete";
 
                 editButton.addEventListener("click", () => {
-                    console.log("Edit clicked for:", schedule.schedule_id);
                     showEditSchedulePopup(schedule);
                 });
 
