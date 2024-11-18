@@ -403,6 +403,74 @@ class Database
         
         return $pendingOrders;
     }
+    public function getClaimedOrdersFiltered($organizationID, $filters = []) {
+        $sql = "SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location
+                FROM organization_schedules AS os
+                JOIN orders AS o USING (schedule_id)
+                JOIN order_products AS op USING (order_id)
+                JOIN products AS p USING (product_id)
+                JOIN users AS u ON o.customer_id = u.user_id
+                WHERE p.organization_id = ? AND o.status = 'Claimed'";
     
+        $params = [$organizationID];
+        $types = 'i'; 
+    
+
+        if (isset($filters[0]) && $filters[0] != "All") {
+            $location = $filters[0];
+            $sql .= " AND os.location LIKE ?";
+            $params[] = "%$location%";
+            // $params[]= "Devesse Plaza";
+            // $params[]= "Amphitheatre";
+            // $params[]= "4th Floor Balcony Right Wing";
+            $types .= 's'; 
+        }
+        //todo fix date calculation
+        if (isset($filters[1])) {
+            $dateRange = $filters[1]; 
+            if ($dateRange>1) {
+            
+                $dateFrom = date('Y-m-d', strtotime("-$dateRange days")) . ' 00:00:00';
+                $currentDate = date('Y-m-d') . ' 23:59:59';
+                // $sql .= " AND o.created_at >= ? AND o.created_at <= ?";
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $currentDate;
+                $types .= 'ss'; 
+            } elseif ($dateRange ==1) { //removable (only used for debugging anyways) if yes, change first if statement to >=1
+                $dateFrom = date('Y-m-d', strtotime('-1 day')) . ' 00:00:00';
+                $dateTo = date('Y-m-d', strtotime('-1 day')) . ' 23:59:59';
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $dateTo;
+                $types .= 'ss'; 
+            } elseif ($dateRange == 0) {
+                $dateFrom = date('Y-m-d') . ' 00:00:00';
+                $dateTo = date('Y-m-d') . ' 23:59:59';
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $dateTo;
+                $types .= 'ss'; 
+            }
+        }
+        
+        
+        $stmt = $this->mysqli->prepare($sql);
+        
+        $stmt->bind_param($types, ...$params);
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingOrders = [];
+        
+        // Fetch each row
+        while ($row = $result->fetch_assoc()) {
+            $pendingOrders[] = $row;
+        }
+        $stmt->close();
+    
+        
+        return $pendingOrders;
+    }
 }
 ?>

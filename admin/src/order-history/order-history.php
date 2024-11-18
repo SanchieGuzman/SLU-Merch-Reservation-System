@@ -13,7 +13,7 @@
             include('../sidenav/side-nav-backend.php');
             include('../sidenav/side-nav.php');
             include('../order-details/order-details.php');
-            include('../filter/filter.php');
+            include('../order-history/filter.php');
         ?>
 
         <section id="left-container">
@@ -42,7 +42,7 @@
         </section>
 
         <script src="../order-details-popup/order-details.js"></script>
-        <script src="../filter/filter.js"></script>
+        <script src="../order-history/filter.js"></script>
 
         <script type="module">
             
@@ -60,7 +60,7 @@
                     $filtersArray = [$selectedLocation,$selectedRadio];
 
                 
-                    $orders = $db->getPendingOrdersFiltered($_SESSION['ORG_ID'], $filtersArray);
+                    $orders = $db->getClaimedOrdersFiltered($_SESSION['ORG_ID'], $filtersArray);
                     $data = $db->getClaimedProducts($_SESSION['ORG_ID']);
                 }    
             ?>        
