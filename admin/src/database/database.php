@@ -348,40 +348,42 @@ class Database
             $types .= 's'; 
         }
         //todo fix date calculation
-        // if (isset($filters[1])) {
-        //     $dateRange = $filters[1]; 
-        //     if (is_int($dateRange)) {
-            
-        //         $dateFrom = date('Y-m-d', strtotime("-$dateRange days"));
-        //         $sql .= " AND o.created_at >= ?";
-        //         $params[] = $dateFrom;
-        //         $types .= 's'; 
-        //     } elseif ($dateRange === 'Yesterday') {
-                
-        //         $dateFrom = date('Y-m-d', strtotime('-1 day')) . ' 00:00:00';
-        //         $dateTo = date('Y-m-d', strtotime('-1 day')) . ' 23:59:59';
-        //         $sql .= " AND o.created_at BETWEEN ? AND ?";
-        //         $params[] = $dateFrom;
-        //         $params[] = $dateTo;
-        //         $types .= 'ss'; 
-        //     } elseif ($dateRange === 'Today') {
-        //         $dateFrom = date('Y-m-d') . ' 00:00:00';
-        //         $dateTo = date('Y-m-d') . ' 23:59:59';
-        //         $sql .= " AND o.created_at BETWEEN ? AND ?";
-        //         $params[] = $dateFrom;
-        //         $params[] = $dateTo;
-        //         $types .= 'ss'; 
-        //     }
-        // }
-          // Check if the second filter (date range) is set and is an integer
         if (isset($filters[1])) {
-            $dateRange = $filters[1];
-            if($dateRange>=0){
-            $sql .= " AND o.created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)";
-            $params[] = $dateRange;
-            $types .= 'i';
+            $dateRange = $filters[1]; 
+            if ($dateRange>1) {
+            
+                $dateFrom = date('Y-m-d', strtotime("-$dateRange days")) . ' 00:00:00';
+                $currentDate = date('Y-m-d') . ' 23:59:59';
+                // $sql .= " AND o.created_at >= ? AND o.created_at <= ?";
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $currentDate;
+                $types .= 'ss'; 
+            } elseif ($dateRange ==1) { //removable (only used for debugging anyways) if yes, change first if statement to >=1
+                $dateFrom = date('Y-m-d', strtotime('-1 day')) . ' 00:00:00';
+                $dateTo = date('Y-m-d', strtotime('-1 day')) . ' 23:59:59';
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $dateTo;
+                $types .= 'ss'; 
+            } elseif ($dateRange == 0) {
+                $dateFrom = date('Y-m-d') . ' 00:00:00';
+                $dateTo = date('Y-m-d') . ' 23:59:59';
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $dateTo;
+                $types .= 'ss'; 
             }
         }
+          // Check if the second filter (date range) is set and is an integer
+        // if (isset($filters[1])) {
+        //     $dateRange = $filters[1];
+        //     if($dateRange>=0){
+        //     $sql .= " AND o.created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)";
+        //     $params[] = $dateRange;
+        //     $types .= 'i';
+        //     }
+        // }
 
         
         $stmt = $this->mysqli->prepare($sql);
