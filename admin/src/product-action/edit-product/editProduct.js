@@ -54,7 +54,7 @@ function loadUIForEditEntry(productId, productName, productQuantity, productPric
     var labelQuantity = document.createElement("label");
     labelQuantity.setAttribute("for", "quantity-text-field");
     labelQuantity.classList.add("label");
-    labelQuantity.textContent = "Initial Quantity";
+    labelQuantity.textContent = "Product Quantity";
 
     var quantityField = document.createElement("input");
     quantityField.setAttribute("type", "number");

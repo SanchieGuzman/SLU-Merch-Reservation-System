@@ -3,8 +3,8 @@
     require('../../classes/Product.php');
     require('../../database/database.php');
 
-    $productName = $_POST['product_name'];
-    $productDescription = $_POST['product_description'];
+    $productName = htmlspecialchars($_POST['product_name']);
+    $productDescription = htmlspecialchars($_POST['product_description']);
     $organizationID = $_SESSION['ORG_ID'];
     $productPrice = $_POST['product_price'];
     $productQuantity = $_POST['product_quantity'];

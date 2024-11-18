@@ -3,7 +3,7 @@
     require('../../database/database.php');
 
     $productId = $_POST['product_id'];
-    $productName = $_POST['product_name'];
+    $productName = htmlspecialchars($_POST['product_name']);
     $productPrice = $_POST['product_price'];
     $productQuantity = $_POST['product_quantity'];
 
