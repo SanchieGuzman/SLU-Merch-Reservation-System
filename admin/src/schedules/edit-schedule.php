@@ -14,11 +14,11 @@
     $location = $_POST['new_location'];
 
     if ($db->editSchedule($scheduleID, $date, $startTime, $endTime, $location)) {
-        $_SESSION['edit-schedule-successful'] = "Schedule edited successfully";
+        $_SESSION['schedule-status'] = "Schedule edited successfully";
         header("Location: ../schedules/schedules.php");
         exit();
     } else {
-        $_SESSION['edit-schedule-failed'] = "Failed to make changes";
+        $_SESSION['schedule-status'] = "Failed to make changes";
         header("Location: ../schedules/schedules.php");
         exit();
     }

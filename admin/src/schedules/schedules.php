@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../assets/css/schedule.css">
     <link rel="stylesheet" href="../../assets/css/schedule-popup.css">
     <link rel="stylesheet" href="../../assets/css/schedule-edit-popup.css">
+    <link rel="stylesheet" href="../../assets/css/schedule-delete-popup.css">
 </head>
 <body>
     <?php 
@@ -47,18 +48,9 @@
         <div id="message-container">
             <!-- adds the message retrieved to the message container -->
             <?php 
-                if (isset($_SESSION['create-schedule-successful'])) {
-                    echo $_SESSION['create-schedule-successful']; 
-                    unset($_SESSION['create-schedule-successful']);
-                } else if (isset($_SESSION['create-schedule-failed'])) {
-                    echo $_SESSION['create-schedule-failed']; 
-                    unset($_SESSION['create-schedule-failed']);
-                } else if (isset($_SESSION['edit-schedule-successful'])) {
-                    echo $_SESSION['edit-schedule-successful'];
-                    unset($_SESSION['edit-schedule-successful']);
-                } else if (isset($_SESSION['edit-schedule-failed'])) {
-                    echo $_SESSION['edit-schedule-failed'];
-                    unset($_SESSION['edit-schedule-failed']);
+                if (isset($_SESSION['schedule-status'])) {
+                    echo $_SESSION['schedule-status']; 
+                    unset($_SESSION['schedule-status']);
                 }
             ?>
         </div>
@@ -68,6 +60,9 @@
 
         <!-- external js file for the edit schedule popup -->
         <script src="../schedules/editSchedule.js"></script>
+
+        <!-- external js file for the delete schedule popup -->
+        <script src="../schedules/deleteSchedule.js"></script>
 
         <!-- adds the list of schedules to the table -->
         <script>
@@ -104,7 +99,7 @@
 
                 deleteButton.addEventListener("click", () => {
                     console.log("Delete clicked for: ", schedule.schedule_id);
-                    // showEditPopup(schedule); TODO
+                    showDeleteSchedulePopup(schedule.schedule_id);
                 });
 
                 td5.appendChild(editButton);

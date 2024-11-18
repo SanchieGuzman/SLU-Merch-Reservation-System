@@ -1,0 +1,21 @@
+#delete-schedule-popup {
+    position: absolute;
+    left: 47%;
+    right: 53%;
+    top: 19%;
+    background-color: rgb(235, 235, 235);
+    z-index: 500;
+    width: 23%;
+    height: 71%;
+    padding: 1rem 1rem;
+    border-radius: 0.3rem;
+    border: 3px solid #2235a2;
+}
+
+#delete-schedule-header{
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.3rem;
+  background-color: #fecb41;
+  color: #2235a2;
+  margin-bottom: 2%;
+}

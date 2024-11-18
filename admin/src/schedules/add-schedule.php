@@ -17,11 +17,11 @@
     $newSchedule = new Schedule(null, $date, $organizationID, $startTime, $endTime, $location);
     
     if ($db->addSchedule($newSchedule)) {
-        $_SESSION['create-schedule-successful'] = "Entry added to the database";
+        $_SESSION['schedule-status'] = "Entry added to the database";
         header("Location: ../schedules/schedules.php");
         exit();
     } else {
-        $_SESSION['create-schedule-failed'] = "Failed to add entry";
+        $_SESSION['schedule-status'] = "Failed to add entry";
         header("Location: ../schedules/schedules.php");
         exit();
     }

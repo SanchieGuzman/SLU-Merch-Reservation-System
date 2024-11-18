@@ -1,6 +1,6 @@
 function displayEditSchedulePopup(value) {
     const popup = document.getElementById('edit-schedule-popup');
-    popup.style.display = value ? "block" : "none";
+    popup.style.display = value ? 'block' : 'none';
 }
 
 function validateNewDate() {
@@ -44,7 +44,7 @@ function validateNewTime() {
 }
 
 function showEditSchedulePopup(schedule) {
-    const scheduleID = document.getElementById('schedule-id');
+    const scheduleID = document.getElementById('schedule-id-edit');
     const dateInput = document.getElementById('edit-date');
     const locationInput = document.getElementById('edit-location');
     const startTimeInput = document.getElementById('edit-start-time');
@@ -74,19 +74,19 @@ function initEditPopup() {
     const actionContainer = document.createElement('div');
 
     header.setAttribute('id', 'edit-schedule-header');
-    inputContainer.setAttribute('id', 'input-container');
-    actionContainer.setAttribute('id', 'action-container');
+    inputContainer.setAttribute('id', 'edit-sched-input-container');
+    actionContainer.setAttribute('id', 'edit-sched-action-container');
 
     // heading
     const h1 = document.createElement('h1');
     h1.textContent = 'Edit Schedule';
 
-    // CANCEL Button
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'CANCEL';
-    closeButton.setAttribute('id', 'close-edit-schedule-popup');
-    closeButton.setAttribute('type', 'button');
-    closeButton.onclick = () => {
+    // cancel button
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = 'Cancel';
+    cancelButton.setAttribute('id', 'cancel-edit-button');
+    cancelButton.setAttribute('type', 'button');
+    cancelButton.onclick = () => {
         displayEditSchedulePopup(false);
     };
 
@@ -99,7 +99,7 @@ function initEditPopup() {
     
     // hidden schedule ID
     const scheduleID = document.createElement('input');
-    scheduleID.setAttribute('id', 'schedule-id');
+    scheduleID.setAttribute('id', 'schedule-id-edit');
     scheduleID.setAttribute('type', 'hidden');
     scheduleID.setAttribute('name', 'schedule_id');
 
@@ -168,9 +168,9 @@ function initEditPopup() {
     endTimeInput.setAttribute('name', 'new_end_time');
     endTimeInput.setAttribute('required', '');
 
-    // CONFIRM Button
+    // confirm button
     const confirmButton = document.createElement('button');
-    confirmButton.textContent = 'CONFIRM';
+    confirmButton.textContent = 'Confirm';
     confirmButton.setAttribute('id', 'confirm-edit-button');
     confirmButton.setAttribute('type', 'submit');
     confirmButton.setAttribute('name', 'confirm');
@@ -211,7 +211,7 @@ function initEditPopup() {
     inputContainer.appendChild(endTimeInput);
 
     // action container
-    actionContainer.appendChild(closeButton);
+    actionContainer.appendChild(cancelButton);
     actionContainer.appendChild(confirmButton);
 
     // form
@@ -224,7 +224,7 @@ function initEditPopup() {
     popup.appendChild(form);
 
     // main content
-    mainContainer.append(popup);
+    mainContainer.appendChild(popup);
 }
 
 initEditPopup();

@@ -20,14 +20,14 @@
   margin-bottom: 2%;
 }
 
-#input-container{
+#edit-sched-input-container{
     display: flex;
     flex-direction: column;
     padding: 2% 2%;
 }
 
-#input-container input,
-#input-container select{
+#edit-sched-input-container input,
+#edit-sched-input-container select{
     font-size: 1.2rem;
     padding: 0 1rem;
     margin-bottom: 4%;
@@ -35,11 +35,11 @@
     border-radius: 0.3rem;
 }
 
-#input-container label{
+#edit-sched-input-container label{
   font-size: 1rem;
 }
 
-#action-container{
+#edit-sched-action-container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -48,7 +48,7 @@
     padding: 0 2%;
 }
 
-#action-container button{
+#edit-sched-action-container button{
     width: 100%;
     margin-top: 0.5rem; 
     height: 2.4rem;

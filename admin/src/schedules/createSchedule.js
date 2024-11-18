@@ -1,6 +1,6 @@
 function display(value) {
     const popup = document.getElementById('popup');
-    popup.style.display = value ? "block" : "none";
+    popup.style.display = value ? 'block' : 'none';
 }
 
 function validateDate() {
