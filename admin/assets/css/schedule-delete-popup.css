@@ -1,15 +1,15 @@
 #delete-schedule-popup {
-    position: absolute;
-    left: 47%;
-    right: 53%;
-    top: 19%;
-    background-color: rgb(235, 235, 235);
-    z-index: 500;
-    width: 23%;
-    height: 71%;
-    padding: 1rem 1rem;
-    border-radius: 0.3rem;
-    border: 3px solid #2235a2;
+  position: absolute;
+  left: 43%;
+  right: 57%;
+  top: 40%;
+  background-color: rgb(235, 235, 235);
+  z-index: 500;
+  width: 28%;
+  height: 28%;
+  padding: 1rem 1rem;
+  border-radius: 0.3rem;
+  border: 3px solid #2235a2;
 }
 
 #delete-schedule-header{
@@ -17,5 +17,29 @@
   border-radius: 0.3rem;
   background-color: #fecb41;
   color: #2235a2;
-  margin-bottom: 2%;
+  margin-bottom: 4%;
+}
+
+#delete-schedule-form{
+  text-align: center;
+}
+
+#delete-schedule-action-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10%;
+  padding: 0 2%;
+}
+
+#delete-schedule-action-container button{
+  width: 100%;
+  margin-top: 1.4rem; 
+  height: 2.4rem;
+  border-radius: 0.3rem;
+  border: none;
+  color: white;
+  cursor: pointer;
+  background-image: linear-gradient(to right, #3a50cb, #15268b); 
 }

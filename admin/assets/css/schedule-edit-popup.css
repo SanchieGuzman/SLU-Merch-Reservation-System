@@ -58,15 +58,3 @@
     cursor: pointer;
     background-image: linear-gradient(to right, #3a50cb, #15268b); 
 }
-
-
-/* #edit-schedule-form, 
-#input-container {
-    display: flex;
-    flex-direction: column;
-}
-
-#action-container {
-    display: flex;
-    flex-direction: row;
-} */

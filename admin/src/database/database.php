@@ -11,7 +11,8 @@ class Database
             $config['HOST'],
             $config['USERNAME'],
             $config['PASSWORD'],
-            $config['DB_NAME']
+            $config['DB_NAME'],
+            // $config['PORT']
         );
 
         // Check for connection error
