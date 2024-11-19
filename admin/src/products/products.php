@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Products</title>
     <link rel="stylesheet" href="../../assets/css/globals.css">
     <link rel="stylesheet" href="../../assets/css/products.css">
     <link rel="stylesheet" href="../../assets/css/add-product-popup.css">
