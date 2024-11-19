@@ -71,6 +71,10 @@
             const scheduleList = <?php echo json_encode($scheduleList) ?>;
 
             scheduleList.forEach(schedule => {
+                if (schedule.status === 'cancelled') {
+                    return;
+                }
+
                 // add the row details and append to the table
                 const tr = document.createElement("tr");
 

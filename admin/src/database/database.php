@@ -225,7 +225,7 @@ class Database
         }
     }
     public function getSchedule($organizationID){
-        $stmt = $this->mysqli->prepare("Select os.schedule_id, os.date, os.start_time, os.end_time, os.location 
+        $stmt = $this->mysqli->prepare("Select os.schedule_id, os.date, os.start_time, os.end_time, os.location, os.status 
                                                 From organization_schedules AS os WHERE organization_id = ?");
         $stmt->bind_param('i', $organizationID);
         $stmt->execute();
@@ -251,6 +251,24 @@ class Database
             return false;
         }
     }
+
+    public function deleteSchedule($scheduleID) {
+        $stmt = $this->mysqli->prepare("UPDATE organization_schedules SET status = 'cancelled' WHERE schedule_id = ?;");
+
+        $stmt->bind_param('i', $scheduleID);
+
+        if ($stmt->execute()) {
+            if ($stmt->affected_rows > 0) {
+                $stmt->close();
+                return true;
+            }
+        }
+
+        $stmt->close();
+
+        return false;
+    }
+
     // method that returns  the products information
     // needed: Product ID, Product Name, qty, price, status
     // other fields must be null to save data 

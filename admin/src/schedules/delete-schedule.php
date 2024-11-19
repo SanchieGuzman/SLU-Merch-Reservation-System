@@ -9,13 +9,13 @@
 
     $scheduleID = $_POST['schedule_id'];
     
-    // if ($db->deleteSchedule($scheduleID)) {
-    //     $_SESSION['schedule-status'] = "Schedule deleted successfully";
-    //     header("Location: ../schedules/schedules.php");
-    //     exit();
-    // } else {
-    //     $_SESSION['schedule-status'] = "Failed to delete entry";
-    //     header("Location: ../schedules/schedules.php");
-    //     exit();
-    // }
+    if ($db->deleteSchedule($scheduleID)) {
+        $_SESSION['schedule-status'] = "Schedule deleted successfully";
+        header("Location: ../schedules/schedules.php");
+        exit();
+    } else {
+        $_SESSION['schedule-status'] = "Failed to delete entry";
+        header("Location: ../schedules/schedules.php");
+        exit();
+    }
 ?>
