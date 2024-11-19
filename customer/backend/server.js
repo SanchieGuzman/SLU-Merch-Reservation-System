@@ -1,6 +1,6 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
-import { serverConfig } from './serverconfig.js';
+import { serverConfig } from './config.js';
 //router imports
 import loginRouter from './routers/login.js';
 import signupRouter from './routers/singup.js';
