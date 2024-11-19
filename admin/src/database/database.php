@@ -259,8 +259,8 @@ class Database
         }
     }
     public function getSchedule($organizationID){
-        $stmt = $this->mysqli->prepare("Select os.schedule_id, os.date, os.start_time, os.end_time, os.location, os.status 
-                                                From organization_schedules AS os WHERE organization_id = ?");
+        $stmt = $this->mysqli->prepare("Select schedule_id, date, start_time, end_time, location, status 
+                                                From organization_schedules WHERE organization_id = ?");
         $stmt->bind_param('i', $organizationID);
         $stmt->execute();
         $result = $stmt->get_result();
