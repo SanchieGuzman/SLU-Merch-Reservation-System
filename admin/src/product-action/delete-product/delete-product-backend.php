@@ -1,5 +1,6 @@
 <?php
-    session_start();
+    include('../../session/session-handling.php');
+    
     require('../../classes/Product.php');
     require('../../database/database.php');
     

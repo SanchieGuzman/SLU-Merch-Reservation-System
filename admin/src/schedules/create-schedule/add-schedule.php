@@ -1,11 +1,8 @@
 <?php
+    include('../../session/session-handling.php');
 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    require_once('../classes/Schedule.php');
-    require_once('../database/database.php');
+    require_once('../../classes/Schedule.php');
+    require_once('../../database/database.php');
     $db = Database::getInstance();
 
     $date = $_POST['date'];
@@ -18,11 +15,11 @@
     
     if ($db->addSchedule($newSchedule)) {
         $_SESSION['schedule-status'] = "Entry added to the database";
-        header("Location: ../schedules/schedules.php");
+        header("Location: ../../schedules/schedules.php");
         exit();
     } else {
         $_SESSION['schedule-status'] = "Failed to add entry";
-        header("Location: ../schedules/schedules.php");
+        header("Location: ../../schedules/schedules.php");
         exit();
     }
 ?>

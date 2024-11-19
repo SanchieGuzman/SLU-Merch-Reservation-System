@@ -1,5 +1,6 @@
 <?php
-    session_start();
+    include('../../session/session-handling.php');
+    
     require('../../database/database.php');
 
     $productId = $_POST['product_id'];

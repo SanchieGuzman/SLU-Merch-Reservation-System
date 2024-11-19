@@ -43,7 +43,7 @@ function initDeleteSchedulePopup() {
     // form
     const form = document.createElement('form');
     form.setAttribute('id', 'delete-schedule-form');
-    form.setAttribute('action', '../schedules/delete-schedule.php');
+    form.setAttribute('action', '../schedules/delete-schedule/delete-schedule.php');
     form.setAttribute('method', 'POST');
     
     // hidden schedule ID

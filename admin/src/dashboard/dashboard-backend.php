@@ -1,9 +1,4 @@
 <?php
-    //fetching dashboard data to be used in dashboard.php
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-
     require_once('../database/database.php');
     $db = Database::getInstance();
 

@@ -12,6 +12,7 @@
 </head>
 <body>
     <?php 
+        include('../session/session-handling.php');
         include('../schedules/schedules-backend.php');
         include('../sidenav/side-nav-backend.php');
         include('../sidenav/side-nav.php');
@@ -56,13 +57,13 @@
         </div>
 
         <!-- external js file for the create schedule popup -->
-        <script src="../schedules/createSchedule.js"></script>
+        <script src="../schedules/create-schedule/createSchedule.js"></script>
 
         <!-- external js file for the edit schedule popup -->
-        <script src="../schedules/editSchedule.js"></script>
+        <script src="../schedules/edit-schedule/editSchedule.js"></script>
 
         <!-- external js file for the delete schedule popup -->
-        <script src="../schedules/deleteSchedule.js"></script>
+        <script src="../schedules/delete-schedule/deleteSchedule.js"></script>
 
         <!-- adds the list of schedules to the table -->
         <script>

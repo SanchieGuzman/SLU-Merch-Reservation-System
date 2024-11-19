@@ -9,6 +9,7 @@
     </head>
     <body>
         <?php
+            include('../session/session-handling.php');
             include('../orders/orders-backend.php');
             include('../sidenav/side-nav-backend.php');
             include('../sidenav/side-nav.php');

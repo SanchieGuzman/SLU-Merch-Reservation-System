@@ -91,7 +91,7 @@ function initCreateSchedulePopup() {
     // form
     const form = document.createElement('form');
     form.setAttribute('id', 'form');
-    form.setAttribute('action', '../schedules/add-schedule.php');
+    form.setAttribute('action', '../schedules/create-schedule/add-schedule.php');
     form.setAttribute('method', 'POST');
     form.setAttribute("enctype", "multipart/form-data");
 

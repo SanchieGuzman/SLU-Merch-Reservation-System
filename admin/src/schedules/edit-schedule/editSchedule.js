@@ -93,7 +93,7 @@ function initEditPopup() {
     // form
     const form = document.createElement('form');
     form.setAttribute('id', 'edit-schedule-form');
-    form.setAttribute('action', '../schedules/edit-schedule.php');
+    form.setAttribute('action', '../schedules/edit-schedule/edit-schedule.php');
     form.setAttribute('method', 'POST');
     form.setAttribute('enctype', 'multipart/form-data');
     
