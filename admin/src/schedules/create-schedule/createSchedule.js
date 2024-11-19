@@ -129,8 +129,8 @@ function initCreateSchedulePopup() {
     option1.setAttribute('value', 'Maryheights Lobby');
 
     const option2 = document.createElement('option');
-    option2.textContent = 'Maryheights Amphitheater';
-    option2.setAttribute('value', 'Maryheights Amphitheater');
+    option2.textContent = 'Maryheights Amphi';
+    option2.setAttribute('value', 'Maryheights Amphi');
 
     const option3 = document.createElement('option');
     option3.textContent = 'Silang Bldg Lobby';
