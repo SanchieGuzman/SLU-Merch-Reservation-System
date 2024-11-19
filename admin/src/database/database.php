@@ -172,7 +172,41 @@ class Database
         // Return the pending orders array, even if theres no pending orders
         return $pendingOrders;
     }
-
+    public function getClaimedOrders($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location 
+                                        FROM organization_schedules AS os
+                                        JOIN orders AS o USING (schedule_id)
+                                        JOIN order_products AS op USING (order_id) 
+                                        JOIN products AS p USING (product_id) 
+                                        JOIN users AS u ON o.customer_id = u.user_id 
+                                        WHERE p.organization_id = ?
+                                        AND o.status = 'Claimed'");
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingProducts = [];
+        while ($row = $result->fetch_assoc()) {
+            $pendingProducts[] = $row;
+        }
+        $stmt->close();
+        return $pendingProducts;
+        
+    }
+    //TODO: create a function that updates the status of an order from pending to claimed
+    public function updateProductStatus($orderID){
+        $stmt = $this->mysqli->prepare("UPDATE orders SET status = 'Claimed', claimed_at = NOW() WHERE order_id =?; ");
+        $stmt->bind_param('i', $orderID);
+        
+        $stmt->execute();
+            
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+   
     // todo: create a function that adds a product to the database. 
     public function addProduct($product){
         // this is product $product = new Product(null, $productName, $productDescription, $organizationID, $productPrice, $productQuantity, $productImage, $status );
@@ -319,33 +353,170 @@ class Database
         $stmt->close();
         return $pendingProducts;
     }
+    public function getClaimedProducts($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, TO_BASE64(p.product_image) AS product_image_base64
+										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
+                                        JOIN products AS p ON op.product_id = p.product_id 
+                                        JOIN users AS u ON o.customer_id = u.user_id 
+                                        WHERE p.organization_id = ?
+                                        AND o.status = 'Claimed'");
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $claimedProducts = [];
+        while ($row = $result->fetch_assoc()) {
+            $claimedProducts[] = $row;
+        }
+        $stmt->close();
+        return $claimedProducts;
+    }
     //TODO: create a query that will fetch all of the pending based on the chosen filter options
-    public function getFilteredPendingOrders($organizationID, $filters = []){
+    public function getPendingOrdersFiltered($organizationID, $filters = []) {
         $sql = "SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location
-                    FROM organization_schedules AS os
-                    JOIN orders AS o USING (schedule_id)
-                    JOIN order_products AS op USING (order_id)
-                    JOIN products AS p USING (product_id)
-                    JOIN users AS u ON o.customer_id = u.user_id
-                    WHERE p.organization_id = ? AND o.status = 'pending'";
-
+                FROM organization_schedules AS os
+                JOIN orders AS o USING (schedule_id)
+                JOIN order_products AS op USING (order_id)
+                JOIN products AS p USING (product_id)
+                JOIN users AS u ON o.customer_id = u.user_id
+                WHERE p.organization_id = ? AND o.status = 'pending'";
+    
         $params = [$organizationID];
-        $types = 'i';
+        $types = 'i'; 
+    
 
-        // if(isset($filters[o])){
-
-        //     $location = $filters[0];
-        //     $sql .= " AND os.location LIKE ?";
-        //     $params[] = "%$location%";
-        //     $types .= 's';
-
+        if (isset($filters[0]) && $filters[0] != "All") {
+            $location = $filters[0];
+            $sql .= " AND os.location LIKE ?";
+            $params[] = "%$location%";
+            // $params[]= "Devesse Plaza";
+            // $params[]= "Amphitheatre";
+            // $params[]= "4th Floor Balcony Right Wing";
+            $types .= 's'; 
+        }
+        //todo fix date calculation
+        if (isset($filters[1])) {
+            $dateRange = $filters[1]; 
+            if ($dateRange>1) {
+            
+                $dateFrom = date('Y-m-d', strtotime("-$dateRange days")) . ' 00:00:00';
+                $currentDate = date('Y-m-d') . ' 23:59:59';
+                // $sql .= " AND o.created_at >= ? AND o.created_at <= ?";
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $currentDate;
+                $types .= 'ss'; 
+            } elseif ($dateRange ==1) { //removable (only used for debugging anyways) if yes, change first if statement to >=1
+                $dateFrom = date('Y-m-d', strtotime('-1 day')) . ' 00:00:00';
+                $dateTo = date('Y-m-d', strtotime('-1 day')) . ' 23:59:59';
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $dateTo;
+                $types .= 'ss'; 
+            } elseif ($dateRange == 0) {
+                $dateFrom = date('Y-m-d') . ' 00:00:00';
+                $dateTo = date('Y-m-d') . ' 23:59:59';
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $dateTo;
+                $types .= 'ss'; 
+            }
+        }
+          // Check if the second filter (date range) is set and is an integer
+        // if (isset($filters[1])) {
+        //     $dateRange = $filters[1];
+        //     if($dateRange>=0){
+        //     $sql .= " AND o.created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)";
+        //     $params[] = $dateRange;
+        //     $types .= 'i';
+        //     }
         // }
-        // if (isset($filters[1])){
-        //     $dateRange = strtolower($filters[1]);
-        //     if(strpos($dateRange, 'last 7 days') !== false){
-        //         $dateFrom = date('Y-m-d', strtotime('-7 days'));
-        //     }else if($date)
-        // }
+
+        
+        $stmt = $this->mysqli->prepare($sql);
+        
+        $stmt->bind_param($types, ...$params);
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingOrders = [];
+        
+        // Fetch each row
+        while ($row = $result->fetch_assoc()) {
+            $pendingOrders[] = $row;
+        }
+        $stmt->close();
+    
+        
+        return $pendingOrders;
+    }
+    public function getClaimedOrdersFiltered($organizationID, $filters = []) {
+        $sql = "SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location
+                FROM organization_schedules AS os
+                JOIN orders AS o USING (schedule_id)
+                JOIN order_products AS op USING (order_id)
+                JOIN products AS p USING (product_id)
+                JOIN users AS u ON o.customer_id = u.user_id
+                WHERE p.organization_id = ? AND o.status = 'Claimed'";
+    
+        $params = [$organizationID];
+        $types = 'i'; 
+    
+
+        if (isset($filters[0]) && $filters[0] != "All") {
+            $location = $filters[0];
+            $sql .= " AND os.location LIKE ?";
+            $params[] = "%$location%";
+            // $params[]= "Devesse Plaza";
+            // $params[]= "Amphitheatre";
+            // $params[]= "4th Floor Balcony Right Wing";
+            $types .= 's'; 
+        }
+        //todo fix date calculation
+        if (isset($filters[1])) {
+            $dateRange = $filters[1]; 
+            if ($dateRange>1) {
+            
+                $dateFrom = date('Y-m-d', strtotime("-$dateRange days")) . ' 00:00:00';
+                $currentDate = date('Y-m-d') . ' 23:59:59';
+                // $sql .= " AND o.created_at >= ? AND o.created_at <= ?";
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $currentDate;
+                $types .= 'ss'; 
+            } elseif ($dateRange ==1) { //removable (only used for debugging anyways) if yes, change first if statement to >=1
+                $dateFrom = date('Y-m-d', strtotime('-1 day')) . ' 00:00:00';
+                $dateTo = date('Y-m-d', strtotime('-1 day')) . ' 23:59:59';
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $dateTo;
+                $types .= 'ss'; 
+            } elseif ($dateRange == 0) {
+                $dateFrom = date('Y-m-d') . ' 00:00:00';
+                $dateTo = date('Y-m-d') . ' 23:59:59';
+                $sql .= " AND o.created_at BETWEEN ? AND ?";
+                $params[] = $dateFrom;
+                $params[] = $dateTo;
+                $types .= 'ss'; 
+            }
+        }
+        
+        
+        $stmt = $this->mysqli->prepare($sql);
+        
+        $stmt->bind_param($types, ...$params);
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingOrders = [];
+        
+        // Fetch each row
+        while ($row = $result->fetch_assoc()) {
+            $pendingOrders[] = $row;
+        }
+        $stmt->close();
+    
+        
+        return $pendingOrders;
     }
 
     //todo: method name: deleteProduct, params: productId

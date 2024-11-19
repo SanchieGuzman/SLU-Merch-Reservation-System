@@ -1,16 +1,17 @@
 body {
-    /* to make sidebar and content-container displayed in flex */
-    /* DO NOT REMOVE */
-    display: flex;
-    position: relative;
+  /* to make sidebar and content-container displayed in flex */
+  /* DO NOT REMOVE */
+  display: flex;
+  position: relative;
+  overflow-y: scroll;
 }
 
-#left-container{
-    /* 85% because sidebar in sidenav.css is 15% */
-    width: 85%;
+#left-container {
+  /* 85% because sidebar in sidenav.css is 15% */
+  width: 85%;
 
-    /* moved the container down by 10vh since it is occupied by the topbar */
-    margin-top: 10vh;
+  /* moved the container down by 10vh since it is occupied by the topbar */
+  margin-top: 10vh;
 }
 
 /* main container of the whole schedules page */
@@ -61,12 +62,14 @@ body {
 
 /* table containing the list of schedules of an organization */
 #schedule-table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-#schedule-table, th, td {
-    border: 1px solid;
+#schedule-table,
+th,
+td {
+  border: 1px solid;
 }
 
 #schedule-table,

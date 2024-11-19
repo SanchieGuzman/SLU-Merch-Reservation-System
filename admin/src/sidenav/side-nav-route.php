@@ -13,8 +13,12 @@
         header("Location: ../products/products.php");
         exit();
     } elseif ($_POST['action'] === 'schedules') {
-        $_SESSION['action'] = 'schedule';
+        $_SESSION['action'] = 'schedules';
         header("Location: ../schedules/schedules.php");
+        exit();
+    }elseif ($_POST['action'] === 'order-history') {
+        $_SESSION['action'] = 'order-history';
+        header("Location: ../order-history/order-history.php");
         exit();
     } elseif($_POST['action'] === 'logout') {
         session_unset();

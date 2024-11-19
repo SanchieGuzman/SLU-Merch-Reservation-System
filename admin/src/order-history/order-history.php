@@ -1,11 +1,11 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Orders</title>
+        <title>Order History</title>
         <link rel="stylesheet" href="../../assets/css/globals.css">
-        <link rel="stylesheet" href="../../assets/css/orders.css">
+        <link rel="stylesheet" href="../../assets/css/order-history.css">
     </head>
     <body>
         <?php
@@ -13,7 +13,7 @@
             include('../sidenav/side-nav-backend.php');
             include('../sidenav/side-nav.php');
             include('../order-details/order-details.php');
-            include('../filter/filter.php');
+            include('../order-history/filter.php');
         ?>
 
         <section id="left-container">
@@ -27,7 +27,7 @@
                     <!-- INPUT FOR SEARCH -->
                     <div class="search-container">
 
-                        <input type="text" id="order-search" size="30" placeholder="Search by Order ID">
+                        <input type="text" id="order-search" size="30" placeholder="Search by Name or Order ID">
                         <img class="filter" id="filter-image" src="../../assets/images/orders-icons/filter-horizontal-svgrepo-com.svg" alt="">
 
                     </div>
@@ -40,12 +40,9 @@
                 </div>
             </main>
         </section>
-         <!-- Hidden form for updating order status -->
-        <form id="update-status-form" method="POST" action="../orders/orders-backend.php" style="display: none;">
-            <input type="hidden" name="order_id" id="order-id-input">
-        </form>
+
         <script src="../order-details-popup/order-details.js"></script>
-        <script src="../filter/filter.js"></script>
+        <script src="../order-history/filter.js"></script>
 
         <script type="module">
             
@@ -53,18 +50,18 @@
                 
                 $db = Database::getInstance();
                
-                $orders = $db -> getPendingOrders($_SESSION['ORG_ID']); 
-                $data = $db -> getPendingProducts($_SESSION['ORG_ID']); 
+                $orders = $db -> getClaimedOrders($_SESSION['ORG_ID']); 
+                $data = $db -> getClaimedProducts($_SESSION['ORG_ID']); 
+                
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    // echo "Request Method: " . $_SERVER['REQUEST_METHOD'] . "<br>";
                     $selectedRadio = isset($_POST['selectedRadio']) ? $_POST['selectedRadio'] : 'All Time';
                     $selectedLocation = isset($_POST['selectedLocation']) ? $_POST['selectedLocation'] : 'All';
             
                     $filtersArray = [$selectedLocation,$selectedRadio];
 
                 
-                    $orders = $db->getPendingOrdersFiltered($_SESSION['ORG_ID'], $filtersArray); 
-                    $data = $db->getPendingProducts($_SESSION['ORG_ID']);
+                    $orders = $db->getClaimedOrdersFiltered($_SESSION['ORG_ID'], $filtersArray);
+                    $data = $db->getClaimedProducts($_SESSION['ORG_ID']);
                 }    
             ?>        
 
@@ -185,10 +182,6 @@
             
 
             window.onload = function () {
-                // orders.forEach(order =>{
-                //     addCard(order['first_name'],order['order_id'],order['created_at'], order['status'], order['location'])
-                // })
-
                 displayOrdersForPage(1,orders); // Display the first page onload
                 addPageButtons(orders)
                 const searchInput = document.getElementById('order-search');
@@ -226,7 +219,7 @@
             newDiv.appendChild(oID);
 
             // a grid for the details of an order
-            const gridContainer = document.createElement('div');    /* -------------------------------------------- */
+            const gridContainer = document.createElement('div');    
             gridContainer.classList.add("details-grid");
                 
             const locationLabel = document.createElement('p');
@@ -255,7 +248,7 @@
             status.textContent = statusValue;
             gridContainer.appendChild(status);
 
-            newDiv.appendChild(gridContainer)/* -------------------------------------------- */
+            newDiv.appendChild(gridContainer)
 
             const viewButton = document.createElement("button");
             viewButton.classList.add("view-button");
@@ -274,41 +267,11 @@
             
             })
 
-            newDiv.appendChild(viewButton);
-
-            const serveButton = document.createElement("button");
-            
-            serveButton.classList.add("served-button");
-            serveButton.textContent = "Served";
-
-            serveButton.addEventListener('click', function() {
-                removeCard(this);
-            });
-
-            newDiv.appendChild(serveButton);
+            newDiv.appendChild(viewButton); 
 
             container.appendChild(newDiv);
             }
-
-            //function to remove a card
-            function removeCard(button){
-                const card = button.closest('.card');
-
-                const orderIdElement = Array.from(card.querySelectorAll('p')).find(p => p.textContent.includes("Order ID:"));
-
-                const orderId = orderIdElement ? orderIdElement.textContent.split("Order ID: ")[1].trim() : null;
-            
-                console.log(orderId);
-                if(orderId){
-                    const form = document.getElementById('update-status-form');
-                    const orderIdInput = document.getElementById('order-id-input');
-                    orderIdInput.value = orderId;
-                    form.submit();
-                }
-                card.remove();
-            }
-
-            //add card 
+  
             function productsCard(data, orderIden){
                 const filtered = data.filter(data => data['order_id'] === orderIden);
                 console.log(filtered)
@@ -316,7 +279,6 @@
                 
             }
 
-            //todo: create a function that will add buttons with their corresponding page numbers based on the queried content
             function addPageButtons(ordersSample){
                 const pagesContainer = document.querySelector('.pages-container');
                 const ordersPerPage = 8;

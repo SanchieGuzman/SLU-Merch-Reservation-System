@@ -121,7 +121,7 @@ function showFilter() {
     // Create form and submit
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = 'orders.php'; // Target PHP file for processing
+    form.action = '../order-history/order-history.php'; // Target PHP file for processing
     form.autocomplete='off';
 
     // Add hidden inputs for the filter values

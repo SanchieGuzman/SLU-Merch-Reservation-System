@@ -1,5 +1,6 @@
 function showOrderDetails(orderID, name, data) {
   const orderDetailsPopUp = document.querySelector(".order-details");
+  orderDetailsPopUp.innerHTML = "";
 
   //Upper container
   const upperCont = document.createElement("div");

@@ -9,6 +9,6 @@
 </head>
 <body> 
   <div id="filter-container" class="hidden"></div>
-  <script src="../filter/filter.js"></script>
+  <script src="../order-history/filter.js"></script>
 </body>
 </html>
