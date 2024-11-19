@@ -402,12 +402,12 @@
 
             // event listeners for next and previous buttons
             document.querySelector('.previous-button').addEventListener('click', () => {
-                const ordersToDisplay = filteredOrders.length ? filteredOrders : orders;
+                const ordersToDisplay = searchOrders.length ? searchOrders : orders;
                 updatePagination(ordersToDisplay, 'previous');
             });
 
             document.querySelector('.next-button').addEventListener('click', () => {
-                const ordersToDisplay = filteredOrders.length ? filteredOrders : orders;
+                const ordersToDisplay = searchOrders.length ? searchOrders : orders;
                 updatePagination(ordersToDisplay, 'next');
             });
 
