@@ -1,0 +1,105 @@
+#edit-product-pop-up-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto; /* Adjust height dynamically */
+    width: 90%; /* Responsive width for smaller screens */
+    max-width: 400px; /* Compact width for design */
+    background-color: #f9f9f9;
+    border: 3px solid #2235a2;
+    border-radius: 12px;
+    padding: 1.5rem; /* Adjusted padding for layout consistency */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Keeps popup above other elements */
+}
+
+#edit-product-title {
+    font-size: 1.3rem; /* Smaller font size for compact title */
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 1rem; /* Space between title and form */
+    text-align: center;
+    background-color: #FFD700;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+form#edit-product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Consistent spacing between form elements */
+}
+
+label.label {
+    font-size: 0.9rem; /* Slightly smaller label font size */
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.3rem; /* Reduced space between label and input */
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%; /* Full width for inputs */
+    padding: 0.6rem; /* Reduced padding for compact design */
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease; /* Smooth focus effect */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: #2235a2; /* Highlight border on focus */
+}
+
+#button-container-cancel-confirm {
+    display: flex;
+    justify-content: space-between; /* Space buttons apart */
+    margin-top: 1rem; /* Add spacing above the buttons */
+    gap: 1rem; /* Space between cancel and confirm buttons */
+}
+
+#cancel-button-edit-popup {
+    flex: 1; /* Equal width for both buttons */
+    padding: 0.8rem; /* Adjusted padding for button height */
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid #2235a2; /* Border to match the design */
+    border-radius: 5px;
+    background-color: #f3f4f6; /* Neutral background for cancel */
+    color: #000; /* Black text for cancel button */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+}
+
+#cancel-button-edit-popup:hover {
+    background-color: #e2e3e5; /* Slightly darker hover state */
+    transform: scale(1.05); /* Slight enlargement on hover */
+}
+
+#confirm-button-confirm-popup {
+    flex: 1; /* Equal width for both buttons */
+    padding: 0.8rem; /* Adjusted padding for button height */
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(to right, #2235a2, #4266ff); /* Blue gradient for confirm */
+    color: #fff; /* White text for contrast */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+}
+
+#confirm-button-confirm-popup:hover {
+    background: linear-gradient(to right, #1b2d85, #3558e0); /* Darker hover gradient */
+    transform: scale(1.05); /* Slight enlargement on hover */
+}
+
+#message-box-edit-popup {
+    font-size: 0.8rem; /* Smaller font size for error messages */
+    color: #e63946; /* Bright red for errors */
+    text-align: center;
+    margin-top: 0.5rem; /* Reduced space above the message */
+}

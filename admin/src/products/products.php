@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../../assets/css/globals.css">
     <link rel="stylesheet" href="../../assets/css/products.css">
     <link rel="stylesheet" href="../../assets/css/add-product-popup.css">
+    <link rel="stylesheet" href="../../assets/css/delete-product-popup.css">
+    <link rel="stylesheet" href="../../assets/css/edit-product-popup.css">
 </head>
 <body>
     <?php
@@ -43,13 +45,21 @@
                if (isset($_SESSION['add_success_message'])) {
                     echo $_SESSION['add_success_message']; 
                     unset($_SESSION['add_success_message']);
+                }elseif(isset($_SESSION['edit_success_message'])){
+                    echo $_SESSION['edit_success_message']; 
+                    unset($_SESSION['edit_success_message']);
+                }elseif(isset($_SESSION['delete_success_message'])){
+                    echo $_SESSION['delete_success_message']; 
+                    unset($_SESSION['delete_success_message']);
                 }
+        
             ?>
         </div>
     </section>
 
-    <script src="../add-product/addProduct.js"></script>
-    <script src="modify.js"></script>
+    <script src="../product-action/add-product/addProduct.js"></script>
+    <script src="../product-action/edit-product/editProduct.js"></script>
+    <script src="../product-action/delete-product/deleteProduct.js"></script>
     
     <script>
         // load na natin yung table
@@ -97,10 +107,19 @@
         tbody.addEventListener('click', (event) => {
             if (event.target.classList.contains('edit-btn')) {
                 const productId = event.target.id.split('-')[1]; // Get the ID from the button ID
-                editEntry(productId); // Call the edit function
+
+                // Get the parent row of the clicked button
+                 const row = event.target.closest('tr');
+
+                // Extract product details from the table cells
+                const productName = row.cells[1].textContent;
+                const productQuantity = row.cells[2].textContent;
+                const productPrice = row.cells[3].textContent;
+
+                loadUIForEditEntry(productId, productName, productQuantity, productPrice)
             } else if (event.target.classList.contains('delete-btn')) {
                 const productId = event.target.id.split('-')[1]; // Get the ID from the button ID
-                deleteEntry(productId); // Call the delete function
+                loadUIForDeleteEntry(productId); // Call the delete function
             }
         });
     </script>
@@ -112,7 +131,7 @@
                 popup.style.display = 'block';
                 setTimeout(function() {
                     popup.style.display = 'none';
-                }, 5000); // Hide after 3 seconds
+                }, 5000); // Hide after 5 seconds
             }
         };
 
