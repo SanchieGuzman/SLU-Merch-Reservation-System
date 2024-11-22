@@ -30,9 +30,7 @@ class Database {
         const params = [username, password]
         const result = await this.execute(query, params);
 
-        //debugging purposes
-        console.log("result", result);
-        return result;
+        return result[0];
     }
 
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
