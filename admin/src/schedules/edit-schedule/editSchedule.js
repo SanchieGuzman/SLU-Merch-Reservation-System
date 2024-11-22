@@ -133,16 +133,26 @@ function initEditPopup() {
     defaultOption.setAttribute('selected', '');
 
     const option1 = document.createElement('option');
-    option1.textContent = 'Main Campus Lobby';
-    option1.setAttribute('value', 'Main Campus Lobby');
+    option1.textContent = 'Maryheights Lobby';
+    option1.setAttribute('value', 'Maryheights Lobby');
 
     const option2 = document.createElement('option');
-    option2.textContent = 'Maryheights Campus Lobby';
-    option2.setAttribute('value', 'Maryheights Campus Lobby');
+    option2.textContent = 'Maryheights Amphi';
+    option2.setAttribute('value', 'Maryheights Amphi');
+
+    const option3 = document.createElement('option');
+    option3.textContent = 'Silang Bldg Lobby';
+    option3.setAttribute('value', 'Silang Bldg Lobby');
+
+    const option4 = document.createElement('option');
+    option4.textContent = 'Prince Bernard Gym';
+    option4.setAttribute('value', 'Prince Bernard Gym');
 
     locationInput.appendChild(defaultOption);
     locationInput.appendChild(option1);
     locationInput.appendChild(option2);
+    locationInput.appendChild(option3);
+    locationInput.appendChild(option4);
 
     // start time input
     const startTimeLabel = document.createElement('label');
