@@ -5,12 +5,11 @@ const loginController = async(req, res)=>{
 
     const result =  await db.login(req.body.username, req.body.password);
     
-    if(result){        
-        res.sendStatus(200);
+    if(result){
+        return res.sendStatus(200);
     }else{       
         res.status(400).json({message: 'Incorrect Credentials'});
     }
-    
 }
 
 export default loginController;

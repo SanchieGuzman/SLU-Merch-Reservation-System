@@ -1,27 +1,29 @@
 async function login(){
-    const credentials = {
+    const loginDetails = {
         username: document.getElementById('usernameField').value,
         password: document.getElementById('passwordField').value
     }    
 
     try{
-        const response = await fetch('http://localhost:3000/api/login', {
+        const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
                  'Content-Type': 'application/json'
             },
-            body: JSON.stringify(credentials)
+            body: JSON.stringify(loginDetails)
         })
         
-        var message = document.getElementById('message')
-
         if(response.status === 200){
-            window.location.href = 'dashboard.html'
-        }else{
+            const currentUrl = window.location.origin;  // Get base URL (e.g., http://localhost:3000) // I made this dynamic for the purpose of docker
+            const productsUrl = `${currentUrl}/products.html`; 
+            
+            // Redirect the user to the dashboard page
+            window.location.href = productsUrl;
+        }else if(response.status === 400){
+            var message = document.getElementById('message')
             const data = await response.json();
             message.textContent = data.message
         }
-
     }catch(err){
         console.log(err);      
     }
