@@ -32,7 +32,13 @@ class Database {
 
         return result[0];
     }
-
+    async getAllProductsOfOrg(organizationID){
+        const query = 'SELECT product_id, product_name, organization_id, price, quantity, product_image, status FROM products WHERE organization_id =? AND status = "Available"';
+    
+        const params = [organizationID]
+        const result = await this.execute(query, params);
+        return result;
+    }
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
     execute(query, params = []) {       
         return new Promise((resolve, reject) => {
