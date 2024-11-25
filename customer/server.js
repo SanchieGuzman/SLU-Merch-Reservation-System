@@ -38,9 +38,9 @@ app.use('/api', loginRouter)
 app.use('/api', _orgIDRouter)
 
 //custom 404
-app.use((req, res, next) => {
-    res.status(404).send("Sorry can't find that!")
-})
+// app.use((req, res, next) => {
+//     res.status(404).send("Sorry can't find that!")
+// })
 
 app.listen(serverConfig.port, serverConfig.host, ()=>{
     console.log(`Server app listening on host ${serverConfig.host} port ${serverConfig.port}`)
