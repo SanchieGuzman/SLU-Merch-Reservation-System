@@ -1,5 +1,6 @@
 import mysql from 'mysql2'
 import { databaseConfig } from '../config.js';
+const Product = require('../classes/Product');
 
 class Database {
     $dbInstance;
@@ -33,11 +34,37 @@ class Database {
         return result[0];
     }
     async getAllProductsOfOrg(organizationID){
-        const query = 'SELECT product_id, product_name, organization_id, price, quantity, product_image, status FROM products WHERE organization_id =? AND status = "Available"';
+        const query = 'SELECT product_id, product_name,product_description, price, quantity, product_image FROM products WHERE organization_id =? AND status = "Available"';
     
         const params = [organizationID]
-        const result = await this.execute(query, params);
-        return result;
+        try {
+            const result = await this.execute(query, params);
+
+            if(result.length == 0){
+                return false;
+            }
+
+            const products =[];
+
+            for (let i = 0; i< result.length; i++){
+                const item = result[i];
+
+                const product = new Product(
+                    item.product_id, 
+                    item.product_name, 
+                    item.product_description,
+                    null, 
+                    item.price, 
+                    item.quantity, 
+                    item.product_image, 
+                    null);
+                products.push(product);
+            }
+            
+        } catch (error) {
+            console.error('Error executing query:', error);
+            return false;
+        }
     }
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
     execute(query, params = []) {       
