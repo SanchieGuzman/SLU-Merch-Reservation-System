@@ -1,6 +1,6 @@
 import mysql from 'mysql2'
 import { databaseConfig } from '../config.js';
-const Product = require('../classes/Product');
+import Product from '../classes/Product.js'
 
 class Database {
     $dbInstance;
@@ -52,7 +52,7 @@ class Database {
                 const product = new Product(
                     item.product_id, 
                     item.product_name, 
-                    item.product_description,
+                    null,
                     null, 
                     item.price, 
                     item.quantity, 
@@ -60,6 +60,8 @@ class Database {
                     null);
                 products.push(product);
             }
+
+            return products;
             
         } catch (error) {
             console.error('Error executing query:', error);

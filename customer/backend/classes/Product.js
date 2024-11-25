@@ -74,3 +74,5 @@ class Product {
         this.status = status;
     }
 }
+
+export default Product;

@@ -1,9 +1,15 @@
+import Database from "../database/database.js";
+
 //to be implemented by stephen
-const seeAllController = async(req, res)=>{
-    const orgID = req.params.orgid;
-    console.log(orgID);
-    
-    res.send('see all controller')
+const seeAllProductsController = async(req, res)=>{
+    const db = Database.getInstance();
+    const result =  await db.getAllProductsOfOrg(req.params.orgid);
+
+    if(result){
+        res.json(result)
+    }else{
+        res.send(200)
+    }    
 }
 
 //to be implemented by leonhard
@@ -15,4 +21,4 @@ const viewProductController = async(req, res)=>{
     res.send('view product controller')
 }
 
-export  {seeAllController, viewProductController};
+export  {seeAllProductsController, viewProductController};
