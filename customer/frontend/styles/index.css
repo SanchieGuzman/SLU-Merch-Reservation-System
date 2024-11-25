@@ -58,7 +58,7 @@ body {
   align-items: center;
   padding: 2rem;
   gap: 2rem;
-  background-image: url("./resources/images/login/login-form-background.png");
+  background-image: url("../resources/images/login/login-form-background.png");
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: contain;
