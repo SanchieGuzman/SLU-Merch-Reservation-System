@@ -59,7 +59,7 @@ class Database {
                         organization_id, 
                         product_image, 
                         ROW_NUMBER() OVER (PARTITION BY organization_id ORDER BY product_id ASC) AS row_num 
-                    FROM products
+                    FROM products WHERE status = 'Available'
                 ) AS p
                 JOIN organizations o USING(organization_id)
                 WHERE p.row_num <= 4; `;   
