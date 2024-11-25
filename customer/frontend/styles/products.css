@@ -1,0 +1,54 @@
+:root {
+  --gradient1: #3a50cb;
+  --gradient2: #15268b;
+  --yellow: #f8dc2c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+/*===========Content==============*/
+
+.right-container .content-container {
+  height: 88vh;
+  padding: 1.5rem;
+  overflow-y: scroll;
+  border: 1px solid gold;
+}
+
+.inner-container {
+  border: 1px solid gray;
+}
+
+.inner-container .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-image: linear-gradient(
+    to right,
+    var(--gradient1),
+    var(--gradient2)
+  );
+  color: white;
+}
+
+.card-header .header-icon {
+  width: 2.5rem;
+}
+
+.inner-container .booth-container {
+  padding: 1.5rem;
+}
+
+.booth-container .booth-name-container {
+  border: 2px solid green;
+  display: flex;
+  justify-content: space-between;
+}
