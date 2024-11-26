@@ -12,7 +12,11 @@ body {
 
   /* moved the container down by 10vh since it is occupied by the topbar */
   margin-top: 10vh;
+
+  /* Add box shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 /* this is where your content should be placed */
 #dashboard-content {
@@ -33,21 +37,26 @@ body {
 #pending-orders-container,
 #sales-container {
   height: 100%;
-  border: solid #2235a2 2px;
+  border: none;
   border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
+
 
 .headingDiv {
   padding: 2%;
   height: 25%;
   align-items: center;
-  border-bottom: solid #2235a2 2px;
+  border-bottom: solid #f8dc2c 2px;
+  font-size: 0.9rem;
+  color: #282828;
 }
 
 #pending-orders-container > strong,
 #sales-container > strong {
   font-size: clamp(24px, 4vw, 80px);
   display: block;
+  color: #282828;
   text-align: center;
   align-content: center;
   height: 55%;
@@ -56,11 +65,13 @@ body {
 #dashboard-content #most-ordered-products-container {
   width: 100%;
   padding: 2%;
-  background-color: #2235a2;
+  background: radial-gradient(circle at 0% 0%, #2e3353, #2540de, #121e63);
   border-radius: 18px;
   max-height: calc(100vh - 21vh);
   gap: 0.5rem;
   color: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  font-size: 0.9rem;
 }
 
 #products-list {
@@ -77,12 +88,12 @@ body {
 #sales-container div:last-child {
   padding: 2%;
   height: 20%;
-  background-color: #2235a2;
+  background-color: #f8dc2c;
   border-radius: 0 0 8px 8px;
 }
 
 #time-div span {
-  color: white;
+  color: black;
   width: 100%;
   text-align: center;
   align-content: center;
@@ -97,7 +108,9 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-bottom: solid white 4px;
+  border-top: solid #ededeb 2px;
+  margin: 20px;
+  
 }
 
 .card > span,
