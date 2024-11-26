@@ -11,8 +11,8 @@ const seeAllController = async(req, res)=>{
 //to be implemented by leonhard
 const viewProductController = async(req, res)=>{
     try {
-        const orgID = req.params.orgID;
-        const prodID = req.params.prodID;
+        const orgID = req.params.orgid;
+        const prodID = req.params.prodid;
         
         const db = Database.getInstance();
 

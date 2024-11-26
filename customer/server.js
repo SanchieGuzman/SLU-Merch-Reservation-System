@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'frontend')));
 
 //routers
 app.use('/api', loginRouter)
-// app.use('/api', productsRouter)
+app.use('/api', productsRouter)
 app.use('/api', _orgIDRouter)
 
 app.listen(serverConfig.port, serverConfig.host, ()=>{
