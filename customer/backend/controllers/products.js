@@ -20,7 +20,9 @@ const productsController = async(req, res) => {
                         products: [],
                     });
                 }
-
+                
+                console.log(item);
+                
                 map.get(orgID).products.push({
                     product_id: item.product_id,
                     product_name: item.product_name,
