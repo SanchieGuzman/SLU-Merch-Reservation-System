@@ -16,7 +16,7 @@ const viewProductController = async(req, res)=>{
         
         const db = Database.getInstance();
 
-        const result = await db.getProduct(prodID);
+        const result = await db.getProductDetails(prodID);
 
         if (result) {
             return res.status(200).json({
