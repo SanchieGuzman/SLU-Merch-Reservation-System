@@ -1,96 +1,96 @@
 async function getBoothDetails() {
   try {
-    const response = await fetch("api/products", {
+    const response = await fetch("http://localhost:3000/api/products", {
       method: "GET",
     });
-    const result = response.json();
+    const result = await response.json();    
+    return result;
   } catch (err) {
     console.log(err);
   }
 }
+//   {
+//     organization_name: "Icon",
+//     organization_id: "1",
+//     products: [
+//       {
+//         product_id: "1",
+//         product_name: "Hoodie",
+//         product_image: "../resources/images/products/hoodie.png",
+//         product_price: 100,
+//         product_quantity: 11,
+//       },
+//       {
+//         product_id: "2",
+//         product_name: "Cap",
+//         product_image: "../resources/images/products/hoodie.png",
+//         product_price: 100,
+//         product_quantity: 12,
+//       },
+//       {
+//         product_id: "3",
+//         product_name: "Bag",
+//         product_image: "../resources/images/products/hoodie.png",
+//         product_price: 100,
+//         product_quantity: 13,
+//       },
+//       {
+//         product_id: "4",
+//         product_name: "Phone case",
+//         product_image: "../resources/images/products/hoodie.png",
+//         product_price: 100,
+//         product_quantity: 14,
+//       },
+//     ],
+//   },
+//   {
+//     organization_name: "Scope",
+//     organization_id: "2",
+//     products: [
+//       {
+//         product_id: "1",
+//         product_name: "hoodie",
+//         product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
+//         product_price: 100,
+//         product_quantity: 10,
+//       },
+//       {
+//         product_id: "2",
+//         product_name: "cap",
+//         product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
+//         product_price: 100,
+//         product_quantity: 10,
+//       },
+//     ],
+//   },
+//   {
+//     organization_name: "Sample",
+//     organization_id: "2",
+//     products: [
+//       {
+//         product_id: "1",
+//         product_name: "hoodie",
+//         product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
+//         product_price: 100,
+//         product_quantity: 10,
+//       },
+//       {
+//         product_id: "2",
+//         product_name: "cap",
+//         product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
+//         product_price: 100,
+//         product_quantity: 10,
+//       },
+//     ],
+//   },
+// ];
 
-const booths = [
-  {
-    organization_name: "Icon",
-    organization_id: "1",
-    products: [
-      {
-        product_id: "1",
-        product_name: "Hoodie",
-        product_image: "../resources/images/products/hoodie.png",
-        product_price: 100,
-        product_quantity: 11,
-      },
-      {
-        product_id: "2",
-        product_name: "Cap",
-        product_image: "../resources/images/products/hoodie.png",
-        product_price: 100,
-        product_quantity: 12,
-      },
-      {
-        product_id: "3",
-        product_name: "Bag",
-        product_image: "../resources/images/products/hoodie.png",
-        product_price: 100,
-        product_quantity: 13,
-      },
-      {
-        product_id: "4",
-        product_name: "Phone case",
-        product_image: "../resources/images/products/hoodie.png",
-        product_price: 100,
-        product_quantity: 14,
-      },
-    ],
-  },
-  {
-    organization_name: "Scope",
-    organization_id: "2",
-    products: [
-      {
-        product_id: "1",
-        product_name: "hoodie",
-        product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
-        product_price: 100,
-        product_quantity: 10,
-      },
-      {
-        product_id: "2",
-        product_name: "cap",
-        product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
-        product_price: 100,
-        product_quantity: 10,
-      },
-    ],
-  },
-  {
-    organization_name: "Sample",
-    organization_id: "2",
-    products: [
-      {
-        product_id: "1",
-        product_name: "hoodie",
-        product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
-        product_price: 100,
-        product_quantity: 10,
-      },
-      {
-        product_id: "2",
-        product_name: "cap",
-        product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
-        product_price: 100,
-        product_quantity: 10,
-      },
-    ],
-  },
-];
-
-window.onload = function () {
-  showBooths();
+window.onload = async function () {
+  let booths = await getBoothDetails();  
+  showBooths(booths);
 };
 
-function showBooths() {
+function showBooths(booths) {
   const mainContainer = document.querySelector(".content-container");
 
   const innerContainer = document.createElement("div");
@@ -135,7 +135,7 @@ function showBooths() {
     const productsGrid = document.createElement("div");
     productsGrid.classList.add("products-grid");
 
-    booth.products.forEach((product) => {
+    booth.products.forEach((product) => {      
       //item card
       const itemCard = document.createElement("div");
       itemCard.classList.add("item-card");
@@ -144,10 +144,20 @@ function showBooths() {
       const itemCardImageContainer = document.createElement("section");
       itemCardImageContainer.classList.add("item-card-image-container");
 
+      // IMMAGE ISSUES
+      // Convert the product.product_image to a Uint8Array
+      const byteArray = new Uint8Array(product.product_image.data);
+
+      // Create a Blob from the byteArray
+      const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
+
+      // Create a temporary object URL for the blob
+      const imageUrl = URL.createObjectURL(blob);
+
       //image
       const itemImage = document.createElement("img");
       itemImage.classList.add("item-image");
-      itemImage.src = product.product_image;
+      itemImage.src = imageUrl;
       itemCardImageContainer.appendChild(itemImage);
 
       itemCard.appendChild(itemCardImageContainer);
