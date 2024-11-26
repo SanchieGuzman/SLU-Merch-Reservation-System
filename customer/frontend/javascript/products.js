@@ -1,3 +1,14 @@
+async function getBoothDetails() {
+  try {
+    const response = await fetch("api/products", {
+      method: "GET",
+    });
+    const result = response.json();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 const booths = [
   {
     organization_name: "Icon",
@@ -5,28 +16,28 @@ const booths = [
     products: [
       {
         product_id: "1",
-        product_name: "hoodie",
+        product_name: "Hoodie",
         product_image: "../resources/images/products/hoodie.png",
         product_price: 100,
         product_quantity: 11,
       },
       {
         product_id: "2",
-        product_name: "cap",
+        product_name: "Cap",
         product_image: "../resources/images/products/hoodie.png",
         product_price: 100,
         product_quantity: 12,
       },
       {
         product_id: "3",
-        product_name: "bag",
+        product_name: "Bag",
         product_image: "../resources/images/products/hoodie.png",
         product_price: 100,
         product_quantity: 13,
       },
       {
         product_id: "4",
-        product_name: "phone case",
+        product_name: "Phone case",
         product_image: "../resources/images/products/hoodie.png",
         product_price: 100,
         product_quantity: 14,
@@ -35,6 +46,26 @@ const booths = [
   },
   {
     organization_name: "Scope",
+    organization_id: "2",
+    products: [
+      {
+        product_id: "1",
+        product_name: "hoodie",
+        product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
+        product_price: 100,
+        product_quantity: 10,
+      },
+      {
+        product_id: "2",
+        product_name: "cap",
+        product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
+        product_price: 100,
+        product_quantity: 10,
+      },
+    ],
+  },
+  {
+    organization_name: "Sample",
     organization_id: "2",
     products: [
       {
@@ -93,7 +124,7 @@ function showBooths() {
     boothName.textContent = booth.organization_name;
     boothNameContainer.appendChild(boothName);
 
-    const seeAllButton = document.createElement("h2");
+    const seeAllButton = document.createElement("button");
     seeAllButton.classList.add("see-all-button");
     seeAllButton.textContent = "See All";
     boothNameContainer.appendChild(seeAllButton);
@@ -104,7 +135,65 @@ function showBooths() {
     const productsGrid = document.createElement("div");
     productsGrid.classList.add("products-grid");
 
-    booth.products.forEach((product) => {});
+    booth.products.forEach((product) => {
+      //item card
+      const itemCard = document.createElement("div");
+      itemCard.classList.add("item-card");
+
+      //image container
+      const itemCardImageContainer = document.createElement("section");
+      itemCardImageContainer.classList.add("item-card-image-container");
+
+      //image
+      const itemImage = document.createElement("img");
+      itemImage.classList.add("item-image");
+      itemImage.src = product.product_image;
+      itemCardImageContainer.appendChild(itemImage);
+
+      itemCard.appendChild(itemCardImageContainer);
+
+      //item name and price container
+      const itemNameContainer = document.createElement("section");
+      itemNameContainer.classList.add("item-name-container");
+
+      //item name
+      const itemName = document.createElement("p");
+      itemName.classList.add("item-name");
+      itemName.textContent = product.product_name;
+      itemNameContainer.appendChild(itemName);
+
+      //item price
+      const itemPrice = document.createElement("p");
+      itemPrice.classList.add("item-price");
+      itemPrice.textContent = "P" + product.product_price;
+      itemNameContainer.appendChild(itemPrice);
+
+      itemCard.appendChild(itemNameContainer);
+
+      //quantity
+      const quantity = document.createElement("p");
+      quantity.classList.add("quantity");
+      quantity.textContent = "Stock: " + product.product_quantity;
+      itemCard.appendChild(quantity);
+
+      //view button container
+      const viewButtonContainer = document.createElement("section");
+      viewButtonContainer.classList.add("view-button-container");
+
+      //view button
+      const viewButton = document.createElement("button");
+      viewButton.classList.add("view-button");
+      viewButton.textContent = "View";
+      viewButtonContainer.appendChild(viewButton);
+      itemCard.appendChild(viewButtonContainer);
+
+      productsGrid.appendChild(itemCard);
+      boothContainer.appendChild(productsGrid);
+    });
+
+    const line = document.createElement("hr");
+    line.classList.add("line-break");
+    boothContainer.appendChild(line);
   });
 
   mainContainer.appendChild(innerContainer);

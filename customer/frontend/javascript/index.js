@@ -20,9 +20,19 @@ async function login() {
       // Redirect the user to the dashboard page
       window.location.href = productsUrl;
     } else if (response.status === 400) {
-      var message = document.getElementById("message");
+      var message = document.createElement("p");
+      message.classList.add("error-message");
       const data = await response.json();
+      message.innerHTML = "";
       message.textContent = data.message;
+      const container = document.querySelector(".bottom-container");
+
+      const existingMessage = container.querySelector(".error-message");
+      if (existingMessage) {
+        existingMessage.remove();
+      }
+
+      container.prepend(message);
     }
   } catch (err) {
     console.log(err);

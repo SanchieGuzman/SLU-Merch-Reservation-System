@@ -98,7 +98,8 @@ body {
 .bottom-container {
   width: 80%;
   display: flex;
-  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
 }
 
 .bottom-container #loginButton {
@@ -108,4 +109,8 @@ body {
   background-color: var(--yellow);
   border: none;
   font-size: 1rem;
+}
+
+.error-message {
+  color: red;
 }
