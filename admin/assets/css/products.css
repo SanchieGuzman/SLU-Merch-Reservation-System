@@ -24,8 +24,9 @@ body {
 #overview-container {
   height: 85vh;
   overflow-y: scroll;
-  border: #2235a2 solid 3px;
+  border: #2235a2 solid 2px;
   border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #top-title {
@@ -36,7 +37,8 @@ body {
   align-items: center;
   padding: 1rem 2rem;
   background-color: white;
-  border-bottom: #2235a2 3px solid;
+  border-bottom: #2235a2 2px solid;
+  font-size: 0.9rem;
 }
 
 /* TEMPORARY */
@@ -51,6 +53,7 @@ body {
   background-color: #2235a2;
   padding: 0.5rem 1rem;
   border-radius: 5px;
+  font-size: 0.9rem;
 }
 
 #add-product-button:hover {
@@ -93,10 +96,11 @@ body {
 
 /* CSS FOR TABLE */
 table {
-  width: 90%;
+  width: 97%;
   height: auto;
   margin: 1rem auto;
   border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 th,

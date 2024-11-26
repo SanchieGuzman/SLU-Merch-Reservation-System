@@ -16,11 +16,12 @@ body {
 
 /* main container of the whole schedules page */
 #schedules-container {
-    border: solid 3px #2235a2;
+    border: #2235a2 solid 2px;
     margin: 1rem 1rem;
     max-height: 85vh;
     overflow-y: scroll;
     border-radius: 0.3rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* top part of the schedules page containing the heading and the create schedule button */
@@ -33,7 +34,8 @@ body {
     position: sticky;
     top: 0;
     background-color: white;
-    border-bottom: solid 3px #2235a2;
+    border-bottom: solid 2px #2235a2;
+    font-size: 0.9rem;
 }
 
 #schedules-container #top-border img{
@@ -46,24 +48,28 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 22%;
-    padding: 1rem 1rem;
+    width: 20%;
+    padding: 0.5rem 1rem;
     font-size: 1rem;
     color: white;
     background-color: #2235a2;
     border: none;
     border-radius: 0.3rem;
+    font-size: 0.8rem;
+    
 }
+
 
 #schedules-container #schedule-list{
     height: 80vh;
-    padding: 1rem 4rem 1rem 4rem;
+    padding: 1rem 1rem 1rem 1rem;
 }
 
 /* table containing the list of schedules of an organization */
 #schedule-table {
   width: 100%;
   border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #schedule-table,
@@ -92,6 +98,7 @@ td {
     border: none;
     cursor: pointer;
     margin-left: 10px;
+    margin-right: 10px;
 }
 
 .delete-button:last-child {
