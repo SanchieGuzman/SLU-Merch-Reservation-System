@@ -165,3 +165,140 @@ body {
   gap: 0.5rem;
   align-items: flex-start;
 }
+
+
+
+
+
+
+
+.specific-product-container {
+  height : 40vh;
+  display: flex;
+  border: 1px solid #ddd;
+  padding: 2rem;
+  gap: 1rem;
+}
+.left-container-specific-product {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+
+}
+
+.left-container-specific-product img {
+  width: 60%;
+  height: auto;
+}
+
+.right-container-specific-product {
+  width: 60%;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+
+.right-container p {
+  color: #555;
+}
+.quantity-container {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.quantity-container span {
+  margin-right: 10px;
+  color: #333;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.quantity-controls button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  width: 30px;
+  height: 40px; /* Ensure consistent height for buttons */
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.quantity-controls button:hover {
+  background-color: #2980b9;
+}
+
+.input-box {
+  width: 40px;
+  text-align: center;
+  border: none;
+  padding: 8px 10px;
+  font-size: 16px;
+  outline: none;
+  background-color: #fff;
+  border-top: 2px solid #3498db;
+  border-bottom: 2px solid #3498db;
+}
+
+/* Hide the number input spin buttons */
+.input-box::-webkit-inner-spin-button,
+.input-box::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-box[type="number"] {
+  -moz-appearance: textfield;
+}
+.buttons-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-left: 6rem;
+}
+
+.buttons-container button {
+  padding: 10px 20px;
+  border-radius: 3px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px; 
+  width: 15rem;
+}
+
+.buttons-container button:hover {
+  background-color: #002A6E;
+}
+
+hr {
+  margin-top: 15px;
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.price-container {
+  margin-top: 20px;
+}
+
+.price-container h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+.price-container hr {
+  border: none;
+  border-top: 2px solid #ddd;
+  margin: 10px 0;
+}

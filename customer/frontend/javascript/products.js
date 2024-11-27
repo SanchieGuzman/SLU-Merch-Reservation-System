@@ -322,12 +322,12 @@ function viewProductDetails(orgName) {
     product_image: "../resources/images/products/hoodie.png",
     product_description: "sample description hehehheh hahaha",
     product_price: 100,
-    product_quantity: 10,
+    product_quantity: 100,
   };
-
+  //card header ====================================start================
   const cardHeader = document.createElement("div");
   cardHeader.classList.add("card-header");
-
+  // header naming
   const boothName = document.createElement("h2");
   boothName.textContent = orgName;
   cardHeader.appendChild(boothName);
@@ -338,66 +338,150 @@ function viewProductDetails(orgName) {
   const specificProductContainer = document.createElement("div");
   specificProductContainer.classList.add("specific-product-container");
 
+  //left container =================================start============
   const leftContainer = document.createElement("div");
-  leftContainer.classList.add("left-container");
-  specificProductContainer.appendChild(leftContainer);
+  leftContainer.classList.add("left-container-specific-product");
 
+  const productImage = document.createElement("img");
+  productImage.src = product.product_image;
+  productImage.alt = product.product_name;
+  leftContainer.appendChild(productImage);//append image to left container
+
+  specificProductContainer.appendChild(leftContainer);//append left container to specific product container
+ 
+
+  //right  container =================================start============
   const rightContainer = document.createElement("div");
-  rightContainer.classList.add("right-container");
+  rightContainer.classList.add("right-container-specific-product");
 
   //product name RIGHT
   const prodName = document.createElement("h3");
-  prodName.innerText(product.product_name);
+  prodName.textContent = product.product_name.charAt(0).toUpperCase()+product.product_name.slice(1);
+  rightContainer.appendChild(prodName);
 
   //product description RIGHT
   const prodDescription = document.createElement("p");
-  prodDescription.innerText(product.product_description);
+  prodDescription.textContent = product.product_description;
+  rightContainer.appendChild(prodDescription);
 
   //product quantity RIGHT
   const stock = document.createElement("p");
-  stock.innerText("Stocks left: " + product.product_quantity);
+  stock.textContent= "Stocks left: " + product.product_quantity;
+  rightContainer.appendChild(stock);
 
-  //quantity selection container  RIGHT (product quantity -1+)
-  const quantitySelectionContainer = document.createElement("div");
 
-  //quantity selector container Right
-  const quantitySelectorContainer = document.createElement("div");
-  const number = document.createElement("input");
-  number.setAttribute("type", "number");
-  number.setAttribute("min", "0");
-  number.setAttribute("max");
+  //quantity container  RIGHT (product quantity -1+)
+  const quantityContainer = document.createElement("div");
+  quantityContainer.classList.add("quantity-container");
+
+  //quantity text
+  const quantityText = document.createElement("span");
+  quantityText.textContent = "Product Quantity: ";
+
+  //quantity selector controls container Right
+  const quantityControls  = document.createElement("div");
+  quantityControls.classList.add("quantity-controls");
 
   const minusButton = document.createElement("button");
-  minusButton.innerText("-");
+  minusButton.classList.add("qty-count--minus");
+  minusButton.textContent = "-";
+
+  const quantityInput = document.createElement("input");
+  quantityInput.classList.add("input-box");
+  quantityInput.setAttribute("type", "number");
+  quantityInput.setAttribute("min", "1");
+  quantityInput.setAttribute("value", "1");
+  quantityInput.setAttribute("max", product.product_quantity);
+
   const plusButton = document.createElement("button");
+  plusButton.classList.add("qty-count--plus");
   plusButton.textContent = "+";
 
-  quantitySelectorContainer.appendChild(minusButton);
-  quantitySelectorContainer.appendChild(number);
-  quantitySelectionContainer.appendChild(plusButton);
+  quantityControls.appendChild(minusButton);
+  quantityControls.appendChild(quantityInput);
+  quantityControls.appendChild(plusButton);//this is the controls (- 1 +)
 
-  //quantity
-  const quantity = document.createElement("h3");
-  quantity.innerText("Product Quantity: ");
+  quantityContainer.appendChild(quantityText);
+  quantityContainer.appendChild(quantityControls);
+  rightContainer.appendChild(quantityContainer);//append the quantity and controls
 
+  
   //price container
   const priceContainer = document.createElement("div");
+  priceContainer.classList.add("price-container");
+
   const priceText = document.createElement("h3");
-  priceText.innerText("Price: ");
+  priceText.innerText = "Price: P " + product.product_price.toFixed(2);
 
   const lineBreak = document.createElement("hr");
 
-  //total price container
-  const totalPriceContainer = document.createElement("div");
+   priceContainer.appendChild(priceText);
+   priceContainer.appendChild(lineBreak);
 
-  //buttons container
-  const buttonsContainer = document.createElement("div");
+   // total price
+   const totalInfo = document.createElement("h3");
+   totalInfo.textContent = "Total: P " + product.product_price.toFixed(2);
+   totalInfo.id = "totalPrice";
+  
+   // append price container and total info
+   rightContainer.appendChild(priceContainer);
+   rightContainer.appendChild(totalInfo);
 
-  const addToCartButton = document.createElement("button");
+   const buttonsContainer = document.createElement("div");
+   buttonsContainer.classList.add("buttons-container");
+ 
+   const addToCartButton = document.createElement("button");
+   addToCartButton.textContent = "Add to Cart";
+ 
+   const placeOrderButton = document.createElement("button");
+   placeOrderButton.textContent = "Place Order";
+ 
+   buttonsContainer.appendChild(addToCartButton);
+   buttonsContainer.appendChild(placeOrderButton);
+ 
+   rightContainer.appendChild(buttonsContainer);
+ 
+   specificProductContainer.appendChild(rightContainer);
+   container.appendChild(specificProductContainer);
 
-  const placeOrderButton = document.createElement("button");
 
-  specificProductContainer.appendChild(rightContainer);
+   //EVENT LISTENERS FOR BUTTONS
+   minusButton.addEventListener("click", () =>{
+    let currentQuantity = parseInt(quantityInput.value)
+    if(currentQuantity>1){
+      currentQuantity--;
+      quantityInput.value = currentQuantity;
+      updateTotalPrice(currentQuantity, product.product_price);
+    }
+   });
 
-  container.appendChild(specificProductContainer);
+   plusButton.addEventListener("click", () =>{
+    let currentQuantity = parseInt(quantityInput.value)
+    if(currentQuantity<product.product_quantity){
+      currentQuantity++;
+      quantityInput.value = currentQuantity;
+      updateTotalPrice(currentQuantity, product.product_price);
+    }
+   });
+
+   quantityInput.addEventListener("input", () =>{
+    let currentQuantity = parseInt(quantityInput.value)
+
+
+    if(currentQuantity>product.product_quantity){
+      quantityInput.value = product.product_quantity;
+      currentQuantity = product.product_quantity;
+      
+    }
+    if(currentQuantity<1 || isNaN(currentQuantity)){
+      quantityInput.value = 1;
+      currentQuantity = 1;
+    }
+    updateTotalPrice(currentQuantity, product.product_price);
+   });
+
+   function updateTotalPrice(quantity, price){
+    const totalPrice = quantity *price;
+    totalInfo.textContent = `Total (${quantity} item${quantity > 1 ? "s" : ""}): P ${totalPrice.toFixed(2)}`;
+   }
 }
