@@ -25,7 +25,7 @@ app.use(cookieParser('stephen pogi'));
 app.use('/resources', express.static(path.join(__dirname, 'frontend', 'resources')));
 app.use('/javascript', express.static(path.join(__dirname, 'frontend', 'javascript')));
 app.use('/styles', express.static(path.join(__dirname, 'frontend', 'styles')));
-app.get('/index.html', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
