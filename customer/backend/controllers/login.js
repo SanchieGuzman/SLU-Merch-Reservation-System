@@ -9,6 +9,10 @@ const loginController = async(req, res)=>{
             httpOnly: true, 
             path: '/',
             signed: true
+        }).cookie("username", req.body.username, {
+            httpOnly: false,
+            path: '/',
+            signed: false  
         }).sendStatus(200);
     }else{       
         res.status(400).json({message: 'Incorrect Credentials'});

@@ -34,7 +34,6 @@ body {
 .right-container {
   width: 85%;
   height: 100vh;
-  border: 2px solid purple;
 }
 
 /*========= Side Nav ========== */
@@ -126,7 +125,7 @@ body {
   background-color: #15268b;
   color: white;
   border-radius: 5rem;
-  width: 13rem;
+  width: auto;
   padding: 0.3rem 1rem 0.3rem 0.3rem;
 }
 
