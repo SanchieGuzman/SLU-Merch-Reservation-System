@@ -1,15 +1,21 @@
 #add-product-pop-up-container{
     position: absolute;
-    top: 50%; /* Move down 50% of the viewport height */
-            left: 50%; /* Move right 50% of the viewport width */
-            transform: translate(-50%, -50%); /* Offset by half its own width and height */
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
     height: 520px;
     width: 800px;
-    background: radial-gradient(circle at 0% 0%, #2e3353, #2540de, #121e63);
-    /* border: solid #2235a2 3px; */
+    background: #ededeb;
     border-radius: 10px;
     padding: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+  rgba(248, 220, 44, 0.4) -5px 5px, 
+  rgba(248, 220, 44, 0.3) -10px 10px, 
+  rgba(248, 220, 44, 0.2) -15px 15px, 
+  rgba(248, 220, 44, 0.1) -20px 20px, 
+  rgba(248, 220, 44, 0.05) -25px 25px;
+
+  
 }
 
 #top{
@@ -64,15 +70,15 @@
 }
 
 #image-upload{
-    color:#f8dc2c;
+    color:#f4436f;
 }
 
 #add-product-form .label{
-    color: white;
+    color: #2235a2;
 }
 
 #add-product-form #message{
-    color: #f8dc2c;
+    color: #f4436f;
     display: flex;
     justify-content: center;
     text-align: center;
@@ -86,20 +92,21 @@
     width: 100%;
     border-radius: 0.3rem;
     font-family: 'Poppins', sans-serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
     padding-left: 1rem;
 }
 
 #description-text-field{
     height: 100%; 
     width: 100%; 
-    resize:none;
+    resize: none;
     padding: 0.5rem 0.5rem;
     border-radius: 0.3rem;
     font-family: 'Poppins', sans-serif;
     font-size: 0.9rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
     padding-left: 1rem;
+    border: 1px;
 }
 
 #left, #right {

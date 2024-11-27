@@ -3,24 +3,24 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: auto; /* Adjust height dynamically */
-    width: 90%; /* Responsive width for smaller screens */
-    max-width: 400px; /* Compact width for design */
-    background-color: #f9f9f9;
-    border: 3px solid #2235a2;
+    height: auto;
+    width: 90%;
+    max-width: 400px;
+    background-color: #ededeb;
+    border: 1px solid #2235a2;
     border-radius: 12px;
-    padding: 1.5rem; /* Adjusted padding for layout consistency */
+    padding: 1.5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Keeps popup above other elements */
+    z-index: 1000;
 }
 
 #edit-product-title {
-    font-size: 1.3rem; /* Smaller font size for compact title */
+    font-size: 1.2rem;
     font-weight: bold;
     color: #000;
-    margin-bottom: 1rem; /* Space between title and form */
+    margin-bottom: 1rem;
     text-align: center;
-    background-color: #FFD700;
+    background-color: #f8dc2c;
     padding: 0.5rem;
     border-radius: 5px;
 }
@@ -28,78 +28,83 @@
 form#edit-product-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* Consistent spacing between form elements */
+    gap: 1rem;
 }
 
 label.label {
-    font-size: 0.9rem; /* Slightly smaller label font size */
+    font-size: 0.9rem;
     font-weight: 600;
-    color: #444;
-    margin-bottom: 0.3rem; /* Reduced space between label and input */
+    color: #201f1f;
+    margin-bottom: 0.3rem;
 }
 
 input[type="text"],
 input[type="number"] {
-    width: 100%; /* Full width for inputs */
-    padding: 0.6rem; /* Reduced padding for compact design */
+    width: 100%;
+    padding: 0.6rem;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
-    transition: border-color 0.3s ease; /* Smooth focus effect */
+    transition: border-color 0.3s ease;
 }
 
 input[type="text"]:focus,
 input[type="number"]:focus {
-    border-color: #2235a2; /* Highlight border on focus */
+    border-color: #2235a2;
 }
 
 #button-container-cancel-confirm {
     display: flex;
-    justify-content: space-between; /* Space buttons apart */
-    margin-top: 1rem; /* Add spacing above the buttons */
-    gap: 1rem; /* Space between cancel and confirm buttons */
+    justify-content: space-between;
+    margin-top: 1rem;
+    gap: 1rem;
 }
 
 #cancel-button-edit-popup {
-    flex: 1; /* Equal width for both buttons */
-    padding: 0.8rem; /* Adjusted padding for button height */
+    flex: 1;
+    padding: 0.8rem;
     font-size: 1rem;
     font-weight: 600;
-    border: 2px solid #2235a2; /* Border to match the design */
+    border: 2px;
     border-radius: 5px;
-    background-color: #f3f4f6; /* Neutral background for cancel */
-    color: #000; /* Black text for cancel button */
+    background-color: white;
+    border-color: #2235a2;
+    color: #000;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    height: 40px;
+    border-radius: 25px;
 }
 
 #cancel-button-edit-popup:hover {
-    background-color: #e2e3e5; /* Slightly darker hover state */
-    transform: scale(1.05); /* Slight enlargement on hover */
+    background-color: #e2e3e5;
+    transform: scale(1.05);
 }
 
 #confirm-button-confirm-popup {
-    flex: 1; /* Equal width for both buttons */
-    padding: 0.8rem; /* Adjusted padding for button height */
+    flex: 1;
+    padding: 0.8rem;
     font-size: 1rem;
     font-weight: 600;
     border: none;
     border-radius: 5px;
-    background: linear-gradient(to right, #2235a2, #4266ff); /* Blue gradient for confirm */
-    color: #fff; /* White text for contrast */
+    background: linear-gradient(to right, #2235a2, #4266ff);
+    color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    height: 40px;
+    border-radius: 25px;
 }
 
 #confirm-button-confirm-popup:hover {
-    background: linear-gradient(to right, #1b2d85, #3558e0); /* Darker hover gradient */
-    transform: scale(1.05); /* Slight enlargement on hover */
+    background: linear-gradient(to right, #1b2d85, #3558e0);
+    transform: scale(1.05);
 }
 
 #message-box-edit-popup {
-    font-size: 0.8rem; /* Smaller font size for error messages */
-    color: #e63946; /* Bright red for errors */
+    font-size: 0.8rem;
+    color: #e63946;
     text-align: center;
-    margin-top: 0.5rem; /* Reduced space above the message */
+    margin-top: 0.5rem;
 }

@@ -46,14 +46,14 @@ body {
 
 .topbar .welcome-message h3 {
   font-size: 18px;
-  margin-bottom: 0.25rem; 
+  margin-bottom: 0; 
   font-weight: 500;
 }
 
 .topbar .welcome-message h2 {
   font-size: 20px;
   font-weight: 700;
-  margin-top: 0.25rem; 
+  margin-top: 0; 
 }
 
 /* Notification icon container */
