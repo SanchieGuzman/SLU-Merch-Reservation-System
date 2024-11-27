@@ -170,7 +170,12 @@ body {
 
 
 
-
+.close-button {
+  width: 2rem;
+  height: 2rem;
+  background-image: url("../resources/images/products/returnButton.png");
+  background-size: cover;
+}
 
 .specific-product-container {
   height : 40vh;
@@ -198,7 +203,7 @@ body {
   gap: 1rem;
 }
 
-.right-container p {
+.right-container-specific-product p {
   color: #555;
 }
 .quantity-container {
