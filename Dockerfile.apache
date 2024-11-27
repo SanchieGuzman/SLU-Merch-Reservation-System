@@ -1,0 +1,18 @@
+FROM php:8.3.14-apache
+
+COPY ./admin /var/www/html/admin/
+COPY ./apache-config/leonardos.conf /etc/apache2/sites-available/leonardos.conf
+
+# set the working directory for the following RUN commands
+WORKDIR /var/www/html
+
+# install mysqli
+RUN docker-php-ext-install mysqli
+
+# enable leonardos.conf while disabling the default config file
+RUN a2ensite leonardos.conf && a2dissite 000-default.conf
+
+# reload apache
+RUN apachectl -k restart
+
+EXPOSE 80
