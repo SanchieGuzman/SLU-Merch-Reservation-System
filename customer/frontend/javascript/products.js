@@ -9,85 +9,18 @@ async function getBoothDetails() {
     console.log(err);
   }
 }
-//   {
-//     organization_name: "Icon",
-//     organization_id: "1",
-//     products: [
-//       {
-//         product_id: "1",
-//         product_name: "Hoodie",
-//         product_image: "../resources/images/products/hoodie.png",
-//         product_price: 100,
-//         product_quantity: 11,
-//       },
-//       {
-//         product_id: "2",
-//         product_name: "Cap",
-//         product_image: "../resources/images/products/hoodie.png",
-//         product_price: 100,
-//         product_quantity: 12,
-//       },
-//       {
-//         product_id: "3",
-//         product_name: "Bag",
-//         product_image: "../resources/images/products/hoodie.png",
-//         product_price: 100,
-//         product_quantity: 13,
-//       },
-//       {
-//         product_id: "4",
-//         product_name: "Phone case",
-//         product_image: "../resources/images/products/hoodie.png",
-//         product_price: 100,
-//         product_quantity: 14,
-//       },
-//     ],
-//   },
-//   {
-//     organization_name: "Scope",
-//     organization_id: "2",
-//     products: [
-//       {
-//         product_id: "1",
-//         product_name: "hoodie",
-//         product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
-//         product_price: 100,
-//         product_quantity: 10,
-//       },
-//       {
-//         product_id: "2",
-//         product_name: "cap",
-//         product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
-//         product_price: 100,
-//         product_quantity: 10,
-//       },
-//     ],
-//   },
-//   {
-//     organization_name: "Sample",
-//     organization_id: "2",
-//     products: [
-//       {
-//         product_id: "1",
-//         product_name: "hoodie",
-//         product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
-//         product_price: 100,
-//         product_quantity: 10,
-//       },
-//       {
-//         product_id: "2",
-//         product_name: "cap",
-//         product_image: "../resources/images/products/hoodie.png", // Replace with an actual path or Blob instance
-//         product_price: 100,
-//         product_quantity: 10,
-//       },
-//     ],
-//   },
-// ];
 
 window.onload = async function () {
   let booths = await getBoothDetails();
   showBooths(booths);
+
+  const userName = document.cookie.split("=")[1];
+
+  const welcomUser = document.querySelector("#welcome-name");
+  welcomUser.textContent = userName;
+
+  const userNameTopBar = document.querySelector(".username");
+  userNameTopBar.textContent = userName;
 };
 
 function showBooths(booths) {
@@ -129,11 +62,14 @@ function showBooths(booths) {
     const seeAllButton = document.createElement("button");
     seeAllButton.classList.add("see-all-button");
     seeAllButton.textContent = "See All";
-    seeAllButton.addEventListener("click", function () {
+    seeAllButton.addEventListener("click", async function () {
       const boothId = seeAllButton.closest(".booth-container").id;
+
+      let orgProducts = await getBoothProducts(boothId);
+
       const orgName = boothName.textContent;
       // const organizationName = seeAllButton.closest(".booth-name").id;
-      showBoothProducts(boothId, orgName);
+      showBoothProducts(orgName, orgProducts);
     });
     boothNameContainer.appendChild(seeAllButton);
 
@@ -202,6 +138,12 @@ function showBooths(booths) {
       const viewButton = document.createElement("button");
       viewButton.classList.add("view-button");
       viewButton.textContent = "View";
+
+      viewButton.addEventListener("click", function () {
+        const orgName = boothName.textContent;
+        viewProductDetails(orgName);
+      });
+
       viewButtonContainer.appendChild(viewButton);
       itemCard.appendChild(viewButtonContainer);
 
@@ -217,9 +159,24 @@ function showBooths(booths) {
   mainContainer.appendChild(innerContainer);
 }
 
+async function getBoothProducts(orgId) {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/${orgId}/products`,
+      {
+        method: "GET",
+      }
+    );
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 /* ==============Method for See All======================== */
 
-function showBoothProducts(boothId, organizationName) {
+function showBoothProducts(organizationName, products) {
   const mainContainer = document.querySelector(".inner-container");
   const children = Array.from(mainContainer.children);
 
@@ -258,156 +215,6 @@ function showBoothProducts(boothId, organizationName) {
   const productGridContainer = document.createElement("div");
   productGridContainer.classList.add("product-grid-container");
 
-  const products = [
-    {
-      product_id: "1",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "2",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "3",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "1",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "2",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "3",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "1",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "2",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "3",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "1",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "2",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "3",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "1",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "2",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "3",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "1",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "2",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "3",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "1",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "2",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-    {
-      product_id: "3",
-      product_name: "cap",
-      product_image: "../resources/images/products/hoodie.png",
-      product_price: 100,
-      product_quantity: 10,
-    },
-  ];
-
   products.forEach((product) => {
     //item card
     const itemCard = document.createElement("div");
@@ -417,10 +224,20 @@ function showBoothProducts(boothId, organizationName) {
     const itemCardImageContainer = document.createElement("section");
     itemCardImageContainer.classList.add("item-card-image-container");
 
+    // IMMAGE ISSUES
+    // Convert the product.product_image to a Uint8Array
+    const byteArray = new Uint8Array(product.product_image.data);
+
+    // Create a Blob from the byteArray
+    const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
+
+    // Create a temporary object URL for the blob
+    const imageUrl = URL.createObjectURL(blob);
+
     //image
     const itemImage = document.createElement("img");
     itemImage.classList.add("item-image");
-    itemImage.src = product.product_image;
+    itemImage.src = imageUrl;
     itemCardImageContainer.appendChild(itemImage);
 
     itemCard.appendChild(itemCardImageContainer);
@@ -438,7 +255,7 @@ function showBoothProducts(boothId, organizationName) {
     //item price
     const itemPrice = document.createElement("p");
     itemPrice.classList.add("item-price");
-    itemPrice.textContent = "P" + product.product_price;
+    itemPrice.textContent = "P" + product.price;
     itemNameContainer.appendChild(itemPrice);
 
     itemCard.appendChild(itemNameContainer);
@@ -446,7 +263,7 @@ function showBoothProducts(boothId, organizationName) {
     //quantity
     const quantity = document.createElement("p");
     quantity.classList.add("quantity");
-    quantity.textContent = "Stock: " + product.product_quantity;
+    quantity.textContent = "Stock: " + product.quantity;
     itemCard.appendChild(quantity);
 
     //view button container
@@ -457,6 +274,11 @@ function showBoothProducts(boothId, organizationName) {
     const viewButton = document.createElement("button");
     viewButton.classList.add("view-button");
     viewButton.textContent = "View";
+
+    viewButton.addEventListener("click", function () {
+      viewProductDetails(organizationName);
+    });
+
     viewButtonContainer.appendChild(viewButton);
     itemCard.appendChild(viewButtonContainer);
 
@@ -471,4 +293,111 @@ function showBoothProducts(boothId, organizationName) {
     top: 0,
     behavior: "smooth",
   });
+}
+
+// async function getProductDetails(orgId,productId) {
+//   try {
+//     const response = await fetch(
+//       `http://localhost:3000/api/${orgId}/products/${productId}`,
+//       {
+//         method: "GET",
+//       }
+//     );
+//     const result = await response.json();
+//     return result;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
+function viewProductDetails(orgName) {
+  const container = document.querySelector(".inner-container");
+
+  container.innerHTML = "";
+
+  const product = {
+    org_id: 1,
+    product_id: "2",
+    product_name: "cap",
+    product_image: "../resources/images/products/hoodie.png",
+    product_description: "sample description hehehheh hahaha",
+    product_price: 100,
+    product_quantity: 10,
+  };
+
+  const cardHeader = document.createElement("div");
+  cardHeader.classList.add("card-header");
+
+  const boothName = document.createElement("h2");
+  boothName.textContent = orgName;
+  cardHeader.appendChild(boothName);
+
+  container.appendChild(cardHeader);
+
+  //specific product container ====================================start========================
+  const specificProductContainer = document.createElement("div");
+  specificProductContainer.classList.add("specific-product-container");
+
+  const leftContainer = document.createElement("div");
+  leftContainer.classList.add("left-container");
+  specificProductContainer.appendChild(leftContainer);
+
+  const rightContainer = document.createElement("div");
+  rightContainer.classList.add("right-container");
+
+  //product name RIGHT
+  const prodName = document.createElement("h3");
+  prodName.innerText(product.product_name);
+
+  //product description RIGHT
+  const prodDescription = document.createElement("p");
+  prodDescription.innerText(product.product_description);
+
+  //product quantity RIGHT
+  const stock = document.createElement("p");
+  stock.innerText("Stocks left: " + product.product_quantity);
+
+  //quantity selection container  RIGHT (product quantity -1+)
+  const quantitySelectionContainer = document.createElement("div");
+
+  //quantity selector container Right
+  const quantitySelectorContainer = document.createElement("div");
+  const number = document.createElement("input");
+  number.setAttribute("type", "number");
+  number.setAttribute("min", "0");
+  number.setAttribute("max");
+
+  const minusButton = document.createElement("button");
+  minusButton.innerText("-");
+  const plusButton = document.createElement("button");
+  plusButton.textContent = "+";
+
+  quantitySelectorContainer.appendChild(minusButton);
+  quantitySelectorContainer.appendChild(number);
+  quantitySelectionContainer.appendChild(plusButton);
+
+  //quantity
+  const quantity = document.createElement("h3");
+  quantity.innerText("Product Quantity: ");
+
+  //price container
+  const priceContainer = document.createElement("div");
+  const priceText = document.createElement("h3");
+  priceText.innerText("Price: ");
+
+  const lineBreak = document.createElement("hr");
+
+  //total price container
+  const totalPriceContainer = document.createElement("div");
+
+  //buttons container
+  const buttonsContainer = document.createElement("div");
+
+  const addToCartButton = document.createElement("button");
+
+  const placeOrderButton = document.createElement("button");
+
+  specificProductContainer.appendChild(rightContainer);
+
+  container.appendChild(specificProductContainer);
 }

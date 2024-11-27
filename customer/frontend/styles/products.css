@@ -85,6 +85,10 @@ body {
   align-items: flex-start;
 }
 
+#welcome-name,
+.username {
+  text-transform: capitalize;
+}
 .item-card .item-card-image-container {
   width: 100%;
   display: flex;
