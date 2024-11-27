@@ -1,0 +1,39 @@
+services:
+  vendor:
+    container_name: Vendor
+    build:
+      context: .
+      dockerfile: Dockerfile.apache
+    ports:
+      - 80:80
+    depends_on:
+      - leonardosDB
+    volumes:
+      - ./admin:/var/www/html/admin
+    
+  customer:
+    container_name: customer
+    build: 
+      context: .
+      dockerfile: Dockerfile.nodejs
+    ports:
+      - 3000:3000
+    depends_on:
+      - leonardosDB
+    volumes:
+      - ./customer:/app/customer
+
+  leonardosDB:
+    container_name: leonardosDB
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=reservationDB
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

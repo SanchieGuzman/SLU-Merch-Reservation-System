@@ -1,6 +1,6 @@
 <?php
 return [
-    'HOST' => 'localhost',
+    'HOST' => 'leonardosDB',
     'USERNAME' => 'root',
     'PASSWORD' => '',
     'DB_NAME' => 'reservationDB',

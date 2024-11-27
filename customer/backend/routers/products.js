@@ -1,5 +1,7 @@
-//almost similar to login router
+import { Router } from "express";
+import productsController from "../controllers/products.js";
+const productsRouter = Router();
 
-const productsRouter = {}
+productsRouter.get('/products', productsController);
 
 export default productsRouter;
