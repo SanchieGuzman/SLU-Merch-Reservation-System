@@ -123,10 +123,10 @@
     height: 3rem;
     border-radius: 0.3rem;
     border: none;
-    color: black;
+    color: white;
     cursor: pointer;
     margin: 0 auto;
-    background-color: #f8dc2c;
+    background: linear-gradient(to right, #2235a2, #4266ff);
     font-weight: bold;
     border-radius: 25px;
     cursor: pointer;

@@ -4,14 +4,20 @@
     left: 50%;
     transform: translate(-50%, -50%);
     height: auto;
-    width: 90%;
-    max-width: 400px;
+    width: 100%;
+    max-width: 450px;
     background-color: #ededeb;
-    border: 1px solid #2235a2;
+    /* border: 1px solid #2235a2; */
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    box-shadow: 
+  rgba(248, 220, 44, 0.4) -5px 5px, 
+  rgba(248, 220, 44, 0.3) -10px 10px, 
+  rgba(248, 220, 44, 0.2) -15px 15px, 
+  rgba(248, 220, 44, 0.1) -20px 20px, 
+  rgba(248, 220, 44, 0.05) -25px 25px;
 }
 
 #edit-product-title {
@@ -34,7 +40,7 @@ form#edit-product-form {
 label.label {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #201f1f;
+    color: #2235a2;
     margin-bottom: 0.3rem;
 }
 
