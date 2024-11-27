@@ -11,7 +11,18 @@ services:
     volumes:
       - ./admin:/var/www/html/admin
     
-  
+  customer:
+    container_name: customer
+    build: 
+      context: .
+      dockerfile: Dockerfile.nodejs
+    ports:
+      - 3000:3000
+    depends_on:
+      - leonardosDB
+    volumes:
+      - ./customer:/app/customer
+
   leonardosDB:
     container_name: leonardosDB
     image: mysql:latest
