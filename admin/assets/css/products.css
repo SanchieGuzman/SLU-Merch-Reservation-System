@@ -24,7 +24,7 @@ body {
 #overview-container {
   height: 85vh;
   overflow-y: scroll;
-  border: #2235a2 solid 2px;
+  /* border: #2235a2 solid 2px; */
   border-radius: 5px;
   /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
@@ -49,24 +49,26 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.5rem;
   color: white;
-  background-color: #2235a2;
+  /* background-color: #2235a2; */
+  background: linear-gradient(to right, #2235a2, #4266ff);;
   padding: 0.5rem 1rem;
-  border-radius: 5px;
-  font-size: 0.9rem;
+  border-radius: 25px;
+  font-size: 0.85rem;
 }
 
-#add-product-button:hover {
+/* #add-product-button:hover {
   background-color: #ededeb;
   color: #2235a2;
   border: 0.5px solid #2235a2;
   height: 36.8px;
-}
+} */
 
-#add-product-button:hover .add-button-icon {
-  filter: invert(38%) sepia(96%) saturate(3241%) hue-rotate(190deg)
-    brightness(60%) contrast(88%);
+#add-product-button:hover{
+  background-color: #e2e3e5;
+  color: white;
+  transform: scale(1.05); 
 }
 
 #add-product-button > img {
@@ -96,6 +98,78 @@ body {
 }
 
 /* CSS FOR TABLE */
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+/* Container */
+.container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Table Styles */
+table {
+  width: 97%;
+  height: auto;
+  margin: 1rem auto;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Table Header */
+th {
+  background-color: #f8dc2c;
+  color: blacks;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 15px;
+
+}
+
+/* Table Data */
+td {
+  background-color: #ffffff;
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ebebeb;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+/* Button Styles */
+#left-container button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+#left-container button:hover {
+  transform: scale(1.05);
+}
+
+#left-container button:active {
+  transform: scale(1.02);
+}
+
+
+/* CSS FOR TABLE
 table {
   width: 97%;
   height: auto;
@@ -125,4 +199,4 @@ td {
 .delete-btn {
   background-color: #f44336;
   color: white;
-}
+} */

@@ -82,6 +82,8 @@
     display: flex;
     justify-content: center;
     text-align: center;
+    font-size: 12px;
+    font-style: italic;
 }
 
 #name-text-field,
@@ -116,7 +118,7 @@
 }
 
 #add_button{
-    width: 50%;
+    width: 30%;
     margin-top: 1rem;
     height: 3rem;
     border-radius: 0.3rem;
@@ -127,4 +129,7 @@
     background-color: #f8dc2c;
     font-weight: bold;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
