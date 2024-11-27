@@ -1,3 +1,6 @@
+<?php
+    include('../session/session-handling.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +14,6 @@
 
 <body>
     <?php
-        include('../session/session-handling.php');
         include('../sidenav/side-nav-backend.php');
         include('../sidenav/side-nav.php');
         include('../dashboard/dashboard-backend.php');

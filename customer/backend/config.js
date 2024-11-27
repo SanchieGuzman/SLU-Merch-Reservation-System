@@ -7,5 +7,5 @@ export const databaseConfig = {
     host: 'leonardosDB',
     user: 'root',
     password: '',
-    database: 'reservationdb'
+    database: 'reservationDB'
 }

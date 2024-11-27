@@ -13,8 +13,17 @@ async function getBoothDetails() {
 window.onload = async function () {
   let booths = await getBoothDetails();
   showBooths(booths);
-
-  const userName = document.cookie.split("=")[1];
+  
+  const userName = (() => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [key, value] = cookie.split("=");
+      if (key === "username") {
+        return value;
+      }
+    }
+    return null;
+  })();
 
   const welcomUser = document.querySelector("#welcome-name");
   welcomUser.textContent = userName;

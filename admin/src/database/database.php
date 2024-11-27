@@ -118,16 +118,17 @@ class Database
     }
 
     public function getMostOrderedProducts($organizationID, $limit) {
-        $stmt = $this->mysqli->prepare("SELECT COUNT(op.product_id) AS order_count, p.product_name, p.product_image 
-                                FROM orders AS o 
-                                JOIN order_products AS op USING (order_id)
-                                JOIN products AS p USING (product_id)
-                                JOIN organizations AS org USING (organization_id)
-                                WHERE o.status = 'claimed' 
-                                AND org.organization_id = ? 
-                                GROUP BY p.product_name 
-                                ORDER BY order_count DESC
-                                LIMIT ?"); 
+        $stmt = $this->mysqli->prepare("SELECT COUNT(op.product_id) AS order_count, p.product_name, 
+        MAX(p.product_image) AS product_image 
+            FROM orders AS o 
+            JOIN order_products AS op USING (order_id)
+            JOIN products AS p USING (product_id)
+            JOIN organizations AS org USING (organization_id)
+            WHERE o.status = 'claimed' 
+            AND org.organization_id = ? 
+            GROUP BY p.product_name 
+            ORDER BY order_count DESC
+            LIMIT ?");
 
         $stmt->bind_param('ii', $organizationID, $limit);
         $stmt->execute();
