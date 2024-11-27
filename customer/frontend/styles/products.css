@@ -85,6 +85,10 @@ body {
   align-items: flex-start;
 }
 
+.inner-container .bottom-spacer {
+  height: 7rem;
+}
+
 #welcome-name,
 .username {
   text-transform: capitalize;
@@ -166,10 +170,6 @@ body {
   align-items: flex-start;
 }
 
-
-
-
-
 .close-button {
   width: 2rem;
   height: 2rem;
@@ -178,7 +178,7 @@ body {
 }
 
 .specific-product-container {
-  height : 40vh;
+  /* height : 40vh; */
   display: flex;
   border: 1px solid #ddd;
   padding: 2rem;
@@ -188,7 +188,6 @@ body {
   width: 40%;
   display: flex;
   justify-content: center;
-
 }
 
 .left-container-specific-product img {
@@ -278,12 +277,12 @@ body {
   color: white;
   border: none;
   cursor: pointer;
-  font-size: 16px; 
+  font-size: 16px;
   width: 15rem;
 }
 
 .buttons-container button:hover {
-  background-color: #002A6E;
+  background-color: #002a6e;
 }
 
 hr {

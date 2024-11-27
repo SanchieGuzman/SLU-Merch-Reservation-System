@@ -82,7 +82,7 @@ function showBooths(booths) {
       //item card
       const itemCard = document.createElement("div");
       itemCard.classList.add("item-card");
-    
+
       //image container
       const itemCardImageContainer = document.createElement("section");
       itemCardImageContainer.classList.add("item-card-image-container");
@@ -138,11 +138,13 @@ function showBooths(booths) {
       viewButton.classList.add("view-button");
       viewButton.textContent = "View";
       viewButton.addEventListener("click", async function () {
-
         //VIEW BUTTON
-        let productDetails = await getProductDetails(product.organization_id, product.product_id); 
+        let productDetails = await getProductDetails(
+          product.organization_id,
+          product.product_id
+        );
         console.log(productDetails);
-        
+
         const orgName = boothName.textContent;
         viewProductDetails(orgName, productDetails);
       });
@@ -281,7 +283,10 @@ function showBoothProducts(organizationName, products, organization_id) {
 
     viewButton.addEventListener("click", async function () {
       //VIEW BUTTON
-      let productDetails = await getProductDetails(organization_id, product.product_id); 
+      let productDetails = await getProductDetails(
+        organization_id,
+        product.product_id
+      );
       console.log(productDetails);
       viewProductDetails(organizationName, productDetails);
     });
@@ -292,6 +297,11 @@ function showBoothProducts(organizationName, products, organization_id) {
     productGridContainer.appendChild(itemCard);
   });
   productsContainer.appendChild(productGridContainer);
+
+  const bottomSpacer = document.createElement("div");
+  bottomSpacer.classList.add("bottom-spacer");
+  productsContainer.appendChild(bottomSpacer);
+
   mainContainer.appendChild(productsContainer);
 
   //this is for scrolling back to top when you're below
@@ -302,7 +312,7 @@ function showBoothProducts(organizationName, products, organization_id) {
   });
 }
 
-async function getProductDetails(orgId,productId) {
+async function getProductDetails(orgId, productId) {
   try {
     const response = await fetch(
       `http://localhost:3000/api/${orgId}/products/${productId}`,
@@ -341,13 +351,12 @@ function viewProductDetails(orgName, product) {
   const closeButton = document.createElement("button");
   closeButton.classList.add("close-button");
   closeButton.src = "../resources/images/products/returnButton.png";
-  closeButton.addEventListener("click", async function (){
+  closeButton.addEventListener("click", async function () {
     const mainContainer = document.querySelector(".content-container");
     mainContainer.innerHTML = "";
     let booths = await getBoothDetails();
     showBooths(booths);
-
-  })
+  });
   cardHeader.appendChild(boothName);
   cardHeader.appendChild(closeButton);
   container.appendChild(cardHeader);
@@ -366,17 +375,16 @@ function viewProductDetails(orgName, product) {
   const byteArray = new Uint8Array(product.product_image.data);
 
   // Create a Blob from the byteArray
-    const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
+  const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
 
   // Create a temporary object URL for the blob
   const imageUrl = URL.createObjectURL(blob);
   productImage.src = imageUrl;
   // productImage.src = product.product_image;
   productImage.alt = product.product_name;
-  leftContainer.appendChild(productImage);//append image to left container
+  leftContainer.appendChild(productImage); //append image to left container
 
-  specificProductContainer.appendChild(leftContainer);//append left container to specific product container
- 
+  specificProductContainer.appendChild(leftContainer); //append left container to specific product container
 
   //right  container =================================start============
   const rightContainer = document.createElement("div");
@@ -384,7 +392,9 @@ function viewProductDetails(orgName, product) {
 
   //product name RIGHT
   const prodName = document.createElement("h3");
-  prodName.textContent = product.product_name.charAt(0).toUpperCase()+product.product_name.slice(1);
+  prodName.textContent =
+    product.product_name.charAt(0).toUpperCase() +
+    product.product_name.slice(1);
   rightContainer.appendChild(prodName);
 
   //product description RIGHT
@@ -394,9 +404,8 @@ function viewProductDetails(orgName, product) {
 
   //product quantity RIGHT
   const stock = document.createElement("p");
-  stock.textContent= "Stocks left: " + product.product_quantity;
+  stock.textContent = "Stocks left: " + product.product_quantity;
   rightContainer.appendChild(stock);
-
 
   //quantity container  RIGHT (product quantity -1+)
   const quantityContainer = document.createElement("div");
@@ -407,7 +416,7 @@ function viewProductDetails(orgName, product) {
   quantityText.textContent = "Product Quantity: ";
 
   //quantity selector controls container Right
-  const quantityControls  = document.createElement("div");
+  const quantityControls = document.createElement("div");
   quantityControls.classList.add("quantity-controls");
 
   const minusButton = document.createElement("button");
@@ -427,13 +436,12 @@ function viewProductDetails(orgName, product) {
 
   quantityControls.appendChild(minusButton);
   quantityControls.appendChild(quantityInput);
-  quantityControls.appendChild(plusButton);//this is the controls (- 1 +)
+  quantityControls.appendChild(plusButton); //this is the controls (- 1 +)
 
   quantityContainer.appendChild(quantityText);
   quantityContainer.appendChild(quantityControls);
-  rightContainer.appendChild(quantityContainer);//append the quantity and controls
+  rightContainer.appendChild(quantityContainer); //append the quantity and controls
 
-  
   //price container
   const priceContainer = document.createElement("div");
   priceContainer.classList.add("price-container");
@@ -443,73 +451,72 @@ function viewProductDetails(orgName, product) {
 
   const lineBreak = document.createElement("hr");
 
-   priceContainer.appendChild(priceText);
-   priceContainer.appendChild(lineBreak);
+  priceContainer.appendChild(priceText);
+  priceContainer.appendChild(lineBreak);
 
-   // total price
-   const totalInfo = document.createElement("h3");
-   totalInfo.textContent = "Total: P " + product.product_price;
-   totalInfo.id = "totalPrice";
-  
-   // append price container and total info
-   rightContainer.appendChild(priceContainer);
-   rightContainer.appendChild(totalInfo);
+  // total price
+  const totalInfo = document.createElement("h3");
+  totalInfo.textContent = "Total: P " + product.product_price;
+  totalInfo.id = "totalPrice";
 
-   const buttonsContainer = document.createElement("div");
-   buttonsContainer.classList.add("buttons-container");
- 
-   const addToCartButton = document.createElement("button");
-   addToCartButton.textContent = "Add to Cart";
- 
-   const placeOrderButton = document.createElement("button");
-   placeOrderButton.textContent = "Place Order";
- 
-   buttonsContainer.appendChild(addToCartButton);
-   buttonsContainer.appendChild(placeOrderButton);
- 
-   rightContainer.appendChild(buttonsContainer);
- 
-   specificProductContainer.appendChild(rightContainer);
-   container.appendChild(specificProductContainer);
+  // append price container and total info
+  rightContainer.appendChild(priceContainer);
+  rightContainer.appendChild(totalInfo);
 
+  const buttonsContainer = document.createElement("div");
+  buttonsContainer.classList.add("buttons-container");
 
-   //EVENT LISTENERS FOR BUTTONS
-   minusButton.addEventListener("click", () =>{
-    let currentQuantity = parseInt(quantityInput.value)
-    if(currentQuantity>1){
+  const addToCartButton = document.createElement("button");
+  addToCartButton.textContent = "Add to Cart";
+
+  const placeOrderButton = document.createElement("button");
+  placeOrderButton.textContent = "Place Order";
+
+  buttonsContainer.appendChild(addToCartButton);
+  buttonsContainer.appendChild(placeOrderButton);
+
+  rightContainer.appendChild(buttonsContainer);
+
+  specificProductContainer.appendChild(rightContainer);
+  container.appendChild(specificProductContainer);
+
+  //EVENT LISTENERS FOR BUTTONS
+  minusButton.addEventListener("click", () => {
+    let currentQuantity = parseInt(quantityInput.value);
+    if (currentQuantity > 1) {
       currentQuantity--;
       quantityInput.value = currentQuantity;
       updateTotalPrice(currentQuantity, product.product_price);
     }
-   });
+  });
 
-   plusButton.addEventListener("click", () =>{
-    let currentQuantity = parseInt(quantityInput.value)
-    if(currentQuantity<product.product_quantity){
+  plusButton.addEventListener("click", () => {
+    let currentQuantity = parseInt(quantityInput.value);
+    if (currentQuantity < product.product_quantity) {
       currentQuantity++;
       quantityInput.value = currentQuantity;
       updateTotalPrice(currentQuantity, product.product_price);
     }
-   });
+  });
 
-   quantityInput.addEventListener("input", () =>{
-    let currentQuantity = parseInt(quantityInput.value)
+  quantityInput.addEventListener("input", () => {
+    let currentQuantity = parseInt(quantityInput.value);
 
-
-    if(currentQuantity>product.product_quantity){
+    if (currentQuantity > product.product_quantity) {
       quantityInput.value = product.product_quantity;
       currentQuantity = product.product_quantity;
-      
     }
-    if(currentQuantity<1 || isNaN(currentQuantity)){
+    if (currentQuantity < 1 || isNaN(currentQuantity)) {
       quantityInput.value = 1;
       currentQuantity = 1;
     }
     updateTotalPrice(currentQuantity, product.product_price);
-   });
+  });
 
-   function updateTotalPrice(quantity, price){
-    const totalPrice = quantity *price;
-    totalInfo.textContent = `Total (${quantity} item${quantity > 1 ? "s" : ""}): P ${totalPrice}`;
-   }
+  function updateTotalPrice(quantity, price) {
+    const totalPrice = quantity * price;
+    totalInfo.textContent = `Total (${quantity} item${
+      quantity > 1 ? "s" : ""
+    }): P ${totalPrice}`;
+  }
 }
