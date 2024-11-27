@@ -7,7 +7,7 @@
 .order-details {
   width: 60%;
   height: 80vh;
-  border: 0.2rem solid #2235a2;
+  /* border: 0.2rem solid #2235a2; */
   border-radius: 0.5rem;
   /* margin: 5% auto; */
   overflow-y: scroll;
@@ -16,6 +16,13 @@
   left: 50%;
   transform: translate(-5000%, -50%);
   background-color: white;
+  box-shadow: 
+  rgba(34, 53, 162, 0.4) -5px 5px, 
+  rgba(34, 53, 162, 0.3) -10px 10px, 
+  rgba(34, 53, 162, 0.2) -15px 15px, 
+  rgba(34, 53, 162, 0.1) -20px 20px, 
+  rgba(34, 53, 162, 0.05) -25px 25px;
+
 }
 
 .order-details.active {
@@ -25,16 +32,17 @@
 /* upper */
 .upperCont {
   display: flex;
+  color: rgb(34, 53, 162);
+  font-size: 1rem;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border: 1px solid blue;
   position: sticky;
   top: 0;
   width: 100%;
   height: 10%;
-  background-color: #f3d64c;
+  background-color: #ededeb;
   z-index: 10;
   border-radius: 0.5 0.5rem 0 0;
 }
@@ -60,6 +68,8 @@
 
 .cards-grid .customer-name {
   grid-column: 1 / -1;
+  font-weight: bold;
+  color: black;
 }
 
 .cards-grid .order-card {
@@ -67,7 +77,8 @@
   flex-flow: column nowrap;
   align-items: center;
   justify-content: space-around;
-  border: 1px solid black;
+  border: 1px solid rgb(34, 53, 162);
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
   padding: 1rem;
   gap: 0.2rem;
   border-radius: 0.5rem;

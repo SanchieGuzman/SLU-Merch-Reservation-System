@@ -23,6 +23,9 @@ body {
   width: 100%;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  background-color: #f8dc2c;
+  color: black;
 }
 
 .top-container .search-container {
@@ -60,7 +63,7 @@ body {
 }
 
 .card {
-  border: 1px solid black;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
   width: 100%;
   height: 100%;
   padding: 0.5rem;
@@ -89,22 +92,35 @@ body {
 
 .card .view-button {
   width: 100%;
-  background-image: linear-gradient(to right, #3a50cb, #15268b);
+  background-image: linear-gradient(to right, #2235a2, #4266ff);
   color: white;
   border: none;
   height: 2.5rem;
   font-size: 1rem;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
+  border-radius: 25px;
+}
+
+.card .view-button:hover {
+  background-color: #1b2d85;
+  transform: scale(1.05);
 }
 
 .card .served-button {
   width: 100%;
-  background-image: linear-gradient(to right, #3a50cb, #15268b);
-  color: white;
-  border: none;
+  background-color: #ededeb;
+  color: black;
   height: 2.5rem;
   font-size: 1rem;
+  border-radius: 25px;
+  border: 1px solid #2235a2;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+}
+
+.card .served-button:hover {
+  background-color: #ededeb;
+  transform: scale(1.05);
 }
 
 #orders-content .page-number {
@@ -132,8 +148,8 @@ body {
 }
 
 .page-number .pages-container .active {
-  background-color: #fecb41;
-  color: white;
+  background-color: #f8dc2c;
+  color: black;
   border: none;
 }
 

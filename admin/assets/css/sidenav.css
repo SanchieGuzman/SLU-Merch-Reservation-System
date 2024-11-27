@@ -28,7 +28,6 @@
 .form {
   height: 90%;
 }
-
 .buttons-container {
   padding-top: 2.7rem;
   display: flex;
@@ -53,20 +52,35 @@
   box-sizing: border-box;
   background-color: transparent;
   color: #ededeb;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Active Button Styling */
 .active-button {
-  background-color: #ededeb; 
+  background-color: #ededeb;
   color: rgb(0, 0, 0);
-  border-radius: 0 2rem 2rem 0; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+  border-radius: 0 2rem 2rem 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
 .active-button:hover {
-  background-color: #d6d6d4; 
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+  background-color: #d6d6d4;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05); 
+}
+
+/* Default Button Styling */
+.default-button {
+  background-color: transparent; 
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.default-button:hover {
+  background-color: transparent; 
+  transform: scale(1.05); 
 }
 
 .default-icon {
