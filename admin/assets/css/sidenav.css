@@ -5,8 +5,8 @@
   left: 0;
   width: 15%;
   height: 100vh;
-  background-color: #fecb41;
-  border-right: 1px solid black;
+  background: radial-gradient(circle at 0% 0%, #2e3353, #2540de, #121e63);
+  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .profile {
@@ -17,7 +17,8 @@
   width: 100%;
   padding: 10% 5%;
   height: 10%;
-  border-bottom: 1px solid white;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  color: #f8dc2c;
 }
 
 .profile img {
@@ -27,7 +28,6 @@
 .form {
   height: 90%;
 }
-
 .buttons-container {
   padding-top: 2.7rem;
   display: flex;
@@ -39,6 +39,9 @@
 .active-button {
   height: 4rem;
   padding-left: 18%;
+  padding-bottom: 5%;
+  padding-top: 5%;
+  margin-bottom: 5%;
   font-size: 1.2rem;
   display: flex;
   align-items: center;
@@ -48,25 +51,49 @@
   width: 100%;
   box-sizing: border-box;
   background-color: transparent;
+  color: #ededeb;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Active Button Styling */
 .active-button {
-  background-color: #2235a2;
-  color: white;
+  background-color: #ededeb;
+  color: rgb(0, 0, 0);
   border-radius: 0 2rem 2rem 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.active-button:hover {
+  background-color: #d6d6d4;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05); 
+}
+
+/* Default Button Styling */
+.default-button {
+  background-color: transparent; 
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.default-button:hover {
+  background-color: transparent; 
+  transform: scale(1.05); 
 }
 
 .default-icon {
   width: 1.5rem;
   height: 1.5rem;
-  filter: invert(38%) sepia(96%) saturate(3241%) hue-rotate(233deg)
-    brightness(0%) contrast(88%);
+  filter: none;
 }
 
 .active-icon {
   width: 1.5rem;
   height: 1.5rem;
-  filter: none;
+  filter: invert(38%) sepia(96%) saturate(3241%) hue-rotate(233deg)
+  brightness(0%) contrast(88%);
 }
 
 .spacer {

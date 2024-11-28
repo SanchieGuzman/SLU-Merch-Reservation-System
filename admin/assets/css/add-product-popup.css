@@ -1,18 +1,24 @@
 #add-product-pop-up-container{
     position: absolute;
-    top: 50%; /* Move down 50% of the viewport height */
-            left: 50%; /* Move right 50% of the viewport width */
-            transform: translate(-50%, -50%); /* Offset by half its own width and height */
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
     height: 520px;
     width: 800px;
-    background-color: rgb(235, 235, 235);
-    border: solid #2235a2 3px;
+    background: #ededeb;
     border-radius: 10px;
     padding: 1rem;
+    box-shadow: 
+  rgba(248, 220, 44, 0.4) -5px 5px, 
+  rgba(248, 220, 44, 0.3) -10px 10px, 
+  rgba(248, 220, 44, 0.2) -15px 15px, 
+  rgba(248, 220, 44, 0.1) -20px 20px, 
+  rgba(248, 220, 44, 0.05) -25px 25px;
+
 }
 
 #top{
-    background-color: #fecb41;
+    background-color: #f8dc2c;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,16 +26,18 @@
     border-radius: 5px;
     padding-bottom: 10px;
     margin-bottom: 1rem;
+    height: 3rem;
 }
 
 #title{
-    color: #2235a2;   
+    color: black;   
+    font-size: 1.2rem;
 }
 
 #close-button{
     all: unset;
-    width: 1.5rem; 
-    height: 1.5rem;
+    width: 0.7rem; 
+    height: 0.7rem;
     background-image: url('../images/close-logo.svg'); 
     background-size: cover; 
     background-position: center; 
@@ -38,13 +46,14 @@
 
 #add-product-form{
     margin: 0 1rem 0 1rem;
+    color: rgb(92, 89, 89);
 }
 
 #add-product-form, 
 #divider{
     display: grid;
     grid-template-columns: repeat(2, 2fr);
-    gap: 0.7rem;
+    gap: 0.8rem;
 }
 
 #add-product-form .label,
@@ -55,25 +64,50 @@
 #message,
 #add_button{
     grid-column: 1/3;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+#image-upload{
+    color:#f4436f;
+}
+
+#add-product-form .label{
+    color: #2235a2;
+}
+
+#add-product-form #message{
+    color: #f4436f;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+    font-style: italic;
 }
 
 #name-text-field,
 #price-text-field,
 #quantity-text-field{
-    font-size: 1rem;
+    font-size: 0.9rem;
     height: 2.8rem;
     width: 100%;
-    padding-left: 0.5rem;
     border-radius: 0.3rem;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    padding-left: 1rem;
 }
 
 #description-text-field{
     height: 100%; 
     width: 100%; 
-    resize:none;
+    resize: none;
     padding: 0.5rem 0.5rem;
     border-radius: 0.3rem;
-    border: 1px solid black; 
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    padding-left: 1rem;
+    border: 1px;
 }
 
 #left, #right {
@@ -83,12 +117,18 @@
 }
 
 #add_button{
-    width: 100%;
-    margin-top: 0.5rem;
+    width: 30%;
+    margin-top: 1rem;
     height: 3rem;
     border-radius: 0.3rem;
     border: none;
     color: white;
     cursor: pointer;
-    background-image: linear-gradient(to right,#3a50cb,#15268b) ;
+    margin: 0 auto;
+    background: linear-gradient(to right, #2235a2, #4266ff);
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
+

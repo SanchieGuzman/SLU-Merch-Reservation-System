@@ -1,21 +1,24 @@
 #delete-schedule-popup {
-  position: absolute;
-  left: 43%;
-  right: 57%;
-  top: 40%;
-  background-color: rgb(235, 235, 235);
-  z-index: 500;
-  width: 28%;
-  height: 28%;
-  padding: 1rem 1rem;
-  border-radius: 0.3rem;
-  border: 3px solid #2235a2;
+  position: fixed;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    background-color: #fff;
+    /* border: 2px solid #2235a2; */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    font-family: 'Poppins', Arial, sans-serif;
+    z-index: 1000;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 #delete-schedule-header{
   padding: 0.5rem 0.6rem;
   border-radius: 0.3rem;
-  background-color: #fecb41;
+  background-color: transparent;
   color: #2235a2;
   margin-bottom: 4%;
 }
@@ -35,11 +38,20 @@
 
 #delete-schedule-action-container button{
   width: 100%;
-  margin-top: 1.4rem; 
+  margin-top: 0.5rem;
   height: 2.4rem;
-  border-radius: 0.3rem;
+  border-radius: 25px;
   border: none;
   color: white;
   cursor: pointer;
-  background-image: linear-gradient(to right, #3a50cb, #15268b); 
+  background-image: linear-gradient(to right, #2235a2, #4266ff);
+  font-family: 'Poppins', sans-serif; 
+  font-size: 1rem; 
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#delete-schedule-action-container button:hover {
+  background-color: #1b2d85; 
+  transform: scale(1.05);
 }

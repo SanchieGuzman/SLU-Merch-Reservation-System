@@ -19,13 +19,14 @@
     transform: translate(-50%, -50%);
     width: 450px;
     background-color: #fff;
-    border: 2px solid #2235a2;
+    /* border: 2px solid #2235a2; */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
     font-family: 'Poppins', Arial, sans-serif;
     z-index: 1000;
     text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 #delete-product-pop-up-container h1 {
@@ -57,6 +58,8 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    height: 40px;
+    border-radius: 25px;
 }
 
 #cancel-button-delete-popup {
@@ -71,7 +74,7 @@
 
 #delete-button {
     background: linear-gradient(to right, #2235a2, #4266ff);
-    color: #fff;
+    color: #ededeb;
 }
 
 #delete-button:hover {

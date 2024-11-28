@@ -135,9 +135,7 @@ function loadUIForAddEntry() {
   // Message Element
   var message = document.createElement("div");
   message.setAttribute("id", "message");
-  message.style.color = "red"; // Style the message (optional)
-  message.style.display = "none"; // Hide the message by default
-  form.appendChild(message);
+  form.appendChild(message); 
 
   // Form Submit Event Listener
   form.addEventListener("submit", function (event) {
