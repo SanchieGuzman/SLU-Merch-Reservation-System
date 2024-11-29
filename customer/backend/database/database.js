@@ -104,18 +104,45 @@ class Database {
             return results; 
 
         }catch(err){
-            console.log("Error executing queyr");
+            console.log("Error executing query");
+            return false;
         }
     }
 
     //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
     async gaddToCart(organization_id, user_id, product_id, quantity){
-        return null
+        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity) VALUES (?,?,?,?);';
+        const params = [user_id, product_id, organization_id, quantity];
+        try{
+            const result = await this.execute(query, params);
+            if(result.affectedRows>0){
+                return true;
+            }else{
+                return false;
+            }
+        }catch{
+            console.error('Error adding to cart:', err);
+            throw err;
+        }
     }
     
     //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
     async getCart(user_id){
-        return null
+                                                                                                                                //NOTE that i used "AS product_price, product_quantity to conform with fetch express"
+        const query = `Select c.organization_id, o.organization_name, c.product_id, p.product_name , p.product_image,p.price AS product_price, c.quantity AS product_quantity, c.total
+                        FROM cart AS c
+                        JOIN products as P ON c.product_id = p.product_id 
+                        JOIN organizations as o ON o.organization_id = p.organization_id 
+                        WHERE c.user_id = ?;`;
+        const params = [user_id];
+        try {
+            const results = await this.execute(query, params);
+            return results; 
+        }catch(err){
+            console.log("Error executing query");
+            return false;
+        }
+        
     }
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
     execute(query, params = []) {       
