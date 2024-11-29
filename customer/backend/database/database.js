@@ -107,6 +107,16 @@ class Database {
             console.log("Error executing queyr");
         }
     }
+
+    //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
+    async gaddToCart(organization_id, user_id, product_id, quantity){
+        return null
+    }
+    
+    //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
+    async getCart(user_id){
+        return null
+    }
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
     execute(query, params = []) {       
         return new Promise((resolve, reject) => {
