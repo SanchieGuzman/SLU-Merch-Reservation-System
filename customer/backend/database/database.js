@@ -144,6 +144,29 @@ class Database {
         }
         
     }
+
+    async getOrders(user_id){                                                                                                           //NOTE that i used "AS product_price, product_quantity to conform with fetch express"
+        const query = `SELECT o.order_id, org.organization_id, org.organization_name, o.created_at, o.claimed_at, o.total, o.status, o.schedule_id, 
+                    os.location,
+                    op.product_id, op.quantity, op.total AS product_price,
+                    p.product_name, p.product_image
+                    FROM organization_schedules AS os
+                    JOIN orders AS o ON os.schedule_id = o.schedule_id
+                    JOIN order_products AS op ON o.order_id = op.order_id
+                    JOIN products AS p ON op.product_id = p.product_id
+                    JOIN organizations AS org ON p.organization_id = org.organization_id
+                    WHERE o.customer_id = ? ORDER BY o.order_id DESC`;
+        const params = [user_id];
+        try {
+            const results = await this.execute(query, params);
+            return results; 
+        }catch(err){
+            console.log("Error executing query");
+            return false;
+        }
+        
+    }
+
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
     execute(query, params = []) {       
         return new Promise((resolve, reject) => {
