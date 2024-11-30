@@ -6,7 +6,7 @@ const getOrdersController = async(req, res)=>{
     const result = await db.getOrders(user_id);
     try{
         if(result){
-            const map = new Map();
+            const ordersMap = new Map();
             for (const item of result) {
                 const orderId = item.order_id;
 
@@ -29,7 +29,7 @@ const getOrdersController = async(req, res)=>{
                     product_name: item.product_name,
                     product_image: item.product_image,
                     product_price: item.product_price,
-                    product_quantity: item.quantity,
+                    quantity: item.quantity,
                 });
             }
 
