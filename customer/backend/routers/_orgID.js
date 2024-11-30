@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { seeAllProductsController, viewProductController, completeOrderController } from "../controllers/_orgID.js";
+import { seeAllProductsController, viewProductController, placeOrderController, completeOrderController } from "../controllers/_orgID.js";
 
 
 const _orgIDRouter = Router()
@@ -8,6 +8,8 @@ const _orgIDRouter = Router()
 _orgIDRouter.get('/:orgid/products', seeAllProductsController)
 
 _orgIDRouter.get('/:orgid/products/:prodid', viewProductController)
+
+_orgIDRouter.get('/:orgid/schedules', placeOrderController);
 
 _orgIDRouter.post('/:orgid/checkout', completeOrderController)
 

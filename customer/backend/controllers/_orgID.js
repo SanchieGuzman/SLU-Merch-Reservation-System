@@ -12,7 +12,6 @@ const seeAllProductsController = async(req, res)=>{
     }    
 }
 
-//to be implemented by leonhard
 const viewProductController = async(req, res)=>{
     try {
         const orgID = req.params.orgid;
@@ -45,6 +44,30 @@ const viewProductController = async(req, res)=>{
     }
 }
 
+const placeOrderController = async(req, res) => {
+    try {
+        const orgID = req.params.orgid;
+        const db = Database.getInstance();
+        const schedules = await db.getValidSchedules(orgID);
+
+        if (schedules) {
+            return res.status(200).json({
+                message: "Schedules fetched successfully.",
+                schedules,
+            });
+        } else {
+            return res.status(400).json({
+                message: "No schedules found",
+            });
+        }
+    } catch(error) {
+        return res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message,
+        });
+    }
+}
+
 const completeOrderController = async(req, res) => {
     try {
         const order = req.body;
@@ -55,30 +78,25 @@ const completeOrderController = async(req, res) => {
         const products = order.products;
 
         for (const product of products) {
-            const price = await db.getProductPrice(product.product_id);
-            const productTotal = product.quantity * price;
-
+            const productPrice = await db.getProductPrice(product.product_id);
+            const productTotal = product.quantity * productPrice.price;
+            
             product.total = productTotal;
             overallTotal += productTotal;
         }
 
-        const createdAt = new Date().toISOString();
-
         const orderData = {
             customer_id: order.user_id,
-            created_at: createdAt,
             total: overallTotal,
-            status: 'Pending',
-            claimed_at: null,
             schedule_id: order.schedule_id,
             products: products,
-        };
+        }
 
         const result = await db.placeOrder(orderData);
 
         if (result) {
             return res.status(200).json({
-                message: "Order placed successfully"
+                message: "Order placed successfully",
             });
         } else {
             return res.status(400).json({
@@ -93,4 +111,4 @@ const completeOrderController = async(req, res) => {
     }
 }
 
-export  {seeAllProductsController, viewProductController, completeOrderController};
+export  {seeAllProductsController, viewProductController, placeOrderController, completeOrderController};
