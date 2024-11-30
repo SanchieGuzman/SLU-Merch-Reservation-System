@@ -45,4 +45,51 @@ const viewProductController = async(req, res)=>{
     }
 }
 
-export  {seeAllProductsController, viewProductController};
+const completeOrderController = async(req, res) => {
+    try {
+        const order = req.body;
+
+        const db = Database.getInstance();
+
+        let overallTotal = 0;
+        const products = order.products;
+
+        products.foreach(product => {
+            const quantity = product.quantity;
+            const price = db.getProductPrice(product.product_id);
+            const productTotal = quantity * price;
+
+            product.total = productTotal;
+
+            overallTotal += productTotal;
+        });
+
+        const createdAt = new Date().toISOString();
+
+        const orderData = {
+            customer_id: order.user_id,
+            created_at: createdAt,
+            total: overallTotal,
+            status: 'Pending',
+            claimed_at: null,
+            schedule_id: order.schedule_id,
+        }
+
+        if (db.placeOrder(orderData)) {
+            return res.status(200).json({
+                message: "Order placed successfully"
+            });
+        } else {
+            return res.status(400).json({
+                message: "Failed to handle request"
+            });
+        }
+    } catch(error) {
+        return res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message,
+        });
+    }
+}
+
+export  {seeAllProductsController, viewProductController, completeOrderController};

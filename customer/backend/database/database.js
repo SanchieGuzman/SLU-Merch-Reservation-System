@@ -74,6 +74,12 @@ class Database {
         const result = await this.execute(query, params);
         return result[0];
     }
+    async getProductPrice(productID) {
+        const query = `SELECT price FROM products WHERE product_id = ?;`
+        const params = [productID];
+        const result = await this.execute(query, params);
+        return result[0];
+    }
     async getFirstProductsOfEachOrg(){
         const query = `
                 SELECT 
@@ -105,6 +111,44 @@ class Database {
 
         }catch(err){
             console.log("Error executing queyr");
+        }
+    }
+    async placeOrder(order) {
+        try {
+            await this.execute("START TRANSACTION");
+
+            const orderQuery = 
+                `INSERT INTO orders (customer_id, created_at, total, status, claimed_at, schedule_id) 
+                VALUES (?, ?, ?, ?, ?, ?)`;
+
+            const orderParams = [
+                order.customer_id,
+                order.created_at,
+                order.total,
+                order.status,
+                order.claimed_at,
+                order.schedule_id,
+            ];
+
+            const result = await this.execute(orderQuery, orderParams);
+
+            const orderID = result.insertId;
+
+            const orderProductsQuery = `INSERT INTO order_products (order_id, product_id, quantity, total)`
+
+            const orderProductsInsertPromises = order.products.map(product => {
+                const orderProductsParams = [orderID, product.product_id, product.quantity, product.total];
+                return this.execute(orderProductsQuery, orderProductsParams);
+            });
+
+            await Promise.all(orderProductsInsertPromises);
+
+            await this.execute("COMMIT");
+
+            return result;
+        } catch(error) {
+            await this.execute("ROLLBACK");
+            console.error("Error placing order");
         }
     }
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
