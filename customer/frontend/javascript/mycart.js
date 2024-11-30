@@ -5,14 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-var cartButton = document.getElementById('cart')
-cartButton.addEventListener('click', function(){
-  const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000) // I made this dynamic for the purpose of docker
-  const cartUrl = `${currentUrl}/pages/mycart.html`;
-  // Redirect the user to the dashboard page
-  window.location.href = cartUrl;
-});
-
 const data = {
   orgArray: [
     {
@@ -63,39 +55,41 @@ const data = {
 };
 
 function showCart(){
-  const mainContainer =  document.querySelector('.cart-content-container');
+  const mainContainer =  document.querySelector('.card-content-container');
 
   const innerContainer = document.createElement('div');
   innerContainer.classList.add("inner-container");
 
   //Card Header
-  const cartHeader = document.createElement('div');
-  cartHeader.classList.add('cart-header');
+  const cardHeader = document.createElement('div');
+  cardHeader.classList.add('card-header');
 
-  const cartTitle = document.createElement('h1');
-  cartTitle.textContent = "Your Cart";
-  cartHeader.appendChild(cartTitle);
+  const cardTitle = document.createElement('h1');
+  cardTitle.textContent = "Your Cart";
+  cardHeader.appendChild(cardTitle);
 
-  const cartHeaderImage = document.createElement('img');
-  cartHeaderImage.src = "../resources/images/cart/cart-header-icon.png";
-  cartHeader.appendChild(cartHeaderImage);
-  innerContainer.appendChild(cartHeader);
+  const cardHeaderImage = document.createElement('img');
+  cardHeaderImage.src = "../resources/images/cart/cart-header-icon.png";
+  cardHeader.appendChild(cardHeaderImage);
+  innerContainer.appendChild(cardHeader);
 
   //Item Cards
   data.orgArray.forEach((datum) => {
     const itemCardContainer = document.createElement('div');
     itemCardContainer.classList.add('item-card-container');
 
-    //Item Card Header
-    const itemCardHeader = document.createElement('div');
-    itemCardHeader.classList.add('item-card-header');
+    //product title
+    const productTitle = document.createElement('div');
+    productTitle.classList.add('product-title'); 
 
+    //Left Header
     const leftHeader = document.createElement('h1');
     leftHeader.classList.add('booth-name')
     leftHeader.textContent = `Item's from ${datum.organization_name}`;
 
-    itemCardHeader.appendChild(leftHeader);
+    productTitle.appendChild(leftHeader);
 
+    //Right Header
     const rightHeader = document.createElement('div');
     rightHeader.classList.add('column-headers');
 
@@ -114,15 +108,17 @@ function showCart(){
     columnHeaderTotal.textContent = "Total";
     rightHeader.appendChild(columnHeaderTotal);
 
-    itemCardHeader.appendChild(rightHeader);
-    itemCardContainer.appendChild(itemCardHeader);
+    productTitle.appendChild(rightHeader);
+
+    itemCardContainer.appendChild(productTitle);
 
     datum.products.forEach((product) => {
       const productContainer = document.createElement('div');
       productContainer.classList.add('product-container');
 
-      const productDetailsContainer = document.createElement('div');
-      productDetailsContainer.classList.add('product-details-container');
+      //product info
+      const productInfoContainer = document.createElement('div');
+      productInfoContainer.classList.add('product-info-container');
 
       const imageContainer = document.createElement('div');
       imageContainer.classList.add('image-container');
@@ -130,29 +126,83 @@ function showCart(){
       const productImage = document.createElement('img');
       productImage.src = product.product_image;
       imageContainer.appendChild(productImage);
-      productDetailsContainer.appendChild(imageContainer);
 
-      productContainer.appendChild(productDetailsContainer);
+      const productName = document.createElement('p');
+      productName.textContent = product.product_name;
+
+      productInfoContainer.appendChild(imageContainer);
+      productInfoContainer.appendChild(productName);
+
+      //product actions
+      const productActionsContainer = document.createElement('div');
+      productActionsContainer.classList.add('product-actions-container');
+
+      //Product Price
+      const productPrice = document.createElement('p');
+      productPrice.classList.add('product-price');
+      productPrice.textContent = `P ${product.product_price}`;
+      productActionsContainer.appendChild(productPrice);
+
+      //Product Quantity
+      const productQuantity = document.createElement('div');
+      productQuantity.classList.add('product-quantity');
+
+      const minusButton = document.createElement("button");
+      minusButton.classList.add("qty-count--minus");
+      minusButton.textContent = "-";
+      productQuantity.appendChild(minusButton);
+
+      const quantityInput = document.createElement("input");
+      quantityInput.classList.add("input-box");
+      quantityInput.setAttribute("type", "number");
+      quantityInput.setAttribute("min", "1");
+      quantityInput.setAttribute("value", "1");
+      quantityInput.setAttribute("max", product.product_quantity);
+      productQuantity.appendChild(quantityInput);
+
+      const plusButton = document.createElement("button");
+      plusButton.classList.add("qty-count--plus");
+      plusButton.textContent = "+";
+      productQuantity.appendChild(plusButton);
+
+      productActionsContainer.appendChild(productQuantity);
+
+      //Product Total
+      const productTotal = document.createElement('p')
+      productTotal.classList.add('product-total');
+      productTotal.textContent = `P ${product.total}`;
+      productActionsContainer.appendChild(productTotal);
+
+      productContainer.appendChild(productInfoContainer);
+      productContainer.appendChild(productActionsContainer);
+
       itemCardContainer.appendChild(productContainer);
-      
     });
 
     //Item Card Footer
     const itemCardFooter  = document.createElement('div');
     itemCardFooter.classList.add('item-card-footer');
 
-    const checkoutButton = document.createElement('button');
-    checkoutButton.classList.add('checkout-button');
-    checkoutButton.textContent = "Checkout";
-    itemCardFooter.appendChild(checkoutButton);
+    const subtotalSection = document.createElement('div')
+    subtotalSection.classList.add('subtotal-section');
 
     const priceTotalLabel = document.createElement('p');
-    priceTotalLabel.textContent = "Total";
-    itemCardFooter.appendChild(priceTotalLabel);
+    priceTotalLabel.textContent = "Subtotal";
+    subtotalSection.appendChild(priceTotalLabel);
+
+    //Computes for the subtotal
+    const totalPrice = datum.products.reduce((acc, product) => acc + product.total, 0);
 
     const priceTotal = document.createElement('p');
-    priceTotal.textContent = datum.products.total;
-    itemCardFooter.appendChild(priceTotal);
+    priceTotal.textContent = `P${totalPrice}`;
+    subtotalSection.appendChild(priceTotal);
+
+    itemCardFooter.appendChild(subtotalSection);
+
+    const checkoutButton = document.createElement('button');
+    checkoutButton.classList.add('checkout-button');
+    checkoutButton.textContent = "CHECKOUT";
+    itemCardFooter.appendChild(checkoutButton);
     
     itemCardContainer.appendChild(itemCardFooter);
     
