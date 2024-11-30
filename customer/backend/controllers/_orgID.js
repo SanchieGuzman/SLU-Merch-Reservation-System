@@ -54,15 +54,13 @@ const completeOrderController = async(req, res) => {
         let overallTotal = 0;
         const products = order.products;
 
-        products.foreach(product => {
-            const quantity = product.quantity;
-            const price = db.getProductPrice(product.product_id);
-            const productTotal = quantity * price;
+        for (const product of products) {
+            const price = await db.getProductPrice(product.product_id);
+            const productTotal = product.quantity * price;
 
             product.total = productTotal;
-
             overallTotal += productTotal;
-        });
+        }
 
         const createdAt = new Date().toISOString();
 
@@ -73,9 +71,12 @@ const completeOrderController = async(req, res) => {
             status: 'Pending',
             claimed_at: null,
             schedule_id: order.schedule_id,
-        }
+            products: products,
+        };
 
-        if (db.placeOrder(orderData)) {
+        const result = await db.placeOrder(orderData);
+
+        if (result) {
             return res.status(200).json({
                 message: "Order placed successfully"
             });
