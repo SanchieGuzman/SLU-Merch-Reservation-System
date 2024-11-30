@@ -38,8 +38,13 @@ body {
   width: 40px;
 }
 
+.inner-container .inner-item-card-container{
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+  box-shadow: -0.2rem .2rem 1rem rgba(0, 0, 0, 0.422);
+}
+
 .inner-container .item-card-container{
-  border-bottom: 1px solid gray;
   padding: 1.5rem 3rem;
 }
 
@@ -49,7 +54,8 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid gray;
-  padding: 1rem 1.3rem 2rem 0;
+  font-size: 0.8rem;
+  padding: 1rem 1.3rem 1rem 1.3rem;
 }
 
 .product-title .column-headers{
@@ -59,7 +65,7 @@ body {
 
 .product-title .column-headers h1:nth-child(2),
 .product-title .column-headers h1:nth-child(3) {
-  padding-left: 7.5rem;
+  padding-left: 9.2rem;
 }
 
 /* ======== product container =========== */
@@ -101,7 +107,7 @@ body {
 }
 
 .product-quantity button {
-  background-color: #3498db;
+  background-color: #2235a2;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -112,15 +118,21 @@ body {
 }
 
 .input-box {
-  height: 30px;
+  height: 35px;
   width: 55px;
   text-align: center;
   border: none;
   font-size: 16px;
   outline: none;
   background-color: #fff;
-  border-top: 2px solid #3498db;
-  border-bottom: 2px solid #3498db;
+  border-top: 2px solid #2235a2;
+  border-bottom: 2px solid #2235a2;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* ======== Item Card Footer =========== */
@@ -129,6 +141,7 @@ body {
   flex-direction: column;
   justify-self: flex-end;
   width: 30%;
+  margin-right: 2rem;
 }
 
 .item-card-footer .subtotal-section {
@@ -146,5 +159,6 @@ body {
   font-weight: bold;
   color: white;
   margin-bottom: 2rem;
+  border-radius: 0.25rem;
   background-color: #2235a2;
 }

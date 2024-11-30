@@ -13,7 +13,7 @@ const data = {
       products: [
         {
           product_id: 1,
-          product_name: "Product 1", // Example name
+          product_name: "ICON Hoodie", // Example name
           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
           product_price: 200,
           product_quantity: 10,
@@ -21,7 +21,7 @@ const data = {
         },
         {
           product_id: 2,
-          product_name: "Product 2", // Example name
+          product_name: "ICON Hoodie", // Example name
           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
           product_price: 150,
           product_quantity: 5,
@@ -35,7 +35,7 @@ const data = {
       products: [
         {
           product_id: 3,
-          product_name: "Product 3", // Example name
+          product_name: "KASAMA Tumbler", // Example name
           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
           product_price: 300,
           product_quantity: 2,
@@ -78,6 +78,9 @@ function showCart(){
     const itemCardContainer = document.createElement('div');
     itemCardContainer.classList.add('item-card-container');
 
+    const innerItemCardContainer = document.createElement('div');
+    innerItemCardContainer.classList.add('inner-item-card-container');
+
     //product title
     const productTitle = document.createElement('div');
     productTitle.classList.add('product-title'); 
@@ -110,7 +113,9 @@ function showCart(){
 
     productTitle.appendChild(rightHeader);
 
-    itemCardContainer.appendChild(productTitle);
+    innerItemCardContainer.appendChild(productTitle);
+
+    itemCardContainer.appendChild(innerItemCardContainer);
 
     datum.products.forEach((product) => {
       const productContainer = document.createElement('div');
@@ -156,7 +161,7 @@ function showCart(){
       quantityInput.classList.add("input-box");
       quantityInput.setAttribute("type", "number");
       quantityInput.setAttribute("min", "1");
-      quantityInput.setAttribute("value", "1");
+      quantityInput.setAttribute("value", product.product_quantity);
       quantityInput.setAttribute("max", product.product_quantity);
       productQuantity.appendChild(quantityInput);
 
@@ -166,17 +171,49 @@ function showCart(){
       productQuantity.appendChild(plusButton);
 
       productActionsContainer.appendChild(productQuantity);
+       
+      plusButton.addEventListener("click", () => {
+        let currentQuantity = parseInt(quantityInput.value);
+        if(currentQuantity < product.product_quantity){
+          currentQuantity++;
+          quantityInput.value = currentQuantity;
+          updateTotal(quantityInput.value, product.product_price);
+          updateSubTotal();
+        }
+      });
+
+      minusButton.addEventListener("click", () => {
+        let currentQuantity = parseInt(quantityInput.value);
+        if(currentQuantity > 1){
+          currentQuantity--;
+          quantityInput.value = currentQuantity;
+          updateTotal(quantityInput.value, product.product_price);
+          updateSubTotal();
+        }
+      });
+
+      function updateTotal(quantity,price){
+        let productPriceTotal = quantity * price;
+        productTotal.textContent =`P${productPriceTotal}`;
+        product.total = productPriceTotal;
+      }
+
+      function updateSubTotal(){
+        let subtotal = datum.products.reduce((acc, product) => acc + product.total, 0);
+        priceTotal.textContent = `P${subtotal}`;
+      }
 
       //Product Total
       const productTotal = document.createElement('p')
       productTotal.classList.add('product-total');
-      productTotal.textContent = `P ${product.total}`;
+      productTotal.textContent = `P${product.total}`;
       productActionsContainer.appendChild(productTotal);
 
       productContainer.appendChild(productInfoContainer);
       productContainer.appendChild(productActionsContainer);
 
-      itemCardContainer.appendChild(productContainer);
+      innerItemCardContainer.appendChild(productContainer);
+      itemCardContainer.appendChild(innerItemCardContainer);
     });
 
     //Item Card Footer
@@ -203,9 +240,10 @@ function showCart(){
     checkoutButton.classList.add('checkout-button');
     checkoutButton.textContent = "CHECKOUT";
     itemCardFooter.appendChild(checkoutButton);
-    
-    itemCardContainer.appendChild(itemCardFooter);
-    
+
+    innerItemCardContainer.appendChild(itemCardFooter);
+    itemCardContainer.appendChild(innerItemCardContainer);
+
     innerContainer.appendChild(itemCardContainer);
   });
 
