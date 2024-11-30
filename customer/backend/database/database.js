@@ -110,7 +110,7 @@ class Database {
     }
 
     //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
-    async gaddToCart(organization_id, user_id, product_id, quantity){
+    async addToCart(organization_id, user_id, product_id, quantity){
         const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity) VALUES (?,?,?,?);';
         const params = [user_id, product_id, organization_id, quantity];
         try{
