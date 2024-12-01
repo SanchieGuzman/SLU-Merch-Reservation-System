@@ -98,7 +98,8 @@
         const eventTime = document.createElement('p');
         const eventStartTimeText = vendorData.start_time ? vendorData.start_time : 'None';
         const eventEndTimeText = vendorData.end_time ? vendorData.end_time : 'None'; 
-        eventTime.innerHTML = `<strong class="vendor-card-booth-label">Time:</strong> ${eventStartTimeText} - ${eventEndTimeText}`;
+        const timeString = eventStartTimeText == 'None' && eventEndTimeText == 'None' ? 'None' : vendorData.start_time +' - '+vendorData.end_time
+        eventTime.innerHTML = `<strong class="vendor-card-booth-label">Time:</strong> ${timeString}`;
         boothDetails.appendChild(eventTime);
 
         const eventLocation = document.createElement('p');
