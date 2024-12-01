@@ -11,6 +11,8 @@ import loginRouter from './backend/routers/login.js';
 import productsRouter from './backend/routers/products.js';
 import _orgIDRouter from './backend/routers/_orgID.js';
 import authenticate from './backend/middleware/authenticate.js';
+import cartRouter from './backend/routers/cart.js';
+import ordersRouter from './backend/routers/orders.js';
 
 // Get __dirname equivalent in ES module
 const __filename = fileURLToPath(import.meta.url);
@@ -36,6 +38,8 @@ app.use('/pages', authenticate, express.static(path.join(__dirname, 'frontend', 
 app.use('/api', loginRouter)
 app.use('/api', productsRouter)
 app.use('/api', _orgIDRouter)
+app.use('/api', cartRouter)
+app.use('/api', ordersRouter)
 
 //custom 404
 // app.use((req, res, next) => {

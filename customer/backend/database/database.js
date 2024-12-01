@@ -74,6 +74,12 @@ class Database {
         const result = await this.execute(query, params);
         return result[0];
     }
+    async getProductPrice(productID) {
+        const query = `SELECT price FROM products WHERE product_id = ?;`;
+        const params = [productID];
+        const result = await this.execute(query, params);
+        return result[0];
+    }
     async getFirstProductsOfEachOrg(){
         const query = `
                 SELECT 
@@ -104,7 +110,126 @@ class Database {
             return results; 
 
         }catch(err){
-            console.log("Error executing queyr");
+            console.log("Error executing query");
+            return false;
+        }
+    }
+
+    //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
+    async addToCart(organization_id, user_id, product_id, quantity){
+        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity) VALUES (?,?,?,?);';
+        const params = [user_id, product_id, organization_id, quantity];
+        try{
+            const result = await this.execute(query, params);
+            if(result.affectedRows>0){
+                return true;
+            }else{
+                return false;
+            }
+        }catch{
+            console.error('Error adding to cart:', err);
+            throw err;
+        }
+    }
+    
+    //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
+    async getCart(user_id){
+                                                                                                                                //NOTE that i used "AS product_price, product_quantity to conform with fetch express"
+        const query = `Select c.organization_id, o.organization_name, c.product_id, p.product_name , p.product_image,p.price AS product_price, c.quantity AS product_quantity, c.total
+                        FROM cart AS c
+                        JOIN products as P ON c.product_id = p.product_id 
+                        JOIN organizations as o ON o.organization_id = p.organization_id 
+                        WHERE c.user_id = ?;`;
+        const params = [user_id];
+        try {
+            const results = await this.execute(query, params);
+            return results; 
+        }catch(err){
+            console.log("Error executing query");
+            return false;
+        }
+        
+    }
+
+    async getOrders(user_id){                                                                                                           //NOTE that i used "AS product_price, product_quantity to conform with fetch express"
+        const query = `SELECT o.order_id, org.organization_id, org.organization_name, o.created_at, o.claimed_at, o.total, o.status, o.schedule_id, 
+                    os.location,
+                    op.product_id, op.quantity, op.total AS product_price,
+                    p.product_name, p.product_image
+                    FROM organization_schedules AS os
+                    JOIN orders AS o ON os.schedule_id = o.schedule_id
+                    JOIN order_products AS op ON o.order_id = op.order_id
+                    JOIN products AS p ON op.product_id = p.product_id
+                    JOIN organizations AS org ON p.organization_id = org.organization_id
+                    WHERE o.customer_id = ? ORDER BY o.order_id DESC`;
+        const params = [user_id];
+        try {
+            const results = await this.execute(query, params);
+            return results; 
+        }catch(err){
+            console.log("Error executing query");
+            return false;
+        }
+        
+    }
+
+    async getValidSchedules(orgID) {
+        const currentDateTime = new Date();
+        const query = `
+            SELECT schedule_id, date, start_time, end_time, location FROM organization_schedules 
+            WHERE organization_id = ? 
+            AND (
+                date > CURRENT_DATE OR
+                (date = CURRENT_DATE AND start_time > NOW())
+            );
+        `;
+
+        const params = [orgID, currentDateTime, currentDateTime];
+
+        try {
+            const result = await this.execute(query, params);
+            return result;
+        } catch(error) {
+            console.log("Failed to fetch schedules");
+        }
+    }
+    async placeOrder(order) {
+        try {
+            await this.execute("START TRANSACTION");
+    
+            const orderQuery = `
+                INSERT INTO orders (customer_id, created_at, total, status, claimed_at, schedule_id) 
+                VALUES (?, NOW(), ?, 'Pending', NULL, ?);
+            `;
+    
+            const orderParams = [
+                order.customer_id,
+                order.total,
+                order.schedule_id,
+            ];
+    
+            const result = await this.execute(orderQuery, orderParams);
+    
+            const orderID = result.insertId;
+    
+            const orderProductsQuery = `
+                INSERT INTO order_products (order_id, product_id, quantity, total) 
+                VALUES (?, ?, ?, ?);
+            `;
+    
+            const orderProductsInsertPromises = order.products.map(product => {
+                const orderProductsParams = [orderID, product.product_id, product.quantity, product.total];
+                return this.execute(orderProductsQuery, orderProductsParams);
+            });
+    
+            await Promise.all(orderProductsInsertPromises);
+    
+            await this.execute("COMMIT");
+    
+            return result;
+        } catch (error) {
+            await this.execute("ROLLBACK");
+            console.error("Error placing order:", error);
         }
     }
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
