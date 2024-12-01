@@ -1,4 +1,24 @@
-document.addEventListener('DOMContentLoaded', function () {
+
+
+
+
+    //  // IMMAGE ISSUES
+    //   // Convert the product.product_image to a Uint8Array
+    //   const byteArray = new Uint8Array(product.product_image.data);
+
+    //   // Create a Blob from the byteArray
+    //   const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
+
+    //   // Create a temporary object URL for the blob
+    //   const imageUrl = URL.createObjectURL(blob);
+
+    //   //image
+    //   const itemImage = document.createElement("img");
+    //   itemImage.classList.add("item-image");
+    //   itemImage.src = imageUrl;
+
+
+    document.addEventListener('DOMContentLoaded', async function () {
     const vendorData = {
         vendor_name: "ICON",
         description: "ICON (Integrated Confideracy) is an organization that brings together like-minded individuals focused on fostering collaboration and innovation within the Saint Louis University community. Through its various events, ICON aims to create a platform for students to showcase their ideas, projects, and merchandise.",
@@ -8,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
         booth_event_time: "10:00 AM - 4:00 PM",
         booth_event_location: "Devesse"
     };
-
+    let result = await getVendorDetails();
+    console.log(result);
     //create vendor card elements
     const vendorCard = document.createElement('div');
     vendorCard.classList.add('vendor-card');
@@ -76,3 +97,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const contentContainer = document.querySelector('.content-container');
     contentContainer.appendChild(vendorCard);
 });
+async function getVendorDetails() {
+    try {
+      const response = await fetch("http://localhost:3000/api/vendors", {
+        method: "GET",
+      });
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  }

@@ -107,6 +107,47 @@ class Database {
             console.log("Error executing queyr");
         }
     }
+    async getVendors(){
+        const query = `SELECT 
+                            o.organization_id, 
+                            o.organization_name, 
+                            o.organization_description, 
+                            o.logo,
+                            os.schedule_id, 
+                            os.date, 
+                            os.start_time, 
+                            os.end_time, 
+                            os.location
+                        FROM 
+                            organizations AS o
+                        LEFT JOIN 
+                            organization_schedules AS os 
+                            ON o.organization_id = os.organization_id
+                            AND (
+                                os.date > CURDATE() 
+                                OR (os.date = CURDATE() AND os.start_time >= CURTIME())
+                            )
+                        WHERE 
+                            os.schedule_id = (
+                                SELECT os2.schedule_id
+                                FROM organization_schedules AS os2
+                                WHERE os2.organization_id = o.organization_id
+                                AND (
+                                    os2.date > CURDATE() 
+                                    OR (os2.date = CURDATE() AND os2.start_time >= CURTIME())
+                                )
+                                ORDER BY os2.date ASC, os2.start_time ASC
+                                LIMIT 1
+                            )
+                            OR os.schedule_id IS NULL;`;
+        try{
+            const results = await this.execute(query)
+            return results;
+        }catch (error){
+            console.log("Error getting Vendors");
+            return false;
+        }
+    }
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
     execute(query, params = []) {       
         return new Promise((resolve, reject) => {
