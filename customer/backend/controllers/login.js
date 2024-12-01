@@ -2,7 +2,7 @@ import Database from "../database/database.js";
 
 const loginController = async(req, res)=>{
     const db = Database.getInstance();
-    const result =  await db.login(req.body.username, req.body.password);
+    const result =  await db.login(req.body.username, req.body.password);    
     
     if(result){
         return res.cookie("loggedin", "true", {
@@ -13,7 +13,12 @@ const loginController = async(req, res)=>{
             httpOnly: false,
             path: '/',
             signed: false  
-        }).sendStatus(200);
+        }).cookie("user_id", result.user_id, {
+            httpOnly: false,
+            path: '/',
+            signed: false
+        })
+        .sendStatus(200);
     }else{       
         res.status(400).json({message: 'Incorrect Credentials'});
     }
