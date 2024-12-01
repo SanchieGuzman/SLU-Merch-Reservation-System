@@ -74,6 +74,12 @@ class Database {
         const result = await this.execute(query, params);
         return result[0];
     }
+    async getProductPrice(productID) {
+        const query = `SELECT price FROM products WHERE product_id = ?;`;
+        const params = [productID];
+        const result = await this.execute(query, params);
+        return result[0];
+    }
     async getFirstProductsOfEachOrg(){
         const query = `
                 SELECT 
@@ -167,6 +173,65 @@ class Database {
         
     }
 
+    async getValidSchedules(orgID) {
+        const currentDateTime = new Date();
+        const query = `
+            SELECT schedule_id, date, start_time, end_time, location FROM organization_schedules 
+            WHERE organization_id = ? 
+            AND (
+                date > CURRENT_DATE OR
+                (date = CURRENT_DATE AND start_time > NOW())
+            );
+        `;
+
+        const params = [orgID, currentDateTime, currentDateTime];
+
+        try {
+            const result = await this.execute(query, params);
+            return result;
+        } catch(error) {
+            console.log("Failed to fetch schedules");
+        }
+    }
+    async placeOrder(order) {
+        try {
+            await this.execute("START TRANSACTION");
+    
+            const orderQuery = `
+                INSERT INTO orders (customer_id, created_at, total, status, claimed_at, schedule_id) 
+                VALUES (?, NOW(), ?, 'Pending', NULL, ?);
+            `;
+    
+            const orderParams = [
+                order.customer_id,
+                order.total,
+                order.schedule_id,
+            ];
+    
+            const result = await this.execute(orderQuery, orderParams);
+    
+            const orderID = result.insertId;
+    
+            const orderProductsQuery = `
+                INSERT INTO order_products (order_id, product_id, quantity, total) 
+                VALUES (?, ?, ?, ?);
+            `;
+    
+            const orderProductsInsertPromises = order.products.map(product => {
+                const orderProductsParams = [orderID, product.product_id, product.quantity, product.total];
+                return this.execute(orderProductsQuery, orderProductsParams);
+            });
+    
+            await Promise.all(orderProductsInsertPromises);
+    
+            await this.execute("COMMIT");
+    
+            return result;
+        } catch (error) {
+            await this.execute("ROLLBACK");
+            console.error("Error placing order:", error);
+        }
+    }
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
     execute(query, params = []) {       
         return new Promise((resolve, reject) => {
