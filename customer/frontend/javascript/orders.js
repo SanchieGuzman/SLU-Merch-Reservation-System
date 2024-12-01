@@ -107,6 +107,7 @@ async function showOrders() {
 
       const productImage = document.createElement("img");
       productImage.src = imageUrl;
+      productImage.alt = product.product_name;
       productContainer.appendChild(productImage);
 
       const productName = document.createElement("h4");

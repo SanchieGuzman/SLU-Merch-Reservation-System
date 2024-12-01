@@ -110,6 +110,7 @@ function showBooths(booths) {
       const itemImage = document.createElement("img");
       itemImage.classList.add("item-image");
       itemImage.src = imageUrl;
+      itemImage.alt = product.product_name;
       itemCardImageContainer.appendChild(itemImage);
 
       itemCard.appendChild(itemCardImageContainer);
@@ -255,6 +256,7 @@ function showBoothProducts(organizationName, products, organization_id) {
     const itemImage = document.createElement("img");
     itemImage.classList.add("item-image");
     itemImage.src = imageUrl;
+    itemImage.alt = product.product_name;
     itemCardImageContainer.appendChild(itemImage);
 
     itemCard.appendChild(itemCardImageContainer);
