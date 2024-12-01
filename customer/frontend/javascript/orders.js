@@ -14,7 +14,7 @@ window.onload = function () {
   showOrders();
 };
 
-function showOrders() {
+async function showOrders() {
   const mainContainer = document.querySelector(".content-container");
 
   const innerContainer = document.createElement("div");
@@ -31,150 +31,152 @@ function showOrders() {
   const cardsContainer = document.createElement("div");
   cardsContainer.classList.add("cards-container");
 
-  // let orders = getOrders();
+  let orders = await getOrders();
 
-  const orders = [
-    {
-      order_id: 1,
-      organization_id: 1,
-      organization_name: "ICON",
-      status: "claimed",
-      total: 4000,
-      created_at: "2024-11-17 17:15:00",
-      claimed_at: null, // Assuming it's not claimed yet
-      location: "Maryheights Lobby",
-      products: [
-        {
-          product_id: 1,
-          product_name: "Product 1", // Adjusted to reflect a product name
-          product_image: "../resources/images/products/hoodie.png", // Assuming this is a placeholder for the actual image data
-          product_price: 200,
-          quantity: 10,
-          total: 2000, // Added missing `total` field for consistency
-        },
-        {
-          product_id: 2, // Changed product_id to differentiate products
-          product_name: "Product 2",
-          product_image: "../resources/images/products/hoodie.png",
-          product_price: 200,
-          quantity: 10,
-          total: 2000,
-        },
-      ],
-    },
-    {
-      order_id: 2,
-      organization_id: 2,
-      organization_name: "JPIA",
-      status: "claimed",
-      total: 4000,
-      created_at: "2024-11-17 17:15:00",
-      claimed_at: "2024-11-17 19:15:00",
-      location: "Maryheights Amphi",
-      products: [
-        {
-          product_id: 3, // Adjusted product_id for uniqueness
-          product_name: "Product 3",
-          product_image: "../resources/images/products/hoodie.png",
-          product_price: 200,
-          quantity: 10,
-          total: 2000,
-        },
-        {
-          product_id: 4,
-          product_name: "Product 4",
-          product_image: "../resources/images/products/hoodie.png",
-          product_price: 200,
-          quantity: 10,
-          total: 2000,
-        },
-      ],
-    },
-    {
-      order_id: 2,
-      organization_id: 2,
-      organization_name: "JPIA",
-      status: "claimed",
-      total: 4000,
-      created_at: "2024-11-17 17:15:00",
-      claimed_at: "2024-11-17 19:15:00",
-      location: "Maryheights Amphi",
-      products: [
-        {
-          product_id: 3, // Adjusted product_id for uniqueness
-          product_name: "Product 3",
-          product_image: "../resources/images/products/hoodie.png",
-          product_price: 200,
-          quantity: 10,
-          total: 2000,
-        },
-        {
-          product_id: 4,
-          product_name: "Product 4",
-          product_image: "../resources/images/products/hoodie.png",
-          product_price: 200,
-          quantity: 10,
-          total: 2000,
-        },
-      ],
-    },
-    {
-      order_id: 3,
-      organization_id: 2,
-      organization_name: "JPIA",
-      status: "claimed",
-      total: 4000,
-      created_at: "2024-11-17 17:15:00",
-      claimed_at: "2024-11-17 19:15:00",
-      location: "Maryheights Amphi",
-      products: [
-        {
-          product_id: 3, // Adjusted product_id for uniqueness
-          product_name: "Product 3",
-          product_image: "../resources/images/products/hoodie.png",
-          product_price: 200,
-          quantity: 10,
-          total: 2000,
-        },
-        {
-          product_id: 4,
-          product_name: "Product 4",
-          product_image: "../resources/images/products/hoodie.png",
-          product_price: 200,
-          quantity: 10,
-          total: 2000,
-        },
-      ],
-    },
-    {
-      order_id: 4,
-      organization_id: 2,
-      organization_name: "JPIA",
-      status: "claimed",
-      total: 4000,
-      created_at: "2024-11-17 17:15:00",
-      claimed_at: "2024-11-17 19:15:00",
-      location: "Maryheights Amphi",
-      products: [
-        {
-          product_id: 3, // Adjusted product_id for uniqueness
-          product_name: "Product 3",
-          product_image: "../resources/images/products/hoodie.png",
-          product_price: 200,
-          quantity: 10,
-          total: 2000,
-        },
-        {
-          product_id: 4,
-          product_name: "Product 4",
-          product_image: "../resources/images/products/hoodie.png",
-          product_price: 200,
-          quantity: 10,
-          total: 2000,
-        },
-      ],
-    },
-  ];
+  console.log(orders);
+
+  // const orders = [
+  //   {
+  //     order_id: 1,
+  //     organization_id: 1,
+  //     organization_name: "ICON",
+  //     status: "claimed",
+  //     total: 4000,
+  //     created_at: "2024-11-17 17:15:00",
+  //     claimed_at: null, // Assuming it's not claimed yet
+  //     location: "Maryheights Lobby",
+  //     products: [
+  //       {
+  //         product_id: 1,
+  //         product_name: "Product 1", // Adjusted to reflect a product name
+  //         product_image: "../resources/images/products/hoodie.png", // Assuming this is a placeholder for the actual image data
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000, // Added missing `total` field for consistency
+  //       },
+  //       {
+  //         product_id: 2, // Changed product_id to differentiate products
+  //         product_name: "Product 2",
+  //         product_image: "../resources/images/products/hoodie.png",
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     order_id: 2,
+  //     organization_id: 2,
+  //     organization_name: "JPIA",
+  //     status: "claimed",
+  //     total: 4000,
+  //     created_at: "2024-11-17 17:15:00",
+  //     claimed_at: "2024-11-17 19:15:00",
+  //     location: "Maryheights Amphi",
+  //     products: [
+  //       {
+  //         product_id: 3, // Adjusted product_id for uniqueness
+  //         product_name: "Product 3",
+  //         product_image: "../resources/images/products/hoodie.png",
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000,
+  //       },
+  //       {
+  //         product_id: 4,
+  //         product_name: "Product 4",
+  //         product_image: "../resources/images/products/hoodie.png",
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     order_id: 2,
+  //     organization_id: 2,
+  //     organization_name: "JPIA",
+  //     status: "claimed",
+  //     total: 4000,
+  //     created_at: "2024-11-17 17:15:00",
+  //     claimed_at: "2024-11-17 19:15:00",
+  //     location: "Maryheights Amphi",
+  //     products: [
+  //       {
+  //         product_id: 3, // Adjusted product_id for uniqueness
+  //         product_name: "Product 3",
+  //         product_image: "../resources/images/products/hoodie.png",
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000,
+  //       },
+  //       {
+  //         product_id: 4,
+  //         product_name: "Product 4",
+  //         product_image: "../resources/images/products/hoodie.png",
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     order_id: 3,
+  //     organization_id: 2,
+  //     organization_name: "JPIA",
+  //     status: "claimed",
+  //     total: 4000,
+  //     created_at: "2024-11-17 17:15:00",
+  //     claimed_at: "2024-11-17 19:15:00",
+  //     location: "Maryheights Amphi",
+  //     products: [
+  //       {
+  //         product_id: 3, // Adjusted product_id for uniqueness
+  //         product_name: "Product 3",
+  //         product_image: "../resources/images/products/hoodie.png",
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000,
+  //       },
+  //       {
+  //         product_id: 4,
+  //         product_name: "Product 4",
+  //         product_image: "../resources/images/products/hoodie.png",
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     order_id: 4,
+  //     organization_id: 2,
+  //     organization_name: "JPIA",
+  //     status: "claimed",
+  //     total: 4000,
+  //     created_at: "2024-11-17 17:15:00",
+  //     claimed_at: "2024-11-17 19:15:00",
+  //     location: "Maryheights Amphi",
+  //     products: [
+  //       {
+  //         product_id: 3, // Adjusted product_id for uniqueness
+  //         product_name: "Product 3",
+  //         product_image: "../resources/images/products/hoodie.png",
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000,
+  //       },
+  //       {
+  //         product_id: 4,
+  //         product_name: "Product 4",
+  //         product_image: "../resources/images/products/hoodie.png",
+  //         product_price: 200,
+  //         quantity: 10,
+  //         total: 2000,
+  //       },
+  //     ],
+  //   },
+  // ];
 
   orders.forEach((order) => {
     //order
