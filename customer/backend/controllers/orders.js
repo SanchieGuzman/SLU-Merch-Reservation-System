@@ -1,9 +1,9 @@
 import Database from "../database/database.js";
 
 const getOrdersController = async (req, res) => {
-  const user_id = req.body.order_id;
+  const userid = req.signedCookies.user_id;
   const db = Database.getInstance();
-  const result = await db.getOrders(user_id);
+  const result = await db.getOrders(userid);
   try {
     if (result) {
       const ordersMap = new Map();
@@ -48,4 +48,4 @@ const getOrdersController = async (req, res) => {
   }
 };
 
-export { getOrdersController };
+export default getOrdersController ;

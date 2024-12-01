@@ -19,7 +19,7 @@ const loginController = async (req, res) => {
       .cookie("user_id", result.user_id, {
         httpOnly: false,
         path: "/",
-        signed: false,
+        signed: true,
       })
       .sendStatus(200);
   } else {

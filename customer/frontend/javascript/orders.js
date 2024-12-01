@@ -1,6 +1,8 @@
-async function getOrders() {
+
+
+async function getOrders(userid) {
   try {
-    const response = await fetch("http://localhost:3000/api/orders", {
+    const response = await fetch(`http://localhost:3000/api/orders`, {
       method: "GET",
     });
     const result = await response.json();
@@ -30,10 +32,11 @@ async function showOrders() {
 
   const cardsContainer = document.createElement("div");
   cardsContainer.classList.add("cards-container");
-
+ 
   let orders = await getOrders();
 
   console.log(orders);
+  
 
   // const orders = [
   //   {
