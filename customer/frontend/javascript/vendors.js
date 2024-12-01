@@ -19,7 +19,22 @@
 
 
     document.addEventListener('DOMContentLoaded', async function () {
+      const userName = (() => {
+        const cookies = document.cookie.split("; ");
+        for (const cookie of cookies) {
+          const [key, value] = cookie.split("=");
+          if (key === "username") {
+            return value;
+          }
+        }
+        return null;
+      })();
     
+      const welcomUser = document.querySelector("#welcome-name");
+      welcomUser.textContent = userName;
+    
+      const userNameTopBar = document.querySelector(".username");
+      userNameTopBar.textContent = userName;
     let result = await getVendorDetails();
     console.log(result);
         result.forEach(vendorData => {
