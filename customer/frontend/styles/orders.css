@@ -15,7 +15,7 @@ body {
 
 .content-container {
   padding: 3rem 4rem;
-  height: 88vh;
+  height: 78vh;
   overflow-y: scroll;
 }
 
@@ -57,6 +57,24 @@ body {
   border-bottom: 1px solid black;
 }
 
+.card-header .status-pending {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  color: rgb(151, 151, 7);
+}
+
+.card-header .status-claimed {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  color: green;
+}
+
+.card-header .status-cancelled {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  color: red;
+}
+
 .order-card .product-container {
   border-bottom: 1px solid black;
   display: flex;
@@ -70,7 +88,7 @@ body {
 }
 
 .order-card .product-spacer {
-  width: 70%;
+  width: 50%;
 }
 
 .order-card .quantity-price-container {
@@ -83,4 +101,8 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 1rem 2rem;
+}
+
+.inner-container .bottom-spacer {
+  height: 10vh;
 }

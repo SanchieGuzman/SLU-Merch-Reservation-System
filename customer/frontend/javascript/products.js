@@ -311,10 +311,6 @@ function showBoothProducts(organizationName, products, organization_id) {
   });
   productsContainer.appendChild(productGridContainer);
 
-  const bottomSpacer = document.createElement("div");
-  bottomSpacer.classList.add("bottom-spacer");
-  productsContainer.appendChild(bottomSpacer);
-
   mainContainer.appendChild(productsContainer);
 
   //this is for scrolling back to top when you're below

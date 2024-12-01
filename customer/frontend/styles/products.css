@@ -16,7 +16,7 @@ body {
 /*===========Content==============*/
 
 .right-container .content-container {
-  height: 88vh;
+  height: 78vh;
   padding: 3rem 4rem;
   overflow-y: scroll;
 }
@@ -83,10 +83,6 @@ body {
   flex-flow: column nowrap;
   gap: 0.5rem;
   align-items: flex-start;
-}
-
-.inner-container .bottom-spacer {
-  height: 7rem;
 }
 
 #welcome-name,
@@ -227,7 +223,7 @@ body {
 }
 
 .quantity-controls button {
-  background-color: #3498db;
+  background-color: var(--gradient1);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -239,10 +235,11 @@ body {
 }
 
 .quantity-controls button:hover {
-  background-color: #2980b9;
+  background-color: var(--gradient2);
 }
 
 .input-box {
+  height: 1.3rem;
   width: 40px;
   text-align: center;
   border: none;
@@ -250,8 +247,8 @@ body {
   font-size: 16px;
   outline: none;
   background-color: #fff;
-  border-top: 2px solid #3498db;
-  border-bottom: 2px solid #3498db;
+  border-top: 2px solid var(--gradient1);
+  border-bottom: 2px solid var(--gradient1);
 }
 
 /* Hide the number input spin buttons */
@@ -274,7 +271,7 @@ body {
 .buttons-container button {
   padding: 10px 20px;
   border-radius: 3px;
-  background-color: #3498db;
+  background-color: var(--gradient1);
   color: white;
   border: none;
   cursor: pointer;
@@ -283,7 +280,7 @@ body {
 }
 
 .buttons-container button:hover {
-  background-color: #002a6e;
+  background-color: var(--gradient2);
 }
 
 hr {

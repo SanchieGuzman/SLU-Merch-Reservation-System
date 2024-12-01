@@ -1,5 +1,3 @@
-
-
 async function getOrders(userid) {
   try {
     const response = await fetch(`http://localhost:3000/api/orders`, {
@@ -14,6 +12,23 @@ async function getOrders(userid) {
 
 window.onload = function () {
   showOrders();
+
+  const userName = (() => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [key, value] = cookie.split("=");
+      if (key === "username") {
+        return value;
+      }
+    }
+    return null;
+  })();
+
+  const welcomUser = document.querySelector("#welcome-name");
+  welcomUser.textContent = userName;
+
+  const userNameTopBar = document.querySelector(".username");
+  userNameTopBar.textContent = userName;
 };
 
 async function showOrders() {
@@ -32,70 +47,10 @@ async function showOrders() {
 
   const cardsContainer = document.createElement("div");
   cardsContainer.classList.add("cards-container");
- 
+
   let orders = await getOrders();
 
   console.log(orders);
-  
-
-  // const orders = [
-  //   {
-  //     order_id: 1,
-  //     organization_id: 1,
-  //     organization_name: "ICON",
-  //     status: "claimed",
-  //     total: 4000,
-  //     created_at: "2024-11-17 17:15:00",
-  //     claimed_at: null, // Assuming it's not claimed yet
-  //     location: "Maryheights Lobby",
-  //     products: [
-  //       {
-  //         product_id: 1,
-  //         product_name: "Product 1", // Adjusted to reflect a product name
-  //         product_image: "../resources/images/products/hoodie.png", // Assuming this is a placeholder for the actual image data
-  //         product_price: 200,
-  //         quantity: 10,
-  //         total: 2000, // Added missing `total` field for consistency
-  //       },
-  //       {
-  //         product_id: 2, // Changed product_id to differentiate products
-  //         product_name: "Product 2",
-  //         product_image: "../resources/images/products/hoodie.png",
-  //         product_price: 200,
-  //         quantity: 10,
-  //         total: 2000,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     order_id: 2,
-  //     organization_id: 2,
-  //     organization_name: "JPIA",
-  //     status: "claimed",
-  //     total: 4000,
-  //     created_at: "2024-11-17 17:15:00",
-  //     claimed_at: "2024-11-17 19:15:00",
-  //     location: "Maryheights Amphi",
-  //     products: [
-  //       {
-  //         product_id: 3, // Adjusted product_id for uniqueness
-  //         product_name: "Product 3",
-  //         product_image: "../resources/images/products/hoodie.png",
-  //         product_price: 200,
-  //         quantity: 10,
-  //         total: 2000,
-  //       },
-  //       {
-  //         product_id: 4,
-  //         product_name: "Product 4",
-  //         product_image: "../resources/images/products/hoodie.png",
-  //         product_price: 200,
-  //         quantity: 10,
-  //         total: 2000,
-  //       },
-  //     ],
-  //   },
-  // ];
 
   orders.forEach((order) => {
     //order
@@ -111,7 +66,27 @@ async function showOrders() {
     cardHeader.appendChild(orgName);
 
     const statusText = document.createElement("h3");
-    statusText.textContent = order.status;
+
+    if (order.status === "Pending") {
+      statusText.textContent = "Claim Your Order at: " + order.location;
+      statusText.classList.add("status-pending");
+    } else if (order.status === "Claimed") {
+      const newDate = new Date(order.claimed_at);
+      const readableDate = newDate.toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+      statusText.textContent = "Order Claimed at: " + readableDate;
+      statusText.classList.add("status-claimed");
+    } else {
+      statusText.textContent = "Cancelled";
+      statusText.classList.add("status-cancelled");
+    }
+
     cardHeader.appendChild(statusText);
 
     orderCard.appendChild(cardHeader);
@@ -120,8 +95,18 @@ async function showOrders() {
       const productContainer = document.createElement("section");
       productContainer.classList.add("product-container");
 
+      // IMMAGE ISSUES
+      // Convert the product.product_image to a Uint8Array
+      const byteArray = new Uint8Array(product.product_image.data);
+
+      // Create a Blob from the byteArray
+      const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
+
+      // Create a temporary object URL for the blob
+      const imageUrl = URL.createObjectURL(blob);
+
       const productImage = document.createElement("img");
-      productImage.src = product.product_image;
+      productImage.src = imageUrl;
       productContainer.appendChild(productImage);
 
       const productName = document.createElement("h4");
@@ -142,7 +127,7 @@ async function showOrders() {
 
       const productPrice = document.createElement("h4");
       productPrice.classList.add("product-quantity");
-      productPrice.textContent = "P " + product.total;
+      productPrice.textContent = "₱ " + product.product_price;
       quantityPriceContainer.appendChild(productPrice);
 
       productContainer.appendChild(quantityPriceContainer);
@@ -154,7 +139,17 @@ async function showOrders() {
     totalPriceContainer.classList.add("total-price-container");
 
     const orderDate = document.createElement("p");
-    orderDate.textContent = "Ordered at: " + order.created_at;
+    const newDate = new Date(order.created_at);
+    const creationDate = newDate.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    orderDate.textContent = "Ordered at: " + creationDate;
     totalPriceContainer.appendChild(orderDate);
 
     const orderTotal = document.createElement("h3");
@@ -167,6 +162,10 @@ async function showOrders() {
   });
 
   innerContainer.appendChild(cardsContainer);
+
+  const bottomSpacer = document.createElement("div");
+  bottomSpacer.classList.add("bottom-spacer");
+  // innerContainer.appendChild(bottomSpacer);
 
   mainContainer.appendChild(innerContainer);
 }
