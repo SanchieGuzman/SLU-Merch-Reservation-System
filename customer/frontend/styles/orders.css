@@ -39,11 +39,9 @@ body {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
-  border: 4px solid gold;
 }
 
 .order-card {
-  /* border: 1px solid black; */
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
   box-shadow: -0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.334);

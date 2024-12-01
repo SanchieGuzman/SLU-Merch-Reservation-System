@@ -1,3 +1,15 @@
+async function getOrders() {
+  try {
+    const response = await fetch("http://localhost:3000/api/orders", {
+      method: "GET",
+    });
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 window.onload = function () {
   showOrders();
 };
@@ -15,6 +27,11 @@ function showOrders() {
   headerText.textContent = "Your Orders";
   header.appendChild(headerText);
   innerContainer.appendChild(header);
+
+  const cardsContainer = document.createElement("div");
+  cardsContainer.classList.add("cards-container");
+
+  // let orders = getOrders();
 
   const orders = [
     {
@@ -158,9 +175,6 @@ function showOrders() {
       ],
     },
   ];
-
-  const cardsContainer = document.createElement("div");
-  cardsContainer.classList.add("cards-container");
 
   orders.forEach((order) => {
     //order
