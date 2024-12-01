@@ -1,5 +1,7 @@
 /* General container styles */
 .content-container {
+  max-height: 80vh;
+    overflow-y: auto;
     display: flex;
     justify-content: center;
     align-items: center;
