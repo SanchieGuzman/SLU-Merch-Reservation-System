@@ -96,6 +96,12 @@ body {
   background-color: #f4f4f4;
 }
 
+.product-info-container .image-container img{
+  width: 10rem;
+  height: 10rem;
+  object-fit: fill;
+}
+
 .product-container .product-actions-container {
   display: grid;
   font-size: 1.5rem;
@@ -169,8 +175,20 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* ======== Checkout Page Card =========== */
+.checkout-card-container{
+  border: 2px solid red;
+  /* padding: 1rem 1rem; */
+}
 
-.card-header .back-button{
+.left-details-container{
+  margin-top: 2rem;
+  border: 2px solid blue;
+}
+
+.checkout-card-container .card-header .back-button{
   width: 3rem;
   height: 3rem;
 }
+
+
+

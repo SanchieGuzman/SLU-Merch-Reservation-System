@@ -1,60 +1,3 @@
-// document.addEventListener('DOMContentLoaded', function () {
-//   const currentPath = window.location.pathname;
-//   if (currentPath.includes('/pages/mycart.html')) {
-//     showCart(); 
-//   }
-// });
-
-// const data = {
-//   user_id: 1,
-//   orgArray: [
-//     {
-//       orgname: "ICON",
-//       orgid: "1",
-//       products: [
-//         {
-//           product_id: 1,
-//           product_name: "ICON Hoodie", // Example name
-//           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
-//           product_price: 200,
-//           product_quantity: 10,
-//           total: 2000
-//         },
-//         {
-//           product_id: 2,
-//           product_name: "ICON Hoodie", // Example name
-//           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
-//           product_price: 150,
-//           product_quantity: 5,
-//           total: 750
-//         }
-//       ]
-//     },
-//     {
-//       orgname: "KASAMA",
-//       orgid: "3",
-//       products: [
-//         {
-//           product_id: 3,
-//           product_name: "KASAMA Tumbler TumbleR Tmbler", // Example name
-//           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
-//           product_price: 300,
-//           product_quantity: 2,
-//           total: 600
-//         },
-//         {
-//           product_id: 4,
-//           product_name: "Product 4", // Example name
-//           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
-//           product_price: 100,
-//           product_quantity: 20,
-//           total: 2000
-//         }
-//       ]
-//     }
-//   ]
-// };
-
 async function getCartDetails() {
   try {
     const response = await fetch("/api/cart", {
@@ -72,7 +15,6 @@ async function getCartDetails() {
 
 window.onload = async function () {
   let carts = await getCartDetails();
-  console.log("Cart details response:", carts);
 
   const userName = (() => {
     const cookies = document.cookie.split("; ");
@@ -93,6 +35,8 @@ window.onload = async function () {
 
   showCart(carts);
 };
+
+let currentSubtotal = 0;
 
 function showCart(carts){
   const mainContainer =  document.querySelector('.card-content-container');
@@ -231,7 +175,8 @@ function showCart(carts){
           currentQuantity++;
           quantityInput.value = currentQuantity;
           updateTotal(quantityInput.value, product.product_price);
-          updateSubTotal();
+          const subtotal = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);
+          priceTotal.textContent = `P${subtotal.toFixed(2)}`;
         }
       });
 
@@ -241,19 +186,17 @@ function showCart(carts){
           currentQuantity--;
           quantityInput.value = currentQuantity;
           updateTotal(quantityInput.value, product.product_price);
-          updateSubTotal();
+          const subtotal = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);
+          priceTotal.textContent = `P${subtotal.toFixed(2)}`;
         }
       });
 
       function updateTotal(quantity,price){
-        let productPriceTotal = quantity * price;
-        productTotal.textContent =`P${productPriceTotal}`;
+        //converted the readprice from string to number using parseFloat
+        const numericPrice = parseFloat(price);
+        let productPriceTotal = quantity * numericPrice;
+        productTotal.textContent =`P${productPriceTotal.toFixed(2)}`;
         product.total = productPriceTotal;
-      }
-
-      function updateSubTotal(){
-        let subtotal = cart.products.reduce((acc, product) => acc + product.total, 0);
-        priceTotal.textContent = `P${subtotal}`;
       }
 
       //Product Total
@@ -281,10 +224,11 @@ function showCart(carts){
     subtotalSection.appendChild(priceTotalLabel);
 
     //Computes for the subtotal
-    const totalPrice = cart.products.reduce((acc, product) => acc + product.total, 0);
+    //converted the readtotal from string to number using parseFloat
+    const totalPrice = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);
 
     const priceTotal = document.createElement('p');
-    priceTotal.textContent = `P${totalPrice}`;
+    priceTotal.textContent = `P${totalPrice.toFixed(2)}`;
     subtotalSection.appendChild(priceTotal);
 
     itemCardFooter.appendChild(subtotalSection);
@@ -293,7 +237,8 @@ function showCart(carts){
     checkoutButton.classList.add('checkout-button');
     checkoutButton.textContent = "CHECKOUT";
     checkoutButton.addEventListener("click", async function () {
-      loadCheckoutPage();
+      let prodDescription = await getCartDetails();
+      loadCheckoutPage(prodDescription);
     });
 
     itemCardFooter.appendChild(checkoutButton);
@@ -307,13 +252,25 @@ function showCart(carts){
   mainContainer.appendChild(innerContainer);
 }
 
-function loadCheckoutPage(){
-  //Main Container
-  const container = document.querySelector(".inner-container");
+async function getCheckoutDetails(orgID) {
+  try {
+    const response = await fetch(`/api/${orgID}/checkout`, {
+      method: "POST",
+    });
+    
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
 
+function loadCheckoutPage(prod){
+  const container = document.querySelector(".inner-container");
+  
   container.innerHTML = "";
 
-  //Inner Container
+  //Main Container
   const checkoutCardContainer = document.createElement('div');
   checkoutCardContainer.classList.add('checkout-card-container');
 
@@ -326,17 +283,19 @@ function loadCheckoutPage(){
   cardHeader.appendChild(cardTitle);
 
   const cardBackButton = document.createElement('button');
-  cardBackButton.classList.add('back-button');
+  cardBackButton.classList.add('back-button'); 
   cardBackButton.src = "../resources/images/cart/cart-header-icon.png";
-  cardBackButton.addEventListener("click", () => {
-    container.innerHTML = "";
-    showCart()
+  cardBackButton.addEventListener("click", async function () {
+    const mainContainer = document.querySelector(".card-content-container");
+    mainContainer.innerHTML = "";
+    let carts = await getCartDetails();
+    showCart(carts);
   });
   cardHeader.appendChild(cardBackButton);
 
   checkoutCardContainer.appendChild(cardHeader);
 
-  //Details Main Container
+  //Inner Container
   const checkoutDetailsContainer = document.createElement('div');
   checkoutDetailsContainer.classList.add('checkout-details-container');
 
@@ -346,11 +305,50 @@ function loadCheckoutPage(){
   const leftDetailsContainer = document.createElement('div');
   leftDetailsContainer.classList.add('left-details-container');
 
-  checkoutDetailsContainer.appendChild(leftDetailsContainer);
+  //Customer Details
+  const cName = (() => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [key, value] = cookie.split("=");
+      if (key === "username") {
+        return value;
+      }
+    }
+    return null;
+  })();
 
-  // const customerName = document.createElement('p');
-  // customerName.textContent = 
+  const customerDetailsContainer =  document.createElement('div');
+  customerDetailsContainer.classList.add('customer-details-container');
 
+  const customerHeader = document.createElement('h1');
+  customerHeader.textContent = "Customer Name";
+  customerDetailsContainer.appendChild(customerHeader);
+
+  const customerName = document.createElement('p');
+  customerName.textContent = cName;
+  customerDetailsContainer.appendChild(customerName);
+
+  const customerID = document.createElement('p');
+  customerID.textContent = `customer ID : ${prod.user_id}`;
+  customerDetailsContainer.appendChild(customerID);
   
+  leftDetailsContainer.appendChild(customerDetailsContainer);
+
+  //Orders Summary
+  const orderSummaryContainer =  document.createElement('div');
+  orderSummaryContainer.classList.add('orders-summary-container');
+  
+  const orderSummaryHeader = document.createElement('h1');
+  orderSummaryHeader.textContent = "Order Summary";
+  orderSummaryContainer.appendChild(orderSummaryHeader);
+  
+  // const orderTotalPrice = document.createElement('p');
+  // orderTotalPrice.textContent = `P${total.toFixed(2)}`;
+  // console.log(orderTotalPrice);
+  // orderSummaryContainer.appendChild(orderTotalPrice);
+
+  leftDetailsContainer.appendChild(orderSummaryContainer);
+
+  checkoutDetailsContainer.appendChild(leftDetailsContainer);
   container.appendChild(checkoutCardContainer);
 }
