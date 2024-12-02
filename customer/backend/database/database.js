@@ -29,9 +29,13 @@ class Database {
         
         //make the arguments an array
         const params = [username, password]
-        const result = await this.execute(query, params);
+        const result = await this.execute(query, params);        
 
-        return result[0];
+        if(result[0].username === username && result[0].password === password){
+            return result[0];
+        }else{
+            return false;
+        }
     }
     async getAllProductsOfOrg(organizationID){
         const query = 'SELECT product_id, product_name,product_description, price, quantity, product_image FROM products WHERE organization_id =? AND status = "Available"';

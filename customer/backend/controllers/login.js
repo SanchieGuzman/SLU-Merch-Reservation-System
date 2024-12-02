@@ -14,7 +14,7 @@ const loginController = async(req, res)=>{
             path: '/',
             signed: false  
         }).cookie("user_id", result.user_id, {
-            httpOnly: false,
+            httpOnly: true,
             path: '/',
             signed: false
         })
