@@ -1,61 +1,103 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const currentPath = window.location.pathname;
-  if (currentPath.includes('/pages/mycart.html')) {
-    showCart(); 
-  }
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//   const currentPath = window.location.pathname;
+//   if (currentPath.includes('/pages/mycart.html')) {
+//     showCart(); 
+//   }
+// });
 
-const data = {
-  orgArray: [
-    {
-      organization_name: "ICON",
-      organization_id: "1",
-      products: [
-        {
-          product_id: 1,
-          product_name: "ICON Hoodie", // Example name
-          product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
-          product_price: 200,
-          product_quantity: 10,
-          total: 2000
-        },
-        {
-          product_id: 2,
-          product_name: "ICON Hoodie", // Example name
-          product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
-          product_price: 150,
-          product_quantity: 5,
-          total: 750
-        }
-      ]
-    },
-    {
-      organization_name: "KASAMA",
-      organization_id: "3",
-      products: [
-        {
-          product_id: 3,
-          product_name: "KASAMA Tumbler", // Example name
-          product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
-          product_price: 300,
-          product_quantity: 2,
-          total: 600
-        },
-        {
-          product_id: 4,
-          product_name: "Product 4", // Example name
-          product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
-          product_price: 100,
-          product_quantity: 20,
-          total: 2000
-        }
-      ]
+// const data = {
+//   user_id: 1,
+//   orgArray: [
+//     {
+//       orgname: "ICON",
+//       orgid: "1",
+//       products: [
+//         {
+//           product_id: 1,
+//           product_name: "ICON Hoodie", // Example name
+//           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
+//           product_price: 200,
+//           product_quantity: 10,
+//           total: 2000
+//         },
+//         {
+//           product_id: 2,
+//           product_name: "ICON Hoodie", // Example name
+//           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
+//           product_price: 150,
+//           product_quantity: 5,
+//           total: 750
+//         }
+//       ]
+//     },
+//     {
+//       orgname: "KASAMA",
+//       orgid: "3",
+//       products: [
+//         {
+//           product_id: 3,
+//           product_name: "KASAMA Tumbler TumbleR Tmbler", // Example name
+//           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
+//           product_price: 300,
+//           product_quantity: 2,
+//           total: 600
+//         },
+//         {
+//           product_id: 4,
+//           product_name: "Product 4", // Example name
+//           product_image: "../resources/images/products/hoodie.png", // Replace with actual blob URL or data
+//           product_price: 100,
+//           product_quantity: 20,
+//           total: 2000
+//         }
+//       ]
+//     }
+//   ]
+// };
+
+async function getCartDetails() {
+  try {
+    const response = await fetch("http://localhost:3000/api/cart", {
+      method: "GET",
+    });
+    
+    const result = await response.json();
+    console.log("hello");
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+window.onload = async function () {
+  let carts = await getCartDetails();
+  console.log("Cart details response:", carts);
+
+  const userName = (() => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [key, value] = cookie.split("=");
+      if (key === "username") {
+        return value;
+      }
     }
-  ]
+    return null;
+  })();
+
+  const welcomUser = document.querySelector("#welcome-name");
+  welcomUser.textContent = userName;
+
+  const userNameTopBar = document.querySelector(".username");
+  userNameTopBar.textContent = userName;
+
+  showCart(carts);
 };
 
-function showCart(){
+function showCart(carts){
   const mainContainer =  document.querySelector('.card-content-container');
+
+  mainContainer.innerHTML = "";
 
   const innerContainer = document.createElement('div');
   innerContainer.classList.add("inner-container");
@@ -74,7 +116,7 @@ function showCart(){
   innerContainer.appendChild(cardHeader);
 
   //Item Cards
-  data.orgArray.forEach((datum) => {
+ carts.forEach((cart) => {
     const itemCardContainer = document.createElement('div');
     itemCardContainer.classList.add('item-card-container');
 
@@ -88,7 +130,8 @@ function showCart(){
     //Left Header
     const leftHeader = document.createElement('h1');
     leftHeader.classList.add('booth-name')
-    leftHeader.textContent = `Item's from ${datum.organization_name}`;
+    leftHeader.textContent = `Item's from ${cart.organization_name}`;
+    leftHeader.id = `${cart.organization_name}`;
 
     productTitle.appendChild(leftHeader);
 
@@ -117,7 +160,7 @@ function showCart(){
 
     itemCardContainer.appendChild(innerItemCardContainer);
 
-    datum.products.forEach((product) => {
+    cart.products.forEach((product) => {
       const productContainer = document.createElement('div');
       productContainer.classList.add('product-container');
 
@@ -199,7 +242,7 @@ function showCart(){
       }
 
       function updateSubTotal(){
-        let subtotal = datum.products.reduce((acc, product) => acc + product.total, 0);
+        let subtotal = cart.products.reduce((acc, product) => acc + product.total, 0);
         priceTotal.textContent = `P${subtotal}`;
       }
 
@@ -228,7 +271,7 @@ function showCart(){
     subtotalSection.appendChild(priceTotalLabel);
 
     //Computes for the subtotal
-    const totalPrice = datum.products.reduce((acc, product) => acc + product.total, 0);
+    const totalPrice = cart.products.reduce((acc, product) => acc + product.total, 0);
 
     const priceTotal = document.createElement('p');
     priceTotal.textContent = `P${totalPrice}`;
@@ -239,6 +282,10 @@ function showCart(){
     const checkoutButton = document.createElement('button');
     checkoutButton.classList.add('checkout-button');
     checkoutButton.textContent = "CHECKOUT";
+    checkoutButton.addEventListener("click", async function () {
+      loadCheckoutPage();
+    });
+
     itemCardFooter.appendChild(checkoutButton);
 
     innerItemCardContainer.appendChild(itemCardFooter);
@@ -248,4 +295,52 @@ function showCart(){
   });
 
   mainContainer.appendChild(innerContainer);
+}
+
+function loadCheckoutPage(){
+  //Main Container
+  const container = document.querySelector(".inner-container");
+
+  container.innerHTML = "";
+
+  //Inner Container
+  const checkoutCardContainer = document.createElement('div');
+  checkoutCardContainer.classList.add('checkout-card-container');
+
+  //Card Header
+  const cardHeader = document.createElement('div');
+  cardHeader.classList.add('card-header');
+
+  const cardTitle = document.createElement('h1');
+  cardTitle.textContent = "Checkout";
+  cardHeader.appendChild(cardTitle);
+
+  const cardBackButton = document.createElement('button');
+  cardBackButton.classList.add('back-button');
+  cardBackButton.src = "../resources/images/cart/cart-header-icon.png";
+  cardBackButton.addEventListener("click", () => {
+    container.innerHTML = "";
+    showCart()
+  });
+  cardHeader.appendChild(cardBackButton);
+
+  checkoutCardContainer.appendChild(cardHeader);
+
+  //Details Main Container
+  const checkoutDetailsContainer = document.createElement('div');
+  checkoutDetailsContainer.classList.add('checkout-details-container');
+
+  checkoutCardContainer.appendChild(checkoutDetailsContainer);
+  
+  //Left Container
+  const leftDetailsContainer = document.createElement('div');
+  leftDetailsContainer.classList.add('left-details-container');
+
+  checkoutDetailsContainer.appendChild(leftDetailsContainer);
+
+  // const customerName = document.createElement('p');
+  // customerName.textContent = 
+
+  
+  container.appendChild(checkoutCardContainer);
 }
