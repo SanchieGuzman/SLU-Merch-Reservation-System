@@ -12,6 +12,7 @@ async function getBoothDetails() {
 
 window.onload = async function () {
   let booths = await getBoothDetails();
+  console.log(booths);
   showBooths(booths);
 
   const userName = (() => {

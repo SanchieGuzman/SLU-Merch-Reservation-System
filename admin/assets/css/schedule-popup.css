@@ -2,18 +2,17 @@
   position: absolute;
   right: 19%;
   top: 14%;
-  background-color: rgb(235, 235, 235);
+  background-color:#ededeb;
   z-index: 500;
   width: 50%;
   height: 65%;
   padding: 1rem 1rem;
   border-radius: 0.3rem;
-  box-shadow: 
-  rgba(248, 220, 44, 0.4) -5px 5px, 
-  rgba(248, 220, 44, 0.3) -10px 10px, 
-  rgba(248, 220, 44, 0.2) -15px 15px, 
-  rgba(248, 220, 44, 0.1) -20px 20px, 
-  rgba(248, 220, 44, 0.05) -25px 25px;
+  box-shadow:
+    rgba(0, 0, 0, 0.17) 0px 12px 13px,   
+    rgba(0, 0, 0, 0.17) 0px -12px 13px,  
+    rgba(0, 0, 0, 0.17) 12px 0px 13px,   
+    rgba(0, 0, 0, 0.17) -12px 0px 13px;  
 }
 
 #form {
@@ -43,7 +42,7 @@
 }
 
 #header h1{
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: black;
 }
 
@@ -64,57 +63,94 @@
 #right-form-container label{
   font-size: 1rem;
   margin-bottom: 2%;
-  color: #2235a2;
-  font-weight: bold;
+  color: black;
+  font-weight: 500;
+}
+/* General Input Styling */
+#left-form-container input,
+#right-form-container #locations,
+#time-range-container-left input,
+#time-range-container-right input {
+    font-size: 1rem;
+    height: 45px;
+    padding: 0.7rem;
+    width: 100%;
+    border: 1px solid #b8bac4;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 }
 
-#left-form-container input{
-  font-size: 1.2rem;
-  padding: 0 1rem;
-  height: 7vh;
-  border-radius: 0.3rem;
+#left-form-container input:focus,
+#right-form-container #locations:focus,
+#time-range-container-left input:focus,
+#time-range-container-right input:focus {
+    border-color: #2235a2;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-#left-form-container input[type="date"] {
-  font-size: 16px; 
-  padding: 10px;
+/* Date input styling */
+#left-form-container input[type="date"], 
+#right-form-container input[type="date"], 
+#time-range-container-left input[type="date"],
+#time-range-container-right input[type="date"] {
+    font-size: 1rem;
+    padding: 0.7rem;
+    height: 45px;
+    width: 100%;
+    border: 1px solid #b8bac4;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 }
 
-#right-form-container #locations{
-  font-size: 1rem;
-  padding-left: 0.3rem;
-  height: 7vh;
-  border-radius: 0.3rem;
+#left-form-container input[type="date"]:focus,
+#right-form-container input[type="date"]:focus,
+#time-range-container-left input[type="date"]:focus,
+#time-range-container-right input[type="date"]:focus {
+    border-color: #2235a2;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-/* ======= Popup Time Range ========== */
-#time-range-container{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 1.8rem 0 5rem 0;
+/* Time Range Popup */
+#time-range-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1.8rem 0 5rem 0;
 }
 
 #time-range-container-left, 
-#time-range-container-right{
-  display: flex;
-  flex-direction: column;
-  width: 47%;
-  gap: 30%;
+#time-range-container-right {
+    display: flex;
+    flex-direction: column;
+    width: 47%;
+    gap: 30%;
 }
 
 #time-range-container-left label, 
-#time-range-container-right label{
-  font-size: 1rem;
-  margin-bottom: 2%;
+#time-range-container-right label {
+    font-size: 1rem;
+    margin-bottom: 2%;
 }
 
-#time-range-container-left input, 
-#time-range-container-right input{
-  font-size: 1rem;
-  padding: 0 1rem;
-  height: 7vh;
-  border-radius: 0.3rem;
+/* Locations Dropdown */
+#right-form-container #locations {
+    font-size: 1rem;
+    padding-left: 0.3rem;
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid #b8bac4;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+#right-form-container #locations:focus {
+    border-color: #2235a2;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 /* ======= Popup Add Button ========== */

@@ -24,7 +24,9 @@ body {
   justify-content: space-between;
   padding: 0.5rem 1rem;
   margin-top: 0.5rem;
-  background-color: #f8dc2c;
+  /* background-color: #f8dc2c; */
+  background: linear-gradient(to right, #f8dc2c, #f8dc2c);
+
   color: black;
 }
 
@@ -128,7 +130,7 @@ body {
   display: flex;
   justify-content: center;
 }
-
+/* Button styles for .page-number */
 .page-number > button {
   background-image: linear-gradient(to right, #3a50cb, #15268b);
   color: white;
@@ -137,21 +139,42 @@ body {
   border-radius: 0.2rem;
   margin-right: 1rem;
   border: none;
+  transition: background-image 0.3s ease, transform 0.2s ease; 
 }
 
+.page-number > button:hover {
+  background-image: linear-gradient(to right, #15268b, #3a50cb);
+  transform: scale(1.05); 
+}
+
+/* Styles for page buttons in .pages-container */
 .page-number .pages-container > button {
   width: 2.5rem;
   height: 2.5rem;
   margin-right: 1rem;
   border: 1px solid #15268b;
   border-radius: 0.2rem;
+  background-color: transparent;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.page-number .pages-container > button:hover {
+  background-color: #3a50cb; 
+  color: white; 
+  transform: scale(1.1); 
+}
+
+/* Active button styles */
 .page-number .pages-container .active {
   background-color: #f8dc2c;
   color: black;
   border: none;
 }
+
+.page-number .pages-container .active:hover {
+  background-color: #e1c800; 
+}
+
 
 .pages-container .ellipsis {
   width: 2.5rem;

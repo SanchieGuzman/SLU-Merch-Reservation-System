@@ -1,7 +1,7 @@
 #edit-product-pop-up-container {
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 55%;
     transform: translate(-50%, -50%);
     height: auto;
     width: 100%;
@@ -12,18 +12,17 @@
     padding: 1.5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    box-shadow: 
-  rgba(248, 220, 44, 0.4) -5px 5px, 
-  rgba(248, 220, 44, 0.3) -10px 10px, 
-  rgba(248, 220, 44, 0.2) -15px 15px, 
-  rgba(248, 220, 44, 0.1) -20px 20px, 
-  rgba(248, 220, 44, 0.05) -25px 25px;
+    box-shadow:
+    rgba(0, 0, 0, 0.17) 0px 12px 13px,   
+    rgba(0, 0, 0, 0.17) 0px -12px 13px,  
+    rgba(0, 0, 0, 0.17) 12px 0px 13px,   
+    rgba(0, 0, 0, 0.17) -12px 0px 13px;  
 }
 
 #edit-product-title {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #000;
+    color: black;
     margin-bottom: 1rem;
     text-align: center;
     background-color: #f8dc2c;
@@ -39,8 +38,8 @@ form#edit-product-form {
 
 label.label {
     font-size: 0.9rem;
-    font-weight: 600;
-    color: #2235a2;
+    font-weight: 500;
+    color: black;
     margin-bottom: 0.3rem;
 }
 

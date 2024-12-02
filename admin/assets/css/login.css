@@ -15,7 +15,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at 0% 0%, #2e3353, #2540de, #121e63);
+  background: linear-gradient(to right, #f8dc2c, #f8dc2c);
   height: 100vh;
   margin: 0;
 }
@@ -106,8 +106,8 @@ form #submit_button {
   height: 50px;
   font-size: 1rem;
   font-weight: bold;
-  color: #000000;
-  background-color: #f8dc2c;
+  color: #ffffff;
+  background: linear-gradient(to right, #2235a2, #4266ff);
   border: none;
   border-radius: 25px;
   cursor: pointer;
@@ -116,7 +116,7 @@ form #submit_button {
 }
 
 form #submit_button:hover {
-  background-color: #f8dc2c;
+  background: linear-gradient(to right, #2235a2, #4266ff);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
