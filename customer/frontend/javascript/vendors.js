@@ -125,7 +125,7 @@
 });
 async function getVendorDetails() {
     try {
-      const response = await fetch("http://localhost:3000/api/vendors", {
+      const response = await fetch("/api/vendors", {
         method: "GET",
       });
       const result = await response.json();

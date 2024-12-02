@@ -1,6 +1,6 @@
 async function getBoothDetails() {
   try {
-    const response = await fetch("http://localhost:3000/api/products", {
+    const response = await fetch("/api/products", {
       method: "GET",
     });
     const result = await response.json();
@@ -181,7 +181,7 @@ function showBooths(booths) {
 async function getBoothProducts(orgId) {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/${orgId}/products`,
+      `/api/${orgId}/products`,
       {
         method: "GET",
       }
@@ -327,7 +327,7 @@ function showBoothProducts(organizationName, products, organization_id) {
 async function getProductDetails(orgId, productId) {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/${orgId}/products/${productId}`,
+      `/api/${orgId}/products/${productId}`,
       {
         method: "GET",
       }

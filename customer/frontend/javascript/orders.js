@@ -1,6 +1,6 @@
 async function getOrders(userid) {
   try {
-    const response = await fetch(`http://localhost:3000/api/orders`, {
+    const response = await fetch(`/api/orders`, {
       method: "GET",
     });
     const result = await response.json();
