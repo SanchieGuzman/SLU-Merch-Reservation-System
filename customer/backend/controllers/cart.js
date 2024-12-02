@@ -31,35 +31,55 @@ const getCartController = async(req, res)=>{
         const db = Database.getInstance();
         const result = await db.getCart(user_id);
 
-        const transformedData = {
-            user_id: user_id,
-            orgArray: result.reduce((acc, item) => {
-              const orgIndex = acc.findIndex((org) => org.orgid === item.organization_id);
-              const product = {
+        // Transformation
+        const data = { user_id: user_id, orgArray: [] };
+
+        console.log('length of result: ', result.length);
+        for (let i = 0; i < result.length; i++) {
+          
+          const item = result[i];
+          let orgFound = false;
+
+          // Check if the organization already exists in orgArray
+          for (let j = 0; j < data.orgArray.length; j++) {
+            if (data.orgArray[j].orgid === item.organization_id) {
+              orgFound = true;
+
+              // Add the product to the existing organization
+              data.orgArray[j].products.push({
                 product_id: item.product_id,
                 product_name: item.product_name,
-                product_image: item.product_image, // placeholder for actual blob
-                product_price: parseFloat(item.product_price),
+                product_image: item.product_image,
+                product_price: item.product_price,
                 product_quantity: item.product_quantity,
-                total: parseFloat(item.product_price) * item.product_quantity,
-              };
-          
-              if (orgIndex === -1) {
-                acc.push({
-                  orgid: item.organization_id,
-                  orgname: item.organization_name,
-                  products: [product],
-                });
-              } else {
-                acc[orgIndex].products.push(product);
-              }
-          
-              return acc;
-            }, []),
-          };
+                total: item.total
+              });
+              break;
+            }
+          }
 
-
-        res.status(200).json(transformedData)
+          // If organization is not found, create a new one
+          if (!orgFound) {
+            data.orgArray.push({
+              orgid: item.organization_id,
+              orgname: item.organization_name,
+              products: [
+                {
+                  product_id: item.product_id,
+                  product_name: item.product_name,
+                  product_image: item.product_image,
+                  product_price: item.product_price,
+                  product_quantity: item.product_quantity,
+                  total: item.total
+                }
+              ]
+            });
+          }
+        }
+        
+        console.log();
+        
+        res.status(200).json(data)
     }catch(error){
         return res.status(500).json({
             message: "Internal Server Error",

@@ -57,7 +57,7 @@
 
 async function getCartDetails() {
   try {
-    const response = await fetch("http://localhost:3000/api/cart", {
+    const response = await fetch("/api/cart", {
       method: "GET",
     });
     
@@ -116,7 +116,7 @@ function showCart(carts){
   innerContainer.appendChild(cardHeader);
 
   //Item Cards
- carts.forEach((cart) => {
+  carts.orgArray.forEach((cart) => {
     const itemCardContainer = document.createElement('div');
     itemCardContainer.classList.add('item-card-container');
 
@@ -170,9 +170,19 @@ function showCart(carts){
 
       const imageContainer = document.createElement('div');
       imageContainer.classList.add('image-container');
+      
+      // IMAGE ISSUES
+      // Convert the product.product_image to a Uint8Array
+      const byteArray = new Uint8Array(product.product_image.data);
 
+      // Create a Blob from the byteArray
+      const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
+
+      // Create a temporary object URL for the blob
+      const imageUrl = URL.createObjectURL(blob);
+      
       const productImage = document.createElement('img');
-      productImage.src = product.product_image;
+      productImage.src = imageUrl;
       imageContainer.appendChild(productImage);
 
       const productName = document.createElement('p');
