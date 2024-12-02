@@ -13,7 +13,7 @@ async function getBoothDetails() {
 window.onload = async function () {
   let booths = await getBoothDetails();
   showBooths(booths);
-  
+
   const userName = (() => {
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {
@@ -110,6 +110,7 @@ function showBooths(booths) {
       const itemImage = document.createElement("img");
       itemImage.classList.add("item-image");
       itemImage.src = imageUrl;
+      itemImage.alt = product.product_name;
       itemCardImageContainer.appendChild(itemImage);
 
       itemCard.appendChild(itemCardImageContainer);
@@ -152,10 +153,13 @@ function showBooths(booths) {
           product.organization_id,
           product.product_id
         );
-        console.log(productDetails);
+
+        const ref1 = viewButton.closest(".booth-container");
+
+        const reference = String(ref1);
 
         const orgName = boothName.textContent;
-        viewProductDetails(orgName, productDetails);
+        viewProductDetails(orgName, productDetails, reference);
       });
 
       viewButtonContainer.appendChild(viewButton);
@@ -191,7 +195,6 @@ async function getBoothProducts(orgId) {
 /* ==============Method for See All======================== */
 
 function showBoothProducts(organizationName, products, organization_id) {
-  console.log(products);
   const mainContainer = document.querySelector(".inner-container");
   const children = Array.from(mainContainer.children);
 
@@ -253,6 +256,7 @@ function showBoothProducts(organizationName, products, organization_id) {
     const itemImage = document.createElement("img");
     itemImage.classList.add("item-image");
     itemImage.src = imageUrl;
+    itemImage.alt = product.product_name;
     itemCardImageContainer.appendChild(itemImage);
 
     itemCard.appendChild(itemCardImageContainer);
@@ -296,8 +300,10 @@ function showBoothProducts(organizationName, products, organization_id) {
         organization_id,
         product.product_id
       );
-      console.log(productDetails);
-      viewProductDetails(organizationName, productDetails);
+
+      const reference = organization_id + " | " + organizationName;
+
+      viewProductDetails(organizationName, productDetails, reference);
     });
 
     viewButtonContainer.appendChild(viewButton);
@@ -306,10 +312,6 @@ function showBoothProducts(organizationName, products, organization_id) {
     productGridContainer.appendChild(itemCard);
   });
   productsContainer.appendChild(productGridContainer);
-
-  const bottomSpacer = document.createElement("div");
-  bottomSpacer.classList.add("bottom-spacer");
-  productsContainer.appendChild(bottomSpacer);
 
   mainContainer.appendChild(productsContainer);
 
@@ -336,20 +338,10 @@ async function getProductDetails(orgId, productId) {
   }
 }
 /* ==============Method for View======================== */
-function viewProductDetails(orgName, product) {
+function viewProductDetails(orgName, product, reference) {
   const container = document.querySelector(".inner-container");
 
   container.innerHTML = "";
-
-  // const product = {
-  //   org_id: 1,
-  //   product_id: "2",
-  //   product_name: "cap",
-  //   product_image: "../resources/images/products/hoodie.png",
-  //   product_description: "sample description hehehheh hahaha",
-  //   product_price: 100,
-  //   product_quantity: 100,
-  // };
 
   //card header ====================================start================
   const cardHeader = document.createElement("div");
@@ -363,18 +355,45 @@ function viewProductDetails(orgName, product) {
   closeButton.addEventListener("click", async function () {
     const mainContainer = document.querySelector(".content-container");
     mainContainer.innerHTML = "";
-    let booths = await getBoothDetails();
-    showBooths(booths);
+
+    if (isNaN(reference.charAt(0))) {
+      let booths = await getBoothDetails();
+      showBooths(booths);
+    } else {
+      const innerContainer = document.createElement("div");
+      innerContainer.classList.add("inner-container");
+      //card header
+      const cardHeader = document.createElement("div");
+      cardHeader.classList.add("card-header");
+
+      const headerText = document.createElement("h2");
+      headerText.classList.add("header-text");
+      headerText.textContent = "See Products of Each SLU Organizations";
+      cardHeader.appendChild(headerText);
+
+      const headerIcon = document.createElement("img");
+      headerIcon.classList.add("header-icon");
+      headerIcon.src = "../resources/images/products/products-header-icon.png";
+      cardHeader.appendChild(headerIcon);
+
+      innerContainer.appendChild(cardHeader);
+
+      mainContainer.appendChild(innerContainer);
+      const [organizationId, organizationName] = reference.split("|");
+
+      let orgProducts = await getBoothProducts(organizationId);
+      showBoothProducts(organizationName, orgProducts, organizationId);
+    }
   });
   cardHeader.appendChild(boothName);
   cardHeader.appendChild(closeButton);
   container.appendChild(cardHeader);
 
-  //specific product container ====================================start========================
+  //specific product container
   const specificProductContainer = document.createElement("div");
   specificProductContainer.classList.add("specific-product-container");
 
-  //left container =================================start============
+  //left container
   const leftContainer = document.createElement("div");
   leftContainer.classList.add("left-container-specific-product");
 
@@ -395,7 +414,7 @@ function viewProductDetails(orgName, product) {
 
   specificProductContainer.appendChild(leftContainer); //append left container to specific product container
 
-  //right  container =================================start============
+  //right  container
   const rightContainer = document.createElement("div");
   rightContainer.classList.add("right-container-specific-product");
 
@@ -449,7 +468,7 @@ function viewProductDetails(orgName, product) {
 
   quantityContainer.appendChild(quantityText);
   quantityContainer.appendChild(quantityControls);
-  rightContainer.appendChild(quantityContainer); //append the quantity and controls
+  rightContainer.appendChild(quantityContainer);
 
   //price container
   const priceContainer = document.createElement("div");
