@@ -52,7 +52,8 @@ const getCartController = async(req, res)=>{
                 product_image: item.product_image,
                 product_price: item.product_price,
                 product_quantity: item.product_quantity,
-                total: item.total
+                total: item.total,
+                total_stocks: item.total_stocks
               });
               break;
             }
@@ -70,7 +71,8 @@ const getCartController = async(req, res)=>{
                   product_image: item.product_image,
                   product_price: item.product_price,
                   product_quantity: item.product_quantity,
-                  total: item.total
+                  total: item.total,
+                  total_stocks: item.total_stocks
                 }
               ]
             });

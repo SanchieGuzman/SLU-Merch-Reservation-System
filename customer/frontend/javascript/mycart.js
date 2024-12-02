@@ -15,7 +15,7 @@ async function getCartDetails() {
 
 window.onload = async function () {
   let carts = await getCartDetails();
-
+  console.log(carts);
   const userName = (() => {
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {
