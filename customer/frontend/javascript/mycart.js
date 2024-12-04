@@ -5,7 +5,19 @@ async function getCartDetails() {
     });
     
     const result = await response.json();
-    console.log("hello");
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getScheduleDetails(orgid) {
+  try {
+    const response = await fetch(`/api/${orgid}/schedules`, {
+      method: "GET",
+    });
+    
+    const result = await response.json();
     console.log(result);
     return result;
   } catch (err) {
@@ -15,7 +27,6 @@ async function getCartDetails() {
 
 window.onload = async function () {
   let carts = await getCartDetails();
-  console.log(carts);
   const userName = (() => {
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {
@@ -35,8 +46,6 @@ window.onload = async function () {
 
   showCart(carts);
 };
-
-let currentSubtotal = 0;
 
 function showCart(carts){
   const mainContainer =  document.querySelector('.card-content-container');
@@ -74,8 +83,8 @@ function showCart(carts){
     //Left Header
     const leftHeader = document.createElement('h1');
     leftHeader.classList.add('booth-name')
-    leftHeader.textContent = `Item's from ${cart.organization_name}`;
-    leftHeader.id = `${cart.organization_name}`;
+    leftHeader.textContent = `Item's from ${cart.orgname}`;
+    leftHeader.id = `${cart.orgid}`;
 
     productTitle.appendChild(leftHeader);
 
@@ -160,6 +169,7 @@ function showCart(carts){
       quantityInput.setAttribute("min", "1");
       quantityInput.setAttribute("value", product.product_quantity);
       quantityInput.setAttribute("max", product.product_quantity);
+      quantityInput.setAttribute("data-product-id", product.product_id); 
       productQuantity.appendChild(quantityInput);
 
       const plusButton = document.createElement("button");
@@ -168,15 +178,20 @@ function showCart(carts){
       productQuantity.appendChild(plusButton);
 
       productActionsContainer.appendChild(productQuantity);
-       
+      
       plusButton.addEventListener("click", () => {
         let currentQuantity = parseInt(quantityInput.value);
-        if(currentQuantity < product.product_quantity){
+        if(currentQuantity < product.total_stocks){
           currentQuantity++;
           quantityInput.value = currentQuantity;
+          product.product_quantity = currentQuantity;
+          console.log(product.product_quantity);
           updateTotal(quantityInput.value, product.product_price);
+
           const subtotal = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);
-          priceTotal.textContent = `P${subtotal.toFixed(2)}`;
+          priceTotal.textContent = `₱ ${subtotal.toFixed(2)}`;
+        } else{
+          console.log("Maximum Stock Reached");
         }
       });
 
@@ -185,9 +200,12 @@ function showCart(carts){
         if(currentQuantity > 1){
           currentQuantity--;
           quantityInput.value = currentQuantity;
+          product.product_quantity = currentQuantity;
+          console.log(product.product_quantity);
           updateTotal(quantityInput.value, product.product_price);
+
           const subtotal = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);
-          priceTotal.textContent = `P${subtotal.toFixed(2)}`;
+          priceTotal.textContent = `₱ ${subtotal.toFixed(2)}`;
         }
       });
 
@@ -195,14 +213,14 @@ function showCart(carts){
         //converted the readprice from string to number using parseFloat
         const numericPrice = parseFloat(price);
         let productPriceTotal = quantity * numericPrice;
-        productTotal.textContent =`P${productPriceTotal.toFixed(2)}`;
+        productTotal.textContent =`₱ ${productPriceTotal.toFixed(2)}`;
         product.total = productPriceTotal;
       }
 
       //Product Total
       const productTotal = document.createElement('p')
       productTotal.classList.add('product-total');
-      productTotal.textContent = `P${product.total}`;
+      productTotal.textContent = `₱ ${product.total}`;
       productActionsContainer.appendChild(productTotal);
 
       productContainer.appendChild(productInfoContainer);
@@ -228,7 +246,8 @@ function showCart(carts){
     const totalPrice = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);
 
     const priceTotal = document.createElement('p');
-    priceTotal.textContent = `P${totalPrice.toFixed(2)}`;
+    priceTotal.classList.add('price-total');
+    priceTotal.textContent = `₱ ${totalPrice.toFixed(2)}`;
     subtotalSection.appendChild(priceTotal);
 
     itemCardFooter.appendChild(subtotalSection);
@@ -237,8 +256,28 @@ function showCart(carts){
     checkoutButton.classList.add('checkout-button');
     checkoutButton.textContent = "CHECKOUT";
     checkoutButton.addEventListener("click", async function () {
-      let prodDescription = await getCartDetails();
-      loadCheckoutPage(prodDescription);
+      const orgId = checkoutButton.closest(".item-card-container").querySelector(".booth-name").id;
+      console.log(orgId);
+
+      let carts = await getCartDetails();
+      console.log(carts);
+
+      let selectedOrgProducts = carts.orgArray.filter(cart => cart.orgid.toString() === orgId.toString());
+
+      selectedOrgProducts.forEach(cart => {
+        cart.products.forEach(product => {
+          const quantityInput = document.querySelector(`.input-box[data-product-id="${product.product_id}"]`);
+          if (quantityInput) {
+            product.product_quantity = parseInt(quantityInput.value);
+          }
+        });
+      });
+
+      console.log(selectedOrgProducts);
+
+      let schedules = await getScheduleDetails(orgId);
+
+      loadCheckoutPage(carts,selectedOrgProducts, priceTotal.textContent, schedules);
     });
 
     itemCardFooter.appendChild(checkoutButton);
@@ -252,22 +291,9 @@ function showCart(carts){
   mainContainer.appendChild(innerContainer);
 }
 
-async function getCheckoutDetails(orgID) {
-  try {
-    const response = await fetch(`/api/${orgID}/checkout`, {
-      method: "POST",
-    });
-    
-    const result = await response.json();
-    return result;
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-function loadCheckoutPage(prod){
+function loadCheckoutPage(carts,prod,total,schedules){
   const container = document.querySelector(".inner-container");
-  
+
   container.innerHTML = "";
 
   //Main Container
@@ -329,7 +355,7 @@ function loadCheckoutPage(prod){
   customerDetailsContainer.appendChild(customerName);
 
   const customerID = document.createElement('p');
-  customerID.textContent = `customer ID : ${prod.user_id}`;
+  customerID.textContent = `customer ID : ${carts.user_id}`;
   customerDetailsContainer.appendChild(customerID);
   
   leftDetailsContainer.appendChild(customerDetailsContainer);
@@ -342,13 +368,124 @@ function loadCheckoutPage(prod){
   orderSummaryHeader.textContent = "Order Summary";
   orderSummaryContainer.appendChild(orderSummaryHeader);
   
-  // const orderTotalPrice = document.createElement('p');
-  // orderTotalPrice.textContent = `P${total.toFixed(2)}`;
-  // console.log(orderTotalPrice);
-  // orderSummaryContainer.appendChild(orderTotalPrice);
+  const orderTotalPrice = document.createElement('p');
+  orderTotalPrice.textContent = `Total: ${total}`;
+  orderSummaryContainer.appendChild(orderTotalPrice);
 
   leftDetailsContainer.appendChild(orderSummaryContainer);
 
+  //pickup location/date/time
+  const pickupContainer = document.createElement('div');
+  pickupContainer.classList.add('pickup-container');
+
+  //pickup header
+  const pickupHeader = document.createElement('h1');
+  pickupHeader.textContent = "Pickup Date, Time and Location";
+
+  pickupContainer.appendChild(pickupHeader);
+
+  //pickup dropdown
+  const pickUpDropdown = document.createElement("select");
+  pickUpDropdown.classList.add('pickup-dropdown');
+
+  pickUpDropdown.innerHTML = ""; // Clear existing options
+
+  schedules.schedules.forEach(schedule => {
+    const optionList = document.createElement('option');
+
+    const dateFormat = new Date(schedule.date);
+    const readableFormat = dateFormat.toLocaleString("en-us", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    // Use the original ISO date for accurate time calculations
+    const startDateTime = new Date(`${schedule.date.split("T")[0]}T${schedule.start_time}`);
+    const formattedStartTime = startDateTime.toLocaleTimeString("en-us", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    });
+
+    const endDateTime = new Date(`${schedule.date.split("T")[0]}T${schedule.end_time}`);
+    const formattedEndTime = endDateTime.toLocaleTimeString("en-us", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    });
+
+    optionList.value = `${schedule.date} | ${schedule.start_time} - ${schedule.end_time} | ${schedule.location}`;
+    optionList.textContent = `${readableFormat} | ${formattedStartTime} - ${formattedEndTime} | ${schedule.location}`;
+    pickUpDropdown.appendChild(optionList);
+  });
+
+  pickupContainer.appendChild(pickUpDropdown);
+  leftDetailsContainer.appendChild(pickupContainer);
+
   checkoutDetailsContainer.appendChild(leftDetailsContainer);
+
+  //Right Container
+  const rightDetailsContainer = document.createElement('div');
+  rightDetailsContainer.classList.add('right-details-container');
+
+  prod.forEach((organization) => {
+    organization.products.forEach((product) =>{
+      const checkoutProductContainer = document.createElement('div');
+      checkoutProductContainer.classList.add("checkout-product-container");
+  
+      const imageContainer = document.createElement('div');
+      imageContainer.classList.add('image-container');
+      
+      // IMAGE ISSUES
+      // Convert the product.product_image to a Uint8Array
+      const byteArray = new Uint8Array(product.product_image.data);
+  
+      // Create a Blob from the byteArray
+      const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
+  
+      // Create a temporary object URL for the blob
+      const imageUrl = URL.createObjectURL(blob);
+      
+      const productImage = document.createElement('img');
+      productImage.src = imageUrl;
+      imageContainer.appendChild(productImage);
+  
+      const productName = document.createElement('p');
+      productName.textContent = product.product_name;
+
+      const productQuantity = document.createElement('p');
+      productQuantity.textContent = product.product_quantity;
+
+      
+      checkoutProductContainer.appendChild(productQuantity);
+      checkoutProductContainer.appendChild(imageContainer);
+      checkoutProductContainer.appendChild(productName);
+
+      rightDetailsContainer.appendChild(checkoutProductContainer);
+    });
+  });
+
+  const completeOrder = document.createElement('div');
+  completeOrder.classList.add('complete-order-container');
+
+  const totalLabel = document.createElement('p');
+  totalLabel.textContent = "Total: ";
+
+  const productTotal = document.createElement('p');
+  productTotal.textContent = `${total}`;
+
+  const completeOrderButton = document.createElement('button');
+  completeOrderButton.classList.add('complete-order-button');
+  completeOrderButton.textContent = "Complete Order";
+  
+  completeOrder.appendChild(totalLabel);
+  completeOrder.appendChild(productTotal);
+  completeOrder.appendChild(completeOrderButton);
+
+  rightDetailsContainer.appendChild(completeOrder);
+
+  checkoutDetailsContainer.appendChild(rightDetailsContainer);
+  
   container.appendChild(checkoutCardContainer);
 }

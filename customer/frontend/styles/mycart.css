@@ -176,13 +176,8 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* ======== Checkout Page Card =========== */
 .checkout-card-container{
+  height: 75vh;
   border: 2px solid red;
-  /* padding: 1rem 1rem; */
-}
-
-.left-details-container{
-  margin-top: 2rem;
-  border: 2px solid blue;
 }
 
 .checkout-card-container .card-header .back-button{
@@ -190,5 +185,40 @@ input[type="number"]::-webkit-outer-spin-button {
   height: 3rem;
 }
 
+.checkout-details-container{
+  display: flex;
+  padding: 1rem 1rem;
+  /* height: 67vh; */
+  border:2px solid green ;
+}
 
+.left-details-container,
+.right-details-container{
+  width: 50%;
+}
+
+.left-details-container{
+  font-size: 1.5rem;
+  border-right:2px solid black ;
+}
+
+.left-details-container h1{
+  font-size: 1.8rem;
+}
+
+/* ============== Left Container ============ */
+.left-details-container .customer-details-container {
+  margin-bottom: 1.5rem;
+}
+
+.left-details-container .orders-summary-container{
+  margin-bottom: 1.5rem;
+}
+
+.pickup-container .pickup-dropdown{
+  margin-top: 1rem;
+  width: 90%;
+  height: 4rem;
+  font-size: 1rem;
+}
 
