@@ -16,6 +16,7 @@ async function getScheduleDetails(orgid) {
     const response = await fetch(`/api/${orgid}/schedules`, {
       method: "GET",
     });
+    console.log(response);
     
     const result = await response.json();
     console.log(result);
@@ -82,6 +83,7 @@ function showCart(carts){
 
     //Left Header
     const leftHeader = document.createElement('h1');
+
     leftHeader.classList.add('booth-name')
     leftHeader.textContent = `Item's from ${cart.orgname}`;
     leftHeader.id = `${cart.orgid}`;
@@ -220,7 +222,7 @@ function showCart(carts){
       //Product Total
       const productTotal = document.createElement('p')
       productTotal.classList.add('product-total');
-      productTotal.textContent = `₱ ${product.total}`;
+      productTotal.textContent = `₱${product.total}`;
       productActionsContainer.appendChild(productTotal);
 
       productContainer.appendChild(productInfoContainer);
@@ -256,8 +258,7 @@ function showCart(carts){
     checkoutButton.classList.add('checkout-button');
     checkoutButton.textContent = "CHECKOUT";
     checkoutButton.addEventListener("click", async function () {
-      const orgId = checkoutButton.closest(".item-card-container").querySelector(".booth-name").id;
-      console.log(orgId);
+      const orgId = cart.orgid;
 
       let carts = await getCartDetails();
       console.log(carts);
@@ -265,19 +266,18 @@ function showCart(carts){
       let selectedOrgProducts = carts.orgArray.filter(cart => cart.orgid.toString() === orgId.toString());
 
       selectedOrgProducts.forEach(cart => {
-        cart.products.forEach(product => {
-          const quantityInput = document.querySelector(`.input-box[data-product-id="${product.product_id}"]`);
-          if (quantityInput) {
-            product.product_quantity = parseInt(quantityInput.value);
-          }
+          cart.products.forEach(product => {
+            const quantityInput = document.querySelector(`.input-box[data-product-id="${product.product_id}"]`);
+            if (quantityInput) {
+              product.product_quantity = parseInt(quantityInput.value);
+            }
+          });
         });
-      });
+      ;
 
-      console.log(selectedOrgProducts);
+      let schedules = await getScheduleDetails(cart.orgid);
 
-      let schedules = await getScheduleDetails(orgId);
-
-      loadCheckoutPage(carts,selectedOrgProducts, priceTotal.textContent, schedules);
+      loadCheckoutPage(carts, selectedOrgProducts, priceTotal.textContent, schedules);
     });
 
     itemCardFooter.appendChild(checkoutButton);
@@ -310,7 +310,6 @@ function loadCheckoutPage(carts,prod,total,schedules){
 
   const cardBackButton = document.createElement('button');
   cardBackButton.classList.add('back-button'); 
-  cardBackButton.src = "../resources/images/cart/cart-header-icon.png";
   cardBackButton.addEventListener("click", async function () {
     const mainContainer = document.querySelector(".card-content-container");
     mainContainer.innerHTML = "";
@@ -346,17 +345,29 @@ function loadCheckoutPage(carts,prod,total,schedules){
   const customerDetailsContainer =  document.createElement('div');
   customerDetailsContainer.classList.add('customer-details-container');
 
+  //Username
+  const userNameContainer = document.createElement('div');
+  userNameContainer.classList.add('username-container');
+
   const customerHeader = document.createElement('h1');
   customerHeader.textContent = "Customer Name";
-  customerDetailsContainer.appendChild(customerHeader);
+  userNameContainer.appendChild(customerHeader);
 
   const customerName = document.createElement('p');
   customerName.textContent = cName;
-  customerDetailsContainer.appendChild(customerName);
+  userNameContainer.appendChild(customerName);
+
+  customerDetailsContainer.appendChild(userNameContainer);
+
+  //Userid
+  const userIdContainer = document.createElement('div');
+  userIdContainer.classList.add('userid-container');
 
   const customerID = document.createElement('p');
   customerID.textContent = `customer ID : ${carts.user_id}`;
-  customerDetailsContainer.appendChild(customerID);
+  userIdContainer.appendChild(customerID);
+
+  customerDetailsContainer.appendChild(userIdContainer);
   
   leftDetailsContainer.appendChild(customerDetailsContainer);
 
@@ -364,12 +375,22 @@ function loadCheckoutPage(carts,prod,total,schedules){
   const orderSummaryContainer =  document.createElement('div');
   orderSummaryContainer.classList.add('orders-summary-container');
   
+  //Orders Header
+  const orderSummaryTextContainer =  document.createElement('div');
+  orderSummaryTextContainer.classList.add('orders-summary-text-container');
+
   const orderSummaryHeader = document.createElement('h1');
   orderSummaryHeader.textContent = "Order Summary";
-  orderSummaryContainer.appendChild(orderSummaryHeader);
+  orderSummaryTextContainer.appendChild(orderSummaryHeader);
+
+  const totalText = document.createElement('p');
+  totalText.textContent = "Total:";
+  orderSummaryTextContainer.appendChild(totalText);
+
+  orderSummaryContainer.appendChild(orderSummaryTextContainer);
   
   const orderTotalPrice = document.createElement('p');
-  orderTotalPrice.textContent = `Total: ${total}`;
+  orderTotalPrice.textContent = `${total}`;
   orderSummaryContainer.appendChild(orderTotalPrice);
 
   leftDetailsContainer.appendChild(orderSummaryContainer);
@@ -429,10 +450,17 @@ function loadCheckoutPage(carts,prod,total,schedules){
   const rightDetailsContainer = document.createElement('div');
   rightDetailsContainer.classList.add('right-details-container');
 
+  const scrollable = document.createElement('div');
+  scrollable.classList.add('checkout-scrollable');
+
   prod.forEach((organization) => {
     organization.products.forEach((product) =>{
+
       const checkoutProductContainer = document.createElement('div');
       checkoutProductContainer.classList.add("checkout-product-container");
+
+      const detailsContainer = document.createElement('div');
+      detailsContainer.classList.add('details-container');
   
       const imageContainer = document.createElement('div');
       imageContainer.classList.add('image-container');
@@ -450,37 +478,53 @@ function loadCheckoutPage(carts,prod,total,schedules){
       const productImage = document.createElement('img');
       productImage.src = imageUrl;
       imageContainer.appendChild(productImage);
+      
+      detailsContainer.appendChild(imageContainer);
   
+      const productActionsContainer = document.createElement('div');
+      productActionsContainer.classList.add('product-actions-container');
+
       const productName = document.createElement('p');
       productName.textContent = product.product_name;
+      productActionsContainer.appendChild(productName);
 
       const productQuantity = document.createElement('p');
-      productQuantity.textContent = product.product_quantity;
+      productQuantity.textContent = `x${product.product_quantity}`;
+      productActionsContainer.appendChild(productQuantity);
 
-      
-      checkoutProductContainer.appendChild(productQuantity);
-      checkoutProductContainer.appendChild(imageContainer);
-      checkoutProductContainer.appendChild(productName);
+      detailsContainer.appendChild(productActionsContainer);
 
-      rightDetailsContainer.appendChild(checkoutProductContainer);
+      const productTotal = document.createElement('p');
+      productTotal.textContent = `₱${product.product_price * product.product_quantity}`;
+          
+      checkoutProductContainer.appendChild(detailsContainer);
+      checkoutProductContainer.appendChild(productTotal);
+
+      scrollable.appendChild(checkoutProductContainer);
+
+      rightDetailsContainer.appendChild(scrollable);
     });
   });
 
   const completeOrder = document.createElement('div');
   completeOrder.classList.add('complete-order-container');
 
+  const totalSection = document.createElement('div');
+  totalSection.classList.add('total-section');
+
   const totalLabel = document.createElement('p');
   totalLabel.textContent = "Total: ";
+  totalSection.appendChild(totalLabel);
 
   const productTotal = document.createElement('p');
   productTotal.textContent = `${total}`;
+  totalSection.appendChild(productTotal);
 
   const completeOrderButton = document.createElement('button');
   completeOrderButton.classList.add('complete-order-button');
   completeOrderButton.textContent = "Complete Order";
   
-  completeOrder.appendChild(totalLabel);
-  completeOrder.appendChild(productTotal);
+  completeOrder.appendChild(totalSection);
   completeOrder.appendChild(completeOrderButton);
 
   rightDetailsContainer.appendChild(completeOrder);

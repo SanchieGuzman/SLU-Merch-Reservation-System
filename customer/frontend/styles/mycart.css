@@ -177,23 +177,24 @@ input[type="number"]::-webkit-outer-spin-button {
 /* ======== Checkout Page Card =========== */
 .checkout-card-container{
   height: 75vh;
-  border: 2px solid red;
 }
 
 .checkout-card-container .card-header .back-button{
   width: 3rem;
   height: 3rem;
+  /* background-color: transparent; */
+  background-image: url(../resources/images/products/returnButton.png);
+  border: none;
 }
 
 .checkout-details-container{
   display: flex;
-  padding: 1rem 1rem;
-  /* height: 67vh; */
-  border:2px solid green ;
+  padding: 1rem 0;
 }
 
 .left-details-container,
 .right-details-container{
+  padding: 2rem 2rem 0 2rem;
   width: 50%;
 }
 
@@ -208,17 +209,89 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* ============== Left Container ============ */
 .left-details-container .customer-details-container {
-  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.customer-details-container .username-container h1{
+  text-transform: capitalize;
+  margin-bottom: 0.8rem;
 }
 
 .left-details-container .orders-summary-container{
-  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 .pickup-container .pickup-dropdown{
   margin-top: 1rem;
-  width: 90%;
+  width: 100%;
   height: 4rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  padding-left: 0.5rem;
 }
+
+/* ============== right Container ============ */
+.right-details-container .checkout-scrollable{
+  height: 45vh;
+  overflow-y: scroll;
+  box-shadow: -0.2rem .2rem 1rem rgba(0, 0, 0, 0.422);
+  margin-bottom: 2rem;
+}
+
+.checkout-product-container{
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  height: 20vh;
+  padding: 0 2rem;
+}
+
+.checkout-product-container .details-container{
+  display:flex;
+  align-items: center;
+}
+
+.checkout-product-container .image-container{
+  margin-right: 1rem;
+  border: 1px solid black;
+  padding: 0.8rem 1rem;
+  background-color: #f4f4f4;
+}
+
+.checkout-product-container .image-container img{
+  width: 10rem;
+  height: 10rem;
+  object-fit: fill;
+}
+
+.complete-order-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.complete-order-container .total-section {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  font-size: 1.5rem;
+  margin: 2rem 0 0.5rem 0;
+}
+
+.complete-order-container button {
+  height: 4rem;
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  border-radius: 0.25rem;
+  background-color: #2235a2;
+}
+
 
