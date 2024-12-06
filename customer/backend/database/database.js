@@ -277,6 +277,76 @@ class Database {
             return false;
         }
     }
+    //
+    async getCompletedOrders(user_id){
+        const query = `SELECT o.order_id, op.quantity, op.total, p.product_id, p.product_name from orders AS o 
+                        JOIN order_products AS op USING (order_id) 
+                        JOIN products AS p USING (product_id)
+                        WHERE o.customer_id = ?  ORDER BY created_at DESC LIMIT 3;`;
+        
+        const params = [user_id];
+        try{
+            const results = await this.execute(query, params);
+            return results;
+        }catch (error){
+            console.log("Error getting completed orders");
+            return false;
+        }
+    }
+    // async getLatestClaimedOrder(user_id){
+    //     const query = `SELECT o.order_id, o.customer_id, o.created_at, o.total, o.status,
+    //                     op.quantity, op.total AS each_product_total, 
+    //                     p.product_id, p.product_name, p.product_image, p.product_description
+    //                     FROM orders AS o JOIN order_products AS op USING (order_id) JOIN products AS p USING (product_id) WHERE o.customer_id =2 AND o.order_id = 
+    //                     (SELECT o1.order_id FROM orders AS o1 WHERE o1.customer_id =2 AND o1.status = 'Claimed' ORDER BY o1.created_at DESC LIMIT 1);`;
+    // }
+
+    // async getLatestPendingOrder(user_id){
+    //     const query = `SELECT o.order_id, o.customer_id, o.created_at, o.total, o.status,
+    //                     op.quantity, op.total AS each_product_total, 
+    //                     p.product_id, p.product_name, p.product_image, p.product_description
+    //                     FROM orders AS o JOIN order_products AS op USING (order_id) JOIN products AS p USING (product_id) WHERE o.customer_id =2 AND o.order_id = 
+    //                     (SELECT o1.order_id FROM orders AS o1 WHERE o1.customer_id =2 AND o1.status = 'Pending' ORDER BY o1.created_at DESC LIMIT 1);`;
+    // }
+
+    async getLatestOrder(user_id){
+        const query = `SELECT o.order_id, o.customer_id, o.created_at, o.total, o.status,
+                        op.quantity, op.total AS each_product_total, 
+                        p.product_id, p.product_name, p.product_image, p.product_description
+                        FROM orders AS o 
+                        JOIN order_products AS op USING (order_id) 
+                        JOIN products AS p USING (product_id) 
+                        WHERE o.customer_id = ? AND o.order_id = 
+                            (SELECT o1.order_id 
+                                FROM orders AS o1 
+                                WHERE o1.customer_id =2 
+                                ORDER BY o1.created_at 
+                                DESC LIMIT 1);`;
+        const params = [user_id];
+        try{
+            const results = await this.execute(query, params);
+            return results;
+        }catch (error){
+            console.log("Error getting latest order");
+            return false;
+        }
+    }
+    async getReservedOrders(user_id){
+        const query = `SELECT o.order_id, o.customer_id, o.status, op.quantity, op.total, p.product_name, p.product_image, p.product_description, org.organization_name
+                        FROM orders AS o
+                        JOIN order_products AS op USING (order_id)
+                        JOIN products AS p USING (product_id)
+                        JOIN organizations as org USING (organization_id)
+                        WHERE o.customer_id = 2 AND o.status = 'Pending' ORDER BY o.order_id DESC;`;
+        const params = [user_id];
+        try{
+            const results = await this.execute(query, params);
+            return results;
+        }catch (error){
+            console.log("Error getting reserved orders");
+            return false;
+        }
+    }
     // ETO ANG TEMPLATE FOR EXECUTING A QUERY. returns a promise object
     execute(query, params = []) {       
         return new Promise((resolve, reject) => {
