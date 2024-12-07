@@ -33,6 +33,34 @@ window.onload = async function () {
   userNameTopBar.textContent = userName;
 };
 
+async function getCartDetails() {
+  try {
+    const response = await fetch("/api/cart", {
+      method: "GET",
+    });
+
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getScheduleDetails(orgid) {
+  try {
+    const response = await fetch(`/api/${orgid}/schedules`, {
+      method: "GET",
+    });
+    console.log(response);
+
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 function showBooths(booths) {
   const mainContainer = document.querySelector(".content-container");
 
@@ -149,6 +177,7 @@ function showBooths(booths) {
       viewButton.classList.add("view-button");
       viewButton.textContent = "View";
       viewButton.addEventListener("click", async function () {
+        const organizationId = viewButton.closest(".booth-container").id;
         //VIEW BUTTON
         let productDetails = await getProductDetails(
           product.organization_id,
@@ -160,7 +189,7 @@ function showBooths(booths) {
         const reference = String(ref1);
 
         const orgName = boothName.textContent;
-        viewProductDetails(orgName, productDetails, reference);
+        viewProductDetails(orgName, productDetails, reference, organizationId);
       });
 
       viewButtonContainer.appendChild(viewButton);
@@ -180,12 +209,9 @@ function showBooths(booths) {
 
 async function getBoothProducts(orgId) {
   try {
-    const response = await fetch(
-      `/api/${orgId}/products`,
-      {
-        method: "GET",
-      }
-    );
+    const response = await fetch(`/api/${orgId}/products`, {
+      method: "GET",
+    });
     const result = await response.json();
     return result;
   } catch (err) {
@@ -304,7 +330,12 @@ function showBoothProducts(organizationName, products, organization_id) {
 
       const reference = organization_id + " | " + organizationName;
 
-      viewProductDetails(organizationName, productDetails, reference);
+      viewProductDetails(
+        organizationName,
+        productDetails,
+        reference,
+        organization_id
+      );
     });
 
     viewButtonContainer.appendChild(viewButton);
@@ -326,12 +357,9 @@ function showBoothProducts(organizationName, products, organization_id) {
 
 async function getProductDetails(orgId, productId) {
   try {
-    const response = await fetch(
-      `/api/${orgId}/products/${productId}`,
-      {
-        method: "GET",
-      }
-    );
+    const response = await fetch(`/api/${orgId}/products/${productId}`, {
+      method: "GET",
+    });
     const result = await response.json();
     return result;
   } catch (err) {
@@ -339,7 +367,7 @@ async function getProductDetails(orgId, productId) {
   }
 }
 /* ==============Method for View======================== */
-function viewProductDetails(orgName, product, reference) {
+function viewProductDetails(orgName, product, reference, org_id) {
   const container = document.querySelector(".inner-container");
 
   container.innerHTML = "";
@@ -454,6 +482,7 @@ function viewProductDetails(orgName, product, reference) {
 
   const quantityInput = document.createElement("input");
   quantityInput.classList.add("input-box");
+  quantityInput.setAttribute("name", "input-box");
   quantityInput.setAttribute("type", "number");
   quantityInput.setAttribute("min", "1");
   quantityInput.setAttribute("value", "1");
@@ -476,7 +505,7 @@ function viewProductDetails(orgName, product, reference) {
   priceContainer.classList.add("price-container");
 
   const priceText = document.createElement("h3");
-  priceText.innerText = "Price: P " + product.product_price;
+  priceText.innerText = "Price: ₱ " + product.product_price;
 
   const lineBreak = document.createElement("hr");
 
@@ -485,7 +514,7 @@ function viewProductDetails(orgName, product, reference) {
 
   // total price
   const totalInfo = document.createElement("h3");
-  totalInfo.textContent = "Total: P " + product.product_price;
+  totalInfo.textContent = "Total: ₱ " + product.product_price;
   totalInfo.id = "totalPrice";
 
   // append price container and total info
@@ -499,7 +528,45 @@ function viewProductDetails(orgName, product, reference) {
   addToCartButton.textContent = "Add to Cart";
 
   const placeOrderButton = document.createElement("button");
+  placeOrderButton.classList.add("place-order-button");
   placeOrderButton.textContent = "Place Order";
+
+  placeOrderButton.addEventListener("click", async () => {
+    let carts = await getCartDetails();
+
+    console.log(org_id);
+
+    let schedules = await getScheduleDetails(org_id);
+    console.log(schedules);
+
+    //product image
+    const prodImage = product.product_image;
+
+    // product Name
+    const prodName = product.product_name;
+
+    // product quantity
+    const prodQuantity = container.querySelector(
+      ".quantity-container input[name='input-box']"
+    ).value;
+    console.log(prodQuantity);
+
+    // product total
+    const prodTotal = container
+      .querySelector("#totalPrice")
+      .textContent.split("₱")[1];
+    console.log(prodTotal);
+
+    loadCheckoutPage(
+      carts,
+      prodImage,
+      prodName,
+      prodQuantity,
+      prodTotal,
+      schedules,
+      reference
+    );
+  });
 
   buttonsContainer.appendChild(addToCartButton);
   buttonsContainer.appendChild(placeOrderButton);
@@ -546,6 +613,282 @@ function viewProductDetails(orgName, product, reference) {
     const totalPrice = quantity * price;
     totalInfo.textContent = `Total (${quantity} item${
       quantity > 1 ? "s" : ""
-    }): P ${totalPrice}`;
+    }): ₱${totalPrice}`;
   }
+}
+
+function loadCheckoutPage(
+  carts,
+  prodImage,
+  prodName,
+  prodQuantity,
+  prodTotal,
+  schedules,
+  reference
+) {
+  const container = document.querySelector(".inner-container");
+
+  container.innerHTML = "";
+
+  //Main Container
+  const checkoutCardContainer = document.createElement("div");
+  checkoutCardContainer.classList.add("checkout-card-container");
+
+  //Card Header
+  const cardHeader = document.createElement("div");
+  cardHeader.classList.add("card-header");
+
+  const cardTitle = document.createElement("h1");
+  cardTitle.textContent = "Checkout";
+  cardHeader.appendChild(cardTitle);
+
+  const cardBackButton = document.createElement("button");
+  cardBackButton.classList.add("back-button");
+  cardBackButton.addEventListener("click", async function () {
+    const mainContainer = document.querySelector(".content-container");
+    mainContainer.innerHTML = "";
+    if (isNaN(reference.charAt(0))) {
+      let booths = await getBoothDetails();
+      showBooths(booths);
+    } else {
+      const innerContainer = document.createElement("div");
+      innerContainer.classList.add("inner-container");
+      //card header
+      const cardHeader = document.createElement("div");
+      cardHeader.classList.add("card-header");
+
+      const headerText = document.createElement("h2");
+      headerText.classList.add("header-text");
+      headerText.textContent = "See Products of Each SLU Organizations";
+      cardHeader.appendChild(headerText);
+
+      const headerIcon = document.createElement("img");
+      headerIcon.classList.add("header-icon");
+      headerIcon.src = "../resources/images/products/products-header-icon.png";
+      cardHeader.appendChild(headerIcon);
+
+      innerContainer.appendChild(cardHeader);
+
+      mainContainer.appendChild(innerContainer);
+      const [organizationId, organizationName] = reference.split("|");
+
+      let orgProducts = await getBoothProducts(organizationId);
+      showBoothProducts(organizationName, orgProducts, organizationId);
+    }
+  });
+  cardHeader.appendChild(cardBackButton);
+
+  checkoutCardContainer.appendChild(cardHeader);
+
+  //Inner Container
+  const checkoutDetailsContainer = document.createElement("div");
+  checkoutDetailsContainer.classList.add("checkout-details-container");
+
+  checkoutCardContainer.appendChild(checkoutDetailsContainer);
+
+  //Left Container
+  const leftDetailsContainer = document.createElement("div");
+  leftDetailsContainer.classList.add("left-details-container");
+
+  //Customer Details
+  const cName = (() => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [key, value] = cookie.split("=");
+      if (key === "username") {
+        return value;
+      }
+    }
+    return null;
+  })();
+
+  const customerDetailsContainer = document.createElement("div");
+  customerDetailsContainer.classList.add("customer-details-container");
+
+  //Username
+  const userNameContainer = document.createElement("div");
+  userNameContainer.classList.add("username-container");
+
+  const customerHeader = document.createElement("h1");
+  customerHeader.textContent = "Customer Name";
+  userNameContainer.appendChild(customerHeader);
+
+  const customerName = document.createElement("p");
+  customerName.textContent = cName;
+  userNameContainer.appendChild(customerName);
+
+  customerDetailsContainer.appendChild(userNameContainer);
+
+  //Userid
+  const userIdContainer = document.createElement("div");
+  userIdContainer.classList.add("userid-container");
+
+  const customerID = document.createElement("p");
+  customerID.textContent = `customer ID : ${carts.user_id}`;
+  userIdContainer.appendChild(customerID);
+
+  customerDetailsContainer.appendChild(userIdContainer);
+
+  leftDetailsContainer.appendChild(customerDetailsContainer);
+
+  //Orders Summary
+  const orderSummaryContainer = document.createElement("div");
+  orderSummaryContainer.classList.add("orders-summary-container");
+
+  //Orders Header
+  const orderSummaryTextContainer = document.createElement("div");
+  orderSummaryTextContainer.classList.add("orders-summary-text-container");
+
+  const orderSummaryHeader = document.createElement("h1");
+  orderSummaryHeader.textContent = "Order Summary";
+  orderSummaryTextContainer.appendChild(orderSummaryHeader);
+
+  const totalText = document.createElement("p");
+  totalText.textContent = "Total:";
+  orderSummaryTextContainer.appendChild(totalText);
+
+  orderSummaryContainer.appendChild(orderSummaryTextContainer);
+
+  const orderTotalPrice = document.createElement("p");
+  orderTotalPrice.textContent = `${prodTotal}`;
+  orderSummaryContainer.appendChild(orderTotalPrice);
+
+  leftDetailsContainer.appendChild(orderSummaryContainer);
+
+  //pickup location/date/time
+  const pickupContainer = document.createElement("div");
+  pickupContainer.classList.add("pickup-container");
+
+  //pickup header
+  const pickupHeader = document.createElement("h1");
+  pickupHeader.textContent = "Pickup Date, Time and Location";
+
+  pickupContainer.appendChild(pickupHeader);
+
+  //pickup dropdown
+  const pickUpDropdown = document.createElement("select");
+  pickUpDropdown.classList.add("pickup-dropdown");
+
+  pickUpDropdown.innerHTML = ""; // Clear existing options
+
+  schedules.schedules.forEach((schedule) => {
+    const optionList = document.createElement("option");
+
+    const dateFormat = new Date(schedule.date);
+    const readableFormat = dateFormat.toLocaleString("en-us", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    // Use the original ISO date for accurate time calculations
+    const startDateTime = new Date(
+      `${schedule.date.split("T")[0]}T${schedule.start_time}`
+    );
+    const formattedStartTime = startDateTime.toLocaleTimeString("en-us", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    const endDateTime = new Date(
+      `${schedule.date.split("T")[0]}T${schedule.end_time}`
+    );
+    const formattedEndTime = endDateTime.toLocaleTimeString("en-us", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    optionList.value = `${schedule.date} | ${schedule.start_time} - ${schedule.end_time} | ${schedule.location}`;
+    optionList.textContent = `${readableFormat} | ${formattedStartTime} - ${formattedEndTime} | ${schedule.location}`;
+    pickUpDropdown.appendChild(optionList);
+  });
+
+  pickupContainer.appendChild(pickUpDropdown);
+  leftDetailsContainer.appendChild(pickupContainer);
+
+  checkoutDetailsContainer.appendChild(leftDetailsContainer);
+
+  //Right Container
+  const rightDetailsContainer = document.createElement("div");
+  rightDetailsContainer.classList.add("right-details-container");
+
+  const scrollable = document.createElement("div");
+  scrollable.classList.add("checkout-scrollable");
+
+  const checkoutProductContainer = document.createElement("div");
+  checkoutProductContainer.classList.add("checkout-product-container");
+
+  const detailsContainer = document.createElement("div");
+  detailsContainer.classList.add("details-container");
+
+  const imageContainer = document.createElement("div");
+  imageContainer.classList.add("image-container");
+
+  // IMAGE ISSUES
+  // Convert the product.product_image to a Uint8Array
+  const byteArray = new Uint8Array(prodImage.data);
+
+  // Create a Blob from the byteArray
+  const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
+
+  // Create a temporary object URL for the blob
+  const imageUrl = URL.createObjectURL(blob);
+
+  const productImage = document.createElement("img");
+  productImage.src = imageUrl;
+  imageContainer.appendChild(productImage);
+
+  detailsContainer.appendChild(imageContainer);
+
+  const productActionsContainer = document.createElement("div");
+  productActionsContainer.classList.add("product-actions-container");
+
+  const productName = document.createElement("p");
+  productName.textContent = prodName;
+  productActionsContainer.appendChild(productName);
+
+  const productQuantity = document.createElement("p");
+  productQuantity.textContent = `x${prodQuantity}`;
+  productActionsContainer.appendChild(productQuantity);
+
+  detailsContainer.appendChild(productActionsContainer);
+
+  const productTotal = document.createElement("p");
+  productTotal.textContent = `₱${prodTotal}`;
+
+  checkoutProductContainer.appendChild(detailsContainer);
+  checkoutProductContainer.appendChild(productTotal);
+
+  scrollable.appendChild(checkoutProductContainer);
+
+  rightDetailsContainer.appendChild(scrollable);
+
+  const completeOrder = document.createElement("div");
+  completeOrder.classList.add("complete-order-container");
+
+  const totalSection = document.createElement("div");
+  totalSection.classList.add("total-section");
+
+  const totalLabel = document.createElement("p");
+  totalLabel.textContent = "Total: ";
+  totalSection.appendChild(totalLabel);
+
+  const productGrandTotal = document.createElement("p");
+  productGrandTotal.textContent = `${prodTotal}`;
+  totalSection.appendChild(productGrandTotal);
+
+  const completeOrderButton = document.createElement("button");
+  completeOrderButton.classList.add("complete-order-button");
+  completeOrderButton.textContent = "Complete Order";
+
+  completeOrder.appendChild(totalSection);
+  completeOrder.appendChild(completeOrderButton);
+
+  rightDetailsContainer.appendChild(completeOrder);
+
+  checkoutDetailsContainer.appendChild(rightDetailsContainer);
+
+  container.appendChild(checkoutCardContainer);
 }
