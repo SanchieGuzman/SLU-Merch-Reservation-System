@@ -34,3 +34,21 @@ vendorssButton.addEventListener("click", function () {
   // Redirect the user to the dashboard page
   window.location.href = vendorsUrl;
 });
+
+//VENDORS PAGE
+var logoutButton = document.getElementById("log-out");
+logoutButton.addEventListener("click", async function () {
+  try {
+    const response = await fetch("/api/logout", {
+      method: "POST",
+    });
+      if (response.status === 200) {
+        const originURL = window.location.origin; 
+                
+        // Redirect the user to the login page
+        window.location.href = originURL;
+      }
+  } catch (err) {
+    console.log(err);
+  }
+});

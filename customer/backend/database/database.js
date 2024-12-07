@@ -30,8 +30,9 @@ class Database {
         //make the arguments an array
         const params = [username, password]
         const result = await this.execute(query, params);        
-
-        if(result[0].username === username && result[0].password === password){
+        console.log(result);
+        
+        if(result[0] && (result[0].username === username && result[0].password === password)){
             return result[0];
         }else{
             return false;
