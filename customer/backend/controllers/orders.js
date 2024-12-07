@@ -1,7 +1,7 @@
 import Database from "../database/database.js";
 
 const getOrdersController = async (req, res) => {
-  const userid = req.signedCookies.user_id;
+  const userid = req.cookies.user_id;
   const db = Database.getInstance();
   const result = await db.getOrders(userid);
   try {
