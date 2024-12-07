@@ -10,9 +10,11 @@ import { serverConfig } from './backend/config.js';
 import loginRouter from './backend/routers/login.js';
 import productsRouter from './backend/routers/products.js';
 import _orgIDRouter from './backend/routers/_orgID.js';
+import vendorsRouter from './backend/routers/vendors.js';
 import authenticate from './backend/middleware/authenticate.js';
 import cartRouter from './backend/routers/cart.js';
 import ordersRouter from './backend/routers/orders.js';
+import logoutRouter from './backend/routers/logout.js';
 
 // Get __dirname equivalent in ES module
 const __filename = fileURLToPath(import.meta.url);
@@ -40,6 +42,8 @@ app.use('/api', productsRouter)
 app.use('/api', _orgIDRouter)
 app.use('/api', cartRouter)
 app.use('/api', ordersRouter)
+app.use('/api', vendorsRouter)
+app.use('/api', logoutRouter)
 
 //custom 404
 // app.use((req, res, next) => {
