@@ -310,9 +310,21 @@ class Database {
     // }
 
     async getLatestOrder(user_id){
+        // const query = `SELECT o.order_id, o.customer_id, o.created_at, o.total, o.status,
+        //                 op.quantity, op.total AS each_product_total, 
+        //                 p.product_id, p.product_name, p.product_image, p.product_description
+        //                 FROM orders AS o 
+        //                 JOIN order_products AS op USING (order_id) 
+        //                 JOIN products AS p USING (product_id) 
+        //                 WHERE o.customer_id = ? AND o.order_id = 
+        //                     (SELECT o1.order_id 
+        //                         FROM orders AS o1 
+        //                         WHERE o1.customer_id =2 
+        //                         ORDER BY o1.created_at 
+        //                         DESC LIMIT 1);`;
         const query = `SELECT o.order_id, o.customer_id, o.created_at, o.total, o.status,
                         op.quantity, op.total AS each_product_total, 
-                        p.product_id, p.product_name, p.product_image, p.product_description
+                        p.product_id, p.product_name, p.product_image
                         FROM orders AS o 
                         JOIN order_products AS op USING (order_id) 
                         JOIN products AS p USING (product_id) 
