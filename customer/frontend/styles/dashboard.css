@@ -1,0 +1,223 @@
+/* Base reset for body and html */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100vh; 
+    overflow: hidden; 
+}
+
+/* Main container */
+.content-container {
+    display: flex;
+    gap: 1.25rem;
+    height: 78vh;  
+    overflow: hidden; 
+    padding: 3rem 4rem;
+}
+
+/* Individual column containers */
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    height: 100%; 
+}
+
+/* Completed and Latest Orders panels */
+.completed-orders-container,
+.latest-orders-container {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0.125rem 0.5rem;
+    padding: 1.25rem;
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%; 
+    overflow-y: auto;
+}
+
+/* Reserved Products panel */
+.reserved-products-container {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0.125rem 0.5rem;
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
+}
+
+.reserved-products-container .reserved-products-heading {
+    position: fixed;
+    height: 1.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid black;
+    width: 35%;
+    background-color: white;
+}
+
+.reserved-products-container .order-cards-container {
+    padding-top: 3.5rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+    gap: 1rem;
+    width: 100%; 
+}
+
+.reserved-products-container .order-card-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%; 
+    height: 100%;
+}
+
+.reserved-products-container .order-card-container div {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+    height: 100%; 
+}
+
+
+.reserved-products-container .order-card-container div img {
+    width: 100%;
+    height: auto; 
+    object-fit: cover; 
+    margin-bottom: 1rem;
+}
+
+.reserved-products-container .order-card-container div .item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+
+.reserved-products-container .order-card-container div .item-price {
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.reserved-products-container .order-card-container div .item-quantity {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+
+/* Cards for items in panels */
+.complete-orders-card,
+.latest-orders-container div{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0.625rem;
+    background-color: #f9f9f9;
+    margin-bottom: 0.625rem;
+    border-radius: 0.5rem;
+    
+}
+
+/* Specific to Latest Orders layout */
+.latest-orders-container div img {
+    border-radius: 0.25rem;
+    height: 3.75rem;
+    width: 3.75rem;
+    margin-right: 0.625rem;
+}
+
+.latest-orders-container .item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3125rem;
+}
+
+.latest-orders-container .item-price {
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.latest-orders-container .item-quantity {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.latest-orders-container .status {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    font-size: 0.75rem;
+    color: #333;
+    line-height: 1.2;
+}
+
+/* Styling for panel headers */
+.completed-orders-container span,
+.latest-orders-container span,
+.reserved-products-container span {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 0.625rem;
+    display: inline-flex;
+    margin-right: 1rem; 
+}
+
+
+/* Empty state placeholder */
+.empty-state {
+    font-size: 0.875rem;
+    color: #aaa;
+    text-align: center;
+    margin-top: 3.125rem;
+}
+
+/* Button styles */
+.view-more-button {
+    background-color: #0033cc;
+    color: white;
+    border: none;
+    padding: 0.3125rem 0.625rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.latest-orders-container button {
+    background-color: #0033cc;
+    color: white;
+    border: none;
+    padding: 0.3125rem 0.625rem;
+    border-radius: 0.25rem;
+    margin-right: 0.3125rem;
+    cursor: pointer;
+}
+
+/* Image styles for reserved products */
+.reserved-products-container div img {
+    height: 3.75rem;
+    width: 3.75rem;
+    margin-right: 0.625rem;
+}
+
+.reserved-products-container div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625rem;
+    background-color: #f9f9f9;
+    margin-bottom: 0.625rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+}

@@ -1,14 +1,173 @@
-async function getData(userid) {
-    try {
-      const response = await fetch(`/api/dashboard`, {
-        method: "GET",
-      });
-      const result = await response.json();
-      return result;
-    } catch (err) {
-      console.log(err);
-    }
-  }
+// async function getData(userid) {
+//     try {
+//       const response = await fetch(`/api/dashboard`, {
+//         method: "GET",
+//       });
+//       const result = await response.json();
+//       return result;
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+
+async function getData() {
+  return {
+    completedOrders: [
+      { product_name: "White Mug", quantity: 2, total: 100 },
+      { product_name: "Notebook", quantity: 1, total: 50 },
+      { product_name: "Pen Set", quantity: 3, total: 150 },
+    ],
+    latestOrders: [
+      {
+        product_name: "White Mug",
+        product_image: { data: "" }, 
+        quantity: 5,
+        total: 100,
+        status: "Successfully",
+      },
+      {
+        product_name: "Diving Mask",
+        product_image: { data: "" },
+        quantity: 2,
+        total: 10,
+        status: "Successfully",
+      },
+    ],
+    reservedProducts: [
+      {
+        order_id: 1,
+        organization_name: "SLU",
+        products: [
+          {
+            product_name: "Hannah",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+        ],
+      },
+      {
+        order_id: 1,
+        organization_name: "SLU",
+        products: [
+          {
+            product_name: "Hannah",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+        ],
+      },
+      {
+        order_id: 1,
+        organization_name: "SLU",
+        products: [
+          {
+            product_name: "Hannah",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+        ],
+      },
+      {
+        order_id: 1,
+        organization_name: "SLU",
+        products: [
+          {
+            product_name: "Hannah",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+        ],
+      },
+      {
+        order_id: 1,
+        organization_name: "SLU",
+        products: [
+          {
+            product_name: "Hannah",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+          {
+            product_name: "ID Lace",
+            product_image: { data: "" },
+            total: 100,
+          },
+        ],
+      },
+    ],
+  };
+}
+
   
   window.onload = function () {
     loadDashboard();
@@ -181,13 +340,18 @@ async function getData(userid) {
 
     // heading
     const heading = document.createElement("span");
+    heading.classList.add("reserved-products-heading");
     heading.textContent = "Reserved Products";
 
     container.appendChild(heading);
 
+    const orderCardsContainer= document.createElement("div");
+    orderCardsContainer.classList.add("order-cards-container");
+
     // cards
     data.forEach(entry => {
       const orderCard = document.createElement("div");
+      orderCard.classList.add("order-card-container");
 
       // div for order number and button image
       const orderNumber = document.createElement("span");
@@ -217,9 +381,10 @@ async function getData(userid) {
         productCard.appendChild(orgName);
 
         orderCard.appendChild(productCard);
+        orderCardsContainer.appendChild(orderCard);
       });
 
-      container.appendChild(orderCard);
+      container.appendChild(orderCardsContainer);
     });
   }
 
