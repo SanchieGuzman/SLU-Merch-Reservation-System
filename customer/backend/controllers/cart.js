@@ -1,6 +1,7 @@
 import Database from "../database/database.js";
 
 const addToCartController = async(req, res)=>{
+  console.log("here")
     try{
         const organization_id = req.body.orgid;
         const user_id = req.cookies.user_id;
@@ -8,14 +9,25 @@ const addToCartController = async(req, res)=>{
         const quantity = req.body.quantity;
 
         const db = Database.getInstance();
-        // try{
-            const result = await db.addToCart(organization_id, user_id, product_id, quantity);
-            res.sendStatus(201)
 
-        // }catch(error){
-        //     res.sendStatus(400);
-        // }
-
+       
+        const existingItem = await db.getSingleCartRow(user_id, product_id, organization_id);
+        console.log(existingItem);
+        if (existingItem) {
+          console.log("product already exists in the db");
+          const updatedRow = await db.updateCartRow(user_id, product_id, organization_id, quantity);
+          if (updatedRow){
+            return res.status(201).json({
+              message: "Updated existing row",
+          });
+          }
+        }
+          await db.addToCart(organization_id, user_id, product_id, quantity);
+          return res.status(201).json({
+            message: "Updated existing row",
+        });
+        
+        
     }catch(error){   
         return res.status(500).json({
             message: "Internal Server Error",
