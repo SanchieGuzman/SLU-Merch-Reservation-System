@@ -282,7 +282,7 @@ class Database {
         const query = `SELECT o.order_id, op.quantity, op.total, p.product_id, p.product_name from orders AS o 
                         JOIN order_products AS op USING (order_id) 
                         JOIN products AS p USING (product_id)
-                        WHERE o.customer_id = ?  ORDER BY created_at DESC LIMIT 3;`;
+                        WHERE o.customer_id = ?  ORDER BY created_at DESC LIMIT 4;`;
         
         const params = [user_id];
         try{
@@ -349,7 +349,7 @@ class Database {
                         JOIN order_products AS op USING (order_id)
                         JOIN products AS p USING (product_id)
                         JOIN organizations as org USING (organization_id)
-                        WHERE o.customer_id = 2 AND o.status = 'Pending' ORDER BY o.order_id DESC;`;
+                        WHERE o.customer_id = ? AND o.status = 'Pending' ORDER BY o.order_id DESC LIMIT 2;`;
         const params = [user_id];
         try{
             const results = await this.execute(query, params);

@@ -41,21 +41,13 @@ async function getData() {
           {
             product_name: "Hannah",
             product_image: { data: "" },
+            quantity: 1,
             total: 100,
           },
           {
             product_name: "ID Lace",
             product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
+            quantity: 5,
             total: 100,
           },
         ],
@@ -67,21 +59,13 @@ async function getData() {
           {
             product_name: "Hannah",
             product_image: { data: "" },
+            quantity: 4,
             total: 100,
           },
           {
             product_name: "ID Lace",
             product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
+            quantity: 6,
             total: 100,
           },
         ],
@@ -93,21 +77,13 @@ async function getData() {
           {
             product_name: "Hannah",
             product_image: { data: "" },
+            quantity: 3,
             total: 100,
           },
           {
             product_name: "ID Lace",
             product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
+            quantity: 6,
             total: 100,
           },
         ],
@@ -119,21 +95,13 @@ async function getData() {
           {
             product_name: "Hannah",
             product_image: { data: "" },
+            quantity: 6,
             total: 100,
           },
           {
             product_name: "ID Lace",
             product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
+            quantity: 8,
             total: 100,
           },
         ],
@@ -145,21 +113,13 @@ async function getData() {
           {
             product_name: "Hannah",
             product_image: { data: "" },
+            quantity: 4,
             total: 100,
           },
           {
             product_name: "ID Lace",
             product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
+            quantity: 3,
             total: 100,
           },
         ],
@@ -248,14 +208,9 @@ async function getData() {
       const total = document.createElement("span");
       total.textContent = `P ${entry.total}`;
 
-      const viewMoreBtn = document.createElement("button");
-      viewMoreBtn.textContent = "view more";
-      viewMoreBtn.classList.add("view-more-button");
-
       card.appendChild(productName);
       card.appendChild(quantity);
       card.appendChild(total);
-      card.appendChild(viewMoreBtn);
 
       container.append(card);
     });
@@ -360,24 +315,34 @@ async function getData() {
       const orgName = document.createElement("span");
       orgName.textContent = `${entry.organization_name} Merch`;
 
+      orderCardsContainer.appendChild(orderNumber);
+
       entry.products.forEach(product => {
         const productCard = document.createElement("div");
 
+        const productName = document.createElement("span");
+        productName.textContent = product.product_name;
+
+        const quantity = document.createElement("span");
+        quantity.textContent = product.quantity > 1 ? `${product.quantity} items` : `${product.quantity} item`;
+
         const total = document.createElement("span");
-        total.textContent = product.total;
+        total.textContent = `₱ ${product.total}`;
 
         const image = document.createElement("img");
         image.src = imgToUrl(product.product_image.data);
         image.alt = product.product_name;
         image.style.height = "40px";
         image.style.width = "40px";
-
-        const productName = document.createElement("span");
-        productName.textContent = product.product_name;
-
+        
         productCard.appendChild(total);
         productCard.appendChild(image);
-        productCard.appendChild(productName);
+
+        const prodNameAndQuantityDiv = document.createElement("div");
+        prodNameAndQuantityDiv.appendChild(productName);
+        prodNameAndQuantityDiv.appendChild(quantity);
+
+        productCard.appendChild(prodNameAndQuantityDiv);
         productCard.appendChild(orgName);
 
         orderCard.appendChild(productCard);
