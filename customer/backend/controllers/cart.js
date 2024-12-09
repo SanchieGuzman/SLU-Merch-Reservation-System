@@ -8,14 +8,24 @@ const addToCartController = async(req, res)=>{
         const quantity = req.body.quantity;
 
         const db = Database.getInstance();
-        // try{
-            const result = await db.addToCart(organization_id, user_id, product_id, quantity);
-            res.sendStatus(201)
 
-        // }catch(error){
-        //     res.sendStatus(400);
-        // }
-
+       
+        const existingItem = await db.getSingleCartRow(user_id, product_id, organization_id);
+        console.log("existingItem: ", existingItem);
+        if (existingItem) {
+          console.log("product already exists in the db");
+          const updatedRow = await db.updateCartRow(user_id, product_id, organization_id, quantity);
+          if (updatedRow){
+            return res.status(201).json({message: "Updated existing row"});
+          }
+        }else{
+          const successAdding = await db.addToCart(organization_id, user_id, product_id, quantity);
+          if(successAdding){
+            return res.status(201).json({message: "Added product to cart"})
+          }
+        };
+        
+        
     }catch(error){   
         return res.status(500).json({
             message: "Internal Server Error",
@@ -52,7 +62,7 @@ const getCartController = async(req, res)=>{
                 product_image: item.product_image,
                 product_price: item.product_price,
                 product_quantity: item.product_quantity,
-                total: item.total,
+                total: (item.product_price * item.product_quantity),
                 total_stocks: item.total_stocks
               });
               break;
@@ -71,7 +81,7 @@ const getCartController = async(req, res)=>{
                   product_image: item.product_image,
                   product_price: item.product_price,
                   product_quantity: item.product_quantity,
-                  total: item.total,
+                  total: (item.product_price * item.product_quantity),
                   total_stocks: item.total_stocks
                 }
               ]

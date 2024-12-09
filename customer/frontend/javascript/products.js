@@ -180,7 +180,7 @@ function showBooths(booths) {
         const organizationId = viewButton.closest(".booth-container").id;
         //VIEW BUTTON
         let productDetails = await getProductDetails(
-          product.organization_id,
+          boothContainer.id,
           product.product_id
         );
 
@@ -584,8 +584,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
     console.log(product_id);
     console.log(org_id);
     console.log(quantity);
-    let result = await addProductsToCart(product_id,org_id,quantity);
-    console.log(result);
+    await addProductsToCart(product_id,org_id,quantity);
   });
 
   minusButton.addEventListener("click", () => {
@@ -630,9 +629,9 @@ function viewProductDetails(orgName, product, reference, org_id) {
 async function addProductsToCart(product_id, organization_id, prodquantity) {
 
   const payload = {
-    product_id: product_id,
-    orgid: organization_id,
-    quantity: prodquantity
+    "product_id": product_id,
+    "orgid": organization_id,
+    "quantity": prodquantity
   }
   console.log("sending to server: "+ payload)
   try {
@@ -643,10 +642,14 @@ async function addProductsToCart(product_id, organization_id, prodquantity) {
             'Content-Type': 'application/json'
         },
       });
+      const result = await response.json();
+        console.log(result);
       if(response.status === 201){
-        const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-        const ordersUrl = `${currentUrl}/pages/mycart.html`;
-        window.location.href = ordersUrl;
+        // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+        // const ordersUrl = `${currentUrl}/pages/mycart.html`;
+        // window.location.href = ordersUrl;
+        console.log("success")
+        
       }else if(response.status === 400){
         console.log("400 response");
       }

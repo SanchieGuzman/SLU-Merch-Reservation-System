@@ -122,7 +122,7 @@ class Database {
 
     //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
     async addToCart(organization_id, user_id, product_id, quantity){
-        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity) VALUES (?,?,?,?);';
+        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity) VALUES (?,?,?,?)';
         const params = [user_id, product_id, organization_id, quantity];
         try{
             const result = await this.execute(query, params);
@@ -155,7 +155,39 @@ class Database {
         }
         
     }
-
+    async getSingleCartRow(user_id, product_id, organization_id){
+        const query = `SELECT user_id, product_id, organization_id FROM cart WHERE user_id = ? AND product_id = ? AND organization_id = ?`;
+        const params = [user_id, product_id, organization_id]
+        try {
+            const results = await this.execute(query, params); 
+            console.log(results);
+            
+            if(results[0]){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(err){
+            console.log("Error getting single row in cart");
+            return false;
+        }
+    }
+    async updateCartRow(user_id, product_id, organization_id, quantity){
+        const query = `UPDATE cart SET quantity = quantity + ? WHERE user_id = ? AND product_id = ? AND organization_id = ?`;
+        const params = [quantity, user_id, product_id, organization_id];
+        try{
+            console.log("updating cart row");
+            const result = await this.execute(query, params);
+            if(result.affectedRows>0){
+                return true;
+            }else{
+                return false;
+            }
+        }catch{
+            console.error('Error updating cart:', err);
+            throw err;
+        }
+    }
     async getOrders(user_id){                                                                                                           //NOTE that i used "AS product_price, product_quantity to conform with fetch express"
         const query = `SELECT o.order_id, org.organization_id, org.organization_name, o.created_at, o.claimed_at, o.total, o.status, o.schedule_id, 
                     os.location,
