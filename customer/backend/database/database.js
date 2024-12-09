@@ -122,7 +122,7 @@ class Database {
 
     //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
     async addToCart(organization_id, user_id, product_id, quantity){
-        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE quantity = quantity + ?;';
+        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity) VALUES (?,?,?,?)';
         const params = [user_id, product_id, organization_id, quantity];
         try{
             const result = await this.execute(query, params);
@@ -159,8 +159,10 @@ class Database {
         const query = `SELECT user_id, product_id, organization_id FROM cart WHERE user_id = ? AND product_id = ? AND organization_id = ?`;
         const params = [user_id, product_id, organization_id]
         try {
-            const results = await this.execute(query, params);
-            if(results.affectedRows>0){
+            const results = await this.execute(query, params); 
+            console.log(results);
+            
+            if(results[0]){
                 return true;
             }else{
                 return false;

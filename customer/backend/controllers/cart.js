@@ -1,7 +1,6 @@
 import Database from "../database/database.js";
 
 const addToCartController = async(req, res)=>{
-  console.log("here")
     try{
         const organization_id = req.body.orgid;
         const user_id = req.cookies.user_id;
@@ -12,20 +11,19 @@ const addToCartController = async(req, res)=>{
 
        
         const existingItem = await db.getSingleCartRow(user_id, product_id, organization_id);
-        console.log(existingItem);
+        console.log("existingItem: ", existingItem);
         if (existingItem) {
           console.log("product already exists in the db");
           const updatedRow = await db.updateCartRow(user_id, product_id, organization_id, quantity);
           if (updatedRow){
-            return res.status(201).json({
-              message: "Updated existing row",
-          });
+            return res.status(201).json({message: "Updated existing row"});
           }
-        }
-          await db.addToCart(organization_id, user_id, product_id, quantity);
-          return res.status(201).json({
-            message: "Updated existing row",
-        });
+        }else{
+          const successAdding = await db.addToCart(organization_id, user_id, product_id, quantity);
+          if(successAdding){
+            return res.status(201).json({message: "Added product to cart"})
+          }
+        };
         
         
     }catch(error){   
@@ -64,7 +62,7 @@ const getCartController = async(req, res)=>{
                 product_image: item.product_image,
                 product_price: item.product_price,
                 product_quantity: item.product_quantity,
-                total: item.total,
+                total: (item.product_price * item.product_quantity),
                 total_stocks: item.total_stocks
               });
               break;
@@ -83,7 +81,7 @@ const getCartController = async(req, res)=>{
                   product_image: item.product_image,
                   product_price: item.product_price,
                   product_quantity: item.product_quantity,
-                  total: item.total,
+                  total: (item.product_price * item.product_quantity),
                   total_stocks: item.total_stocks
                 }
               ]
