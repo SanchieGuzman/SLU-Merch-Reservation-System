@@ -5,16 +5,16 @@ const addToCartController = async(req, res)=>{
         const organization_id = req.body.orgid;
         const user_id = req.cookies.user_id;
         const product_id = req.body.product_id;
-        const quantity = req.body.orgid;
+        const quantity = req.body.quantity;
 
         const db = Database.getInstance();
-        try{
+        // try{
             const result = await db.addToCart(organization_id, user_id, product_id, quantity);
             res.sendStatus(201)
 
-        }catch(error){
-            res.sendStatus(400);
-        }
+        // }catch(error){
+        //     res.sendStatus(400);
+        // }
 
     }catch(error){   
         return res.status(500).json({

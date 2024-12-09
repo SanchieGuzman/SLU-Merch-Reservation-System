@@ -577,6 +577,17 @@ function viewProductDetails(orgName, product, reference, org_id) {
   container.appendChild(specificProductContainer);
 
   //EVENT LISTENERS FOR BUTTONS
+  addToCartButton.addEventListener("click", async () => {
+    product_id = product.product_id;
+    org_id = product.org_id;
+    quantity = document.querySelector(".input-box").value;
+    console.log(product_id);
+    console.log(org_id);
+    console.log(quantity);
+    let result = await addProductsToCart(product_id,org_id,quantity);
+    console.log(result);
+  });
+
   minusButton.addEventListener("click", () => {
     let currentQuantity = parseInt(quantityInput.value);
     if (currentQuantity > 1) {
@@ -608,12 +619,40 @@ function viewProductDetails(orgName, product, reference, org_id) {
     }
     updateTotalPrice(currentQuantity, product.product_price);
   });
-
   function updateTotalPrice(quantity, price) {
     const totalPrice = quantity * price;
     totalInfo.textContent = `Total (${quantity} item${
       quantity > 1 ? "s" : ""
     }): ₱${totalPrice}`;
+  }
+}
+
+async function addProductsToCart(product_id, organization_id, prodquantity) {
+
+  const payload = {
+    product_id: product_id,
+    orgid: organization_id,
+    quantity: prodquantity
+  }
+  console.log("sending to server: "+ payload)
+  try {
+      const response = await fetch('http://localhost:3000/api/cart', {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            'Content-Type': 'application/json'
+        },
+      });
+      if(response.status === 201){
+        const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+        const ordersUrl = `${currentUrl}/pages/mycart.html`;
+        window.location.href = ordersUrl;
+      }else if(response.status === 400){
+        console.log("400 response");
+      }
+  } catch (err) {
+      console.error("Error adding to cart:", err);
+    
   }
 }
 
