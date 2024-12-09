@@ -309,16 +309,14 @@ async function getData() {
       orderCard.classList.add("order-card-container");
 
       // div for order number and button image
-      const orderNumber = document.createElement("span");
-      orderNumber.textContent = `Order # ${entry.order_id}`;
+      const orderNumberAndOrg = document.createElement("span");
+      orderNumberAndOrg.textContent = `Order # ${entry.order_id}: ${entry.organization_name} Products`;
 
-      const orgName = document.createElement("span");
-      orgName.textContent = `${entry.organization_name} Merch`;
-
-      orderCardsContainer.appendChild(orderNumber);
+      orderCardsContainer.appendChild(orderNumberAndOrg);
 
       entry.products.forEach(product => {
         const productCard = document.createElement("div");
+        productCard.classList.add("product-card");
 
         const productName = document.createElement("span");
         productName.textContent = product.product_name;
@@ -343,7 +341,6 @@ async function getData() {
         prodNameAndQuantityDiv.appendChild(quantity);
 
         productCard.appendChild(prodNameAndQuantityDiv);
-        productCard.appendChild(orgName);
 
         orderCard.appendChild(productCard);
         orderCardsContainer.appendChild(orderCard);
