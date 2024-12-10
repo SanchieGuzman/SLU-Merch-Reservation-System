@@ -519,8 +519,8 @@ function viewProductDetails(orgName, product, reference, org_id) {
   quantityInput.classList.add("input-box");
   quantityInput.setAttribute("name", "input-box");
   quantityInput.setAttribute("type", "number");
-  quantityInput.setAttribute("min", "1");
-  quantityInput.setAttribute("value", "1");
+  quantityInput.setAttribute("min", "0");
+  quantityInput.setAttribute("value", "0");
   quantityInput.setAttribute("max", product.product_quantity);
 
   const plusButton = document.createElement("button");
@@ -617,10 +617,11 @@ function viewProductDetails(orgName, product, reference, org_id) {
     product_id = product.product_id;
     org_id = product.org_id;
     quantity = document.querySelector(".input-box").value;
-    // console.log(product_id);
-    // console.log(org_id);
-    // console.log(quantity);
-    await addProductsToCart(product_id,org_id,quantity);
+    if(quantity ==0){
+      alert('Insufficient amount to add to cartrf ngiuabgfia');
+    }else{
+      await addProductsToCart(product_id,org_id,quantity);
+    }
   });
 
   minusButton.addEventListener("click", () => {
