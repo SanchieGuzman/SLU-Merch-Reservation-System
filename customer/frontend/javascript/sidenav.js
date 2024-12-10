@@ -1,3 +1,12 @@
+//DASHBOARD PAGE
+var dashboardButton = document.getElementById("dashboard");
+dashboardButton.addEventListener("click", function () {
+  const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+  const dashboardUrl = `${currentUrl}/pages/dashboard.html`;
+  // Redirect the user to the dashboard page
+  window.location.href = dashboardUrl;
+});
+
 //ORDERS PAGE
 var ordersButton = document.getElementById("orders");
 ordersButton.addEventListener("click", function () {
@@ -6,7 +15,6 @@ ordersButton.addEventListener("click", function () {
   // Redirect the user to the dashboard page
   window.location.href = ordersUrl;
 });
-
 
 // PRODUCTS PAGE
 var productsButton = document.getElementById("products");
@@ -18,8 +26,8 @@ productsButton.addEventListener("click", function () {
 });
 
 //MYCART PAGE
-var cartButton = document.getElementById('cart');
-cartButton.addEventListener('click', function(){
+var cartButton = document.getElementById("cart");
+cartButton.addEventListener("click", function () {
   const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000) // I made this dynamic for the purpose of docker
   const cartUrl = `${currentUrl}/pages/mycart.html`;
   // Redirect the user to the dashboard page
@@ -42,12 +50,12 @@ logoutButton.addEventListener("click", async function () {
     const response = await fetch("/api/logout", {
       method: "POST",
     });
-      if (response.status === 200) {
-        const originURL = window.location.origin; 
-                
-        // Redirect the user to the login page
-        window.location.href = originURL;
-      }
+    if (response.status === 200) {
+      const originURL = window.location.origin;
+
+      // Redirect the user to the login page
+      window.location.href = originURL;
+    }
   } catch (err) {
     console.log(err);
   }

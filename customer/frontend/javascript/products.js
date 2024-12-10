@@ -382,7 +382,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
   boothName.textContent = orgName;
   const closeButton = document.createElement("button");
   closeButton.classList.add("close-button");
-  closeButton.src = "../resources/images/products/returnButton.png";
+  // closeButton.src = "../resources/images/products/returnButton.png";
   closeButton.addEventListener("click", async function () {
     const mainContainer = document.querySelector(".content-container");
     mainContainer.innerHTML = "";
@@ -586,7 +586,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
     console.log(product_id);
     console.log(org_id);
     console.log(quantity);
-    await addProductsToCart(product_id,org_id,quantity);
+    await addProductsToCart(product_id, org_id, quantity);
   });
 
   minusButton.addEventListener("click", () => {
@@ -629,35 +629,32 @@ function viewProductDetails(orgName, product, reference, org_id) {
 }
 
 async function addProductsToCart(product_id, organization_id, prodquantity) {
-
   const payload = {
-    "product_id": product_id,
-    "orgid": organization_id,
-    "quantity": prodquantity
-  }
-  console.log("sending to server: "+ payload)
+    product_id: product_id,
+    orgid: organization_id,
+    quantity: prodquantity,
+  };
+  console.log("sending to server: " + payload);
   try {
-      const response = await fetch('/api/cart', {
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: {
-            'Content-Type': 'application/json'
-        },
-      });
-      const result = await response.json();
-        console.log(result);
-      if(response.status === 201){
-        // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-        // const ordersUrl = `${currentUrl}/pages/mycart.html`;
-        // window.location.href = ordersUrl;
-        console.log("success")
-        
-      }else if(response.status === 400){
-        console.log("400 response");
-      }
+    const response = await fetch("/api/cart", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    if (response.status === 201) {
+      // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+      // const ordersUrl = `${currentUrl}/pages/mycart.html`;
+      // window.location.href = ordersUrl;
+      console.log("success");
+    } else if (response.status === 400) {
+      console.log("400 response");
+    }
   } catch (err) {
-      console.error("Error adding to cart:", err);
-    
+    console.error("Error adding to cart:", err);
   }
 }
 

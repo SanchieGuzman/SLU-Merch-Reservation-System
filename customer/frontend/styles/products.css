@@ -153,9 +153,10 @@ body {
 .org-name-container .return-button {
   width: 2rem;
   height: 2rem;
-  background-image: url("../resources/images/products/returnButton.png");
+  background-image: url("../resources/images/products/exit-button.png");
   background-size: cover;
   border: none;
+  background-color: transparent;
 }
 
 .product-grid-container .item-card {
@@ -169,12 +170,13 @@ body {
 .close-button {
   width: 2rem;
   height: 2rem;
-  background-image: url("../resources/images/products/returnButton.png");
+  background-image: url("../resources/images/products/exit-button-white.png");
   background-size: cover;
+  background-color: transparent;
+  border: none;
 }
 
 .specific-product-container {
-  /* height : 40vh; */
   display: flex;
   border: 1px solid #ddd;
   padding: 2rem;
@@ -313,8 +315,10 @@ hr {
   width: 3rem;
   height: 3rem;
   /* background-color: transparent; */
-  background-image: url(../resources/images/products/returnButton.png);
+  background-image: url("../resources/images/products/exit-button-white.png");
+  background-size: cover;
   border: none;
+  background-color: transparent;
 }
 
 .checkout-details-container {

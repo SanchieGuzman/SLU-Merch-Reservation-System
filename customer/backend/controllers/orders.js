@@ -20,6 +20,8 @@ const getOrdersController = async (req, res) => {
             created_at: item.created_at,
             claimed_at: item.claimed_at,
             location: item.location,
+            startTime: item.start_time,
+            endTime: item.end_time,
             products: [],
           });
         }
@@ -48,4 +50,4 @@ const getOrdersController = async (req, res) => {
   }
 };
 
-export default getOrdersController ;
+export default getOrdersController;
