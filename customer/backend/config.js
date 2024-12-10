@@ -4,7 +4,7 @@ export const serverConfig = {
 };
 
 export const databaseConfig = {
-  host: "localhost",
+  host: "leonardosDB",
   user: "root",
   password: "",
   database: "reservationDB",
