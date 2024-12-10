@@ -109,7 +109,7 @@ class Database {
                     FROM products WHERE status = 'Available'
                 ) AS p
                 JOIN organizations o USING(organization_id)
-                WHERE p.row_num <= 4; `;    
+                WHERE p.row_num <= 4; `;   
         try {
             const results = await this.execute(query);
             return results; 
@@ -122,13 +122,10 @@ class Database {
 
     //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
     async addToCart(organization_id, user_id, product_id, quantity){
-
-        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity, total) VALUES (?,?,?,?, 0)';
+        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity,total) VALUES (?,?,?,?,0)';
         const params = [user_id, product_id, organization_id, quantity];
         try{
             const result = await this.execute(query, params);
-            // console.log("hell", result.affectedRows);
-            
             if(result.affectedRows>0){
                 return true;
             }else{
@@ -233,10 +230,10 @@ class Database {
             console.log("Failed to fetch schedules");
         }
     }
-    async placeOrder(order) {
+    async placeOrder(order, user_id, org_id) {
         try {
             await this.execute("START TRANSACTION");
-    
+            //Step 1: Add to orders table
             const orderQuery = `
                 INSERT INTO orders (customer_id, created_at, total, status, claimed_at, schedule_id) 
                 VALUES (?, NOW(), ?, 'Pending', NULL, ?);
@@ -251,19 +248,48 @@ class Database {
             const result = await this.execute(orderQuery, orderParams);
     
             const orderID = result.insertId;
-    
+            //Step 2: Add to order_products table
             const orderProductsQuery = `
                 INSERT INTO order_products (order_id, product_id, quantity, total) 
                 VALUES (?, ?, ?, ?);
             `;
-    
+            
             const orderProductsInsertPromises = order.products.map(product => {
                 const orderProductsParams = [orderID, product.product_id, product.quantity, product.total];
                 return this.execute(orderProductsQuery, orderProductsParams);
             });
     
             await Promise.all(orderProductsInsertPromises);
-    
+            
+            //Step 3: Remove items from cart after verifying
+
+            console.log("querying to see if exists in car");
+            const prodid= order.products[0].product_id;
+            console.log(prodid);
+            console.log(user_id);
+            console.log(org_id);
+            
+            
+            
+            const cartQuery = `SELECT user_id, product_id, organization_id FROM cart WHERE user_id = ? AND product_id = ? AND organization_id = ?`;
+            const cartParams = [user_id, prodid, org_id];
+            const cartResult = await this.execute(cartQuery, cartParams);
+            console.log(cartResult);
+            if(cartResult){
+                const removeFromCartQuery = `DELETE FROM cart WHERE user_id = ? AND product_id = ?;`;
+                const removeFromCartPromises = order.products.map(product => {
+                    return this.execute(removeFromCartQuery, [user_id, product.product_id]);
+                });
+                await Promise.all(removeFromCartPromises);
+            }
+           
+            //Step 4: update product quantity
+            const updateProductQuantityQuery = `UPDATE products SET quantity = quantity - ? WHERE product_id = ?;`;
+            const updateProductQuantityPromises = order.products.map(product => {
+                return this.execute(updateProductQuantityQuery, [product.quantity, product.product_id]);
+            });
+            await Promise.all(updateProductQuantityPromises);
+
             await this.execute("COMMIT");
     
             return result;

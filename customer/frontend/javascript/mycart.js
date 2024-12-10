@@ -271,10 +271,6 @@ function showCart(carts){
     checkoutButton.textContent = "CHECKOUT";
     checkoutButton.addEventListener("click", async function () {
       const orgId = cart.orgid;
-
-      let carts = await getCartDetails();
-      // console.log(carts);
-
       let selectedOrgProducts = carts.orgArray.filter(cart => cart.orgid.toString() === orgId.toString());
 
       selectedOrgProducts.forEach(cart => {
@@ -289,7 +285,7 @@ function showCart(carts){
 
       let schedules = await getScheduleDetails(cart.orgid);
 
-      loadCheckoutPage(carts, selectedOrgProducts, priceTotal.textContent, schedules);
+      loadCheckoutPage(selectedOrgProducts, priceTotal.textContent, schedules);
     });
 
     itemCardFooter.appendChild(checkoutButton);
@@ -303,7 +299,7 @@ function showCart(carts){
   mainContainer.appendChild(innerContainer);
 }
 
-function loadCheckoutPage(carts,prod,total,schedules){
+function loadCheckoutPage(prod,total,schedules){
   const container = document.querySelector(".inner-container");
 
   container.innerHTML = "";
@@ -371,15 +367,7 @@ function loadCheckoutPage(carts,prod,total,schedules){
 
   customerDetailsContainer.appendChild(userNameContainer);
 
-  //Userid
-  const userIdContainer = document.createElement('div');
-  userIdContainer.classList.add('userid-container');
 
-  const customerID = document.createElement('p');
-  customerID.textContent = `customer ID : ${carts.user_id}`;
-  userIdContainer.appendChild(customerID);
-
-  customerDetailsContainer.appendChild(userIdContainer);
   
   leftDetailsContainer.appendChild(customerDetailsContainer);
 
@@ -450,6 +438,7 @@ function loadCheckoutPage(carts,prod,total,schedules){
 
     optionList.value = `${schedule.date} | ${schedule.start_time} - ${schedule.end_time} | ${schedule.location}`;
     optionList.textContent = `${readableFormat} | ${formattedStartTime} - ${formattedEndTime} | ${schedule.location}`;
+    optionList.id = schedule.schedule_id;
     pickUpDropdown.appendChild(optionList);
   });
 
@@ -536,6 +525,29 @@ function loadCheckoutPage(carts,prod,total,schedules){
   completeOrderButton.classList.add('complete-order-button');
   completeOrderButton.textContent = "Complete Order";
   completeOrder.addEventListener("click", async function (){
+    const selectedOption = pickUpDropdown.options[pickUpDropdown.selectedIndex];
+    console.log("schedule id selected: "+selectedOption.id);
+    //populate array
+    products_array = [];
+    prod.forEach((organization)=>{
+      organization.products.forEach((product)=>{
+        let products = {
+          product_id: product.product_id,
+          quantity: product.product_quantity,
+          total: product.total,
+        };
+        products_array.push(products);
+      })
+    })
+
+    const payload = {
+      schedule_id: selectedOption.id,
+      products : products_array,
+    }
+    console.log(payload, prod[0].orgid);
+    completeAndPlaceOrder(payload, prod[0].orgid);
+    
+    
     removeCart();
 
     let carts = await getCartDetails();
@@ -557,4 +569,31 @@ function removeCart(){
   const container = document.querySelector(".inner-container");
 
   container.innerHTML = " "; 
+}
+async function completeAndPlaceOrder(payload, org_id) {
+  console.log("sending to server: ")
+  console.log(payload);
+  
+  try {
+      const response = await fetch(`/api/${org_id}/checkout`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            'Content-Type': 'application/json'
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      if(response.status === 200){
+        console.log("success")
+        // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+        // const ordersUrl = `${currentUrl}/pages/orders.html`;
+        // window.location.href = ordersUrl;
+      }else if(response.status === 400){
+        console.log("400 response");
+      }
+  } catch (err) {
+      console.error("Error adding to cart:", err);
+    
+  }
 }

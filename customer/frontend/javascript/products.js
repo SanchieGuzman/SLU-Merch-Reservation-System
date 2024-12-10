@@ -65,6 +65,7 @@ async function getScheduleDetails(orgid) {
     const response = await fetch(`/api/${orgid}/schedules`, {
       method: "GET",
     });
+nsole.log(result);
     const result = await response.json();
 
     // babalik sa login if unauthorized
@@ -403,7 +404,8 @@ async function getProductDetails(orgId, productId) {
 /* ==============Method for View======================== */
 function viewProductDetails(orgName, product, reference, org_id) {
   const container = document.querySelector(".inner-container");
-
+  // console.log(product);
+  
   container.innerHTML = "";
 
   //card header ====================================start================
@@ -564,15 +566,15 @@ function viewProductDetails(orgName, product, reference, org_id) {
   const placeOrderButton = document.createElement("button");
   placeOrderButton.classList.add("place-order-button");
   placeOrderButton.textContent = "Place Order";
-
+  //EVENT LISTENER FOR PLACE BUTTON
   placeOrderButton.addEventListener("click", async () => {
-    let carts = await getCartDetails();
-
-    // console.log(org_id);
-
+    console.log(product);
     let schedules = await getScheduleDetails(org_id);
     // console.log(schedules);
-
+    //product id
+    const prod_id = product.product_id;
+    console.log("prodid after pressing place order " +prod_id);
+  
     //product image
     const prodImage = product.product_image;
 
@@ -592,13 +594,14 @@ function viewProductDetails(orgName, product, reference, org_id) {
     // console.log(prodTotal);
 
     loadCheckoutPage(
-      carts,
       prodImage,
       prodName,
       prodQuantity,
       prodTotal,
       schedules,
-      reference
+      reference,
+      org_id,
+      prod_id
     );
   });
 
@@ -660,6 +663,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
   }
 }
 
+
 async function addProductsToCart(product_id, organization_id, prodquantity) {
 
   const payload = {
@@ -696,15 +700,17 @@ async function addProductsToCart(product_id, organization_id, prodquantity) {
 }
 
 function loadCheckoutPage(
-  carts,
   prodImage,
   prodName,
   prodQuantity,
   prodTotal,
   schedules,
-  reference
+  reference,
+  org_id,
+  product_id
 ) {
   const container = document.querySelector(".inner-container");
+ 
 
   container.innerHTML = "";
 
@@ -780,6 +786,7 @@ function loadCheckoutPage(
     return null;
   })();
 
+
   const customerDetailsContainer = document.createElement("div");
   customerDetailsContainer.classList.add("customer-details-container");
 
@@ -797,16 +804,7 @@ function loadCheckoutPage(
 
   customerDetailsContainer.appendChild(userNameContainer);
 
-  //Userid
-  const userIdContainer = document.createElement("div");
-  userIdContainer.classList.add("userid-container");
-
-  const customerID = document.createElement("p");
-  customerID.textContent = `customer ID : ${carts.user_id}`;
-  userIdContainer.appendChild(customerID);
-
-  customerDetailsContainer.appendChild(userIdContainer);
-
+  
   leftDetailsContainer.appendChild(customerDetailsContainer);
 
   //Orders Summary
@@ -851,7 +849,7 @@ function loadCheckoutPage(
 
   schedules.schedules.forEach((schedule) => {
     const optionList = document.createElement("option");
-
+    
     const dateFormat = new Date(schedule.date);
     const readableFormat = dateFormat.toLocaleString("en-us", {
       year: "numeric",
@@ -880,6 +878,7 @@ function loadCheckoutPage(
 
     optionList.value = `${schedule.date} | ${schedule.start_time} - ${schedule.end_time} | ${schedule.location}`;
     optionList.textContent = `${readableFormat} | ${formattedStartTime} - ${formattedEndTime} | ${schedule.location}`;
+    optionList.id = schedule.schedule_id;
     pickUpDropdown.appendChild(optionList);
   });
 
@@ -969,4 +968,93 @@ function loadCheckoutPage(
   checkoutDetailsContainer.appendChild(rightDetailsContainer);
 
   container.appendChild(checkoutCardContainer);
+  console.log("product id before completing order:"+ product_id);
+  completeOrderButton.addEventListener("click", async ()=>{
+    const selectedOption = pickUpDropdown.options[pickUpDropdown.selectedIndex];
+    console.log("schedule id selected: "+selectedOption.id);
+    console.log("org id: "+ org_id);
+    
+
+    //order_products
+    console.log("product quantity: "+ prodQuantity);
+    console.log("product id before completing order:"+ product_id);
+
+    //both orders and order_products
+    console.log("total " + prodTotal);
+
+    const payload = {
+      schedule_id: selectedOption.id,
+      products:[
+        {
+        product_id: product_id,
+        quantity: prodQuantity,
+        total: prodTotal,
+        },
+      ],
+    };
+
+    await completeAndPlaceOrder(payload, org_id);
+  });
+  
+}
+
+async function completeAndPlaceOrder(payload, org_id) {
+  console.log("sending to server: ")
+  console.log(payload);
+  
+  try {
+      const response = await fetch(`/api/${org_id}/checkout`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            'Content-Type': 'application/json'
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      if(response.status === 200){
+        console.log("success")
+        // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+        // const ordersUrl = `${currentUrl}/pages/orders.html`;
+        // window.location.href = ordersUrl;
+      }else if(response.status === 400){
+        console.log("400 response");
+      }
+  } catch (err) {
+      console.error("Error adding to cart:", err);
+    
+  }
+}
+
+async function addProductsToCart(product_id, organization_id, prodquantity) {
+
+  const payload = {
+    "product_id": product_id,
+    "orgid": organization_id,
+    "quantity": prodquantity
+  }
+  console.log("sending to server: "+ payload)
+  try {
+      const response = await fetch('/api/cart', {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            'Content-Type': 'application/json'
+        },
+      });
+      const result = await response.json();
+        console.log(result);
+      if(response.status === 201){
+        const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+        const ordersUrl = `${currentUrl}/pages/mycart.html`;
+        window.location.href = ordersUrl;
+        console.log("success")
+        
+      }else if(response.status === 400){
+        console.log("400 response");
+      }
+  } catch (err) {
+      console.error("Error adding to cart:", err);
+    
+  }
 }
