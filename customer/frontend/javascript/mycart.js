@@ -601,15 +601,6 @@ function loadCheckoutPage(prod, total, schedules) {
     };
     console.log(payload, prod[0].orgid);
     completeAndPlaceOrder(payload, prod[0].orgid);
-<<<<<<< HEAD
-=======
-
-    removeCart();
-
-    let carts = await getCartDetails();
-
-    showCart(carts);
->>>>>>> 860c068e4d1601b49a48e42c23f9d5a72e551601
   });
 
   completeOrder.appendChild(totalSection);
