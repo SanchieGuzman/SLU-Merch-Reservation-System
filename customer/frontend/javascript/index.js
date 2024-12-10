@@ -15,10 +15,11 @@ async function login() {
 
     if (response.status === 200) {
       const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000) // I made this dynamic for the purpose of docker
-      const productsUrl = `${currentUrl}/pages/products.html`;
+      // const productsUrl = `${currentUrl}/pages/products.html`;
+      const dashboardUrl = `${currentUrl}/pages/dashboard.html`;
 
       // Redirect the user to the dashboard page
-      window.location.href = productsUrl;
+      window.location.href = dashboardUrl;
     } else if (response.status === 400) {
       var message = document.createElement("p");
       message.classList.add("error-message");
