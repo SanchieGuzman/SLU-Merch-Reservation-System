@@ -5,6 +5,13 @@ async function getCartDetails() {
     });
     
     const result = await response.json();
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);
@@ -16,10 +23,15 @@ async function getScheduleDetails(orgid) {
     const response = await fetch(`/api/${orgid}/schedules`, {
       method: "GET",
     });
-    console.log(response);
     
     const result = await response.json();
-    console.log(result);
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);
@@ -187,13 +199,13 @@ function showCart(carts){
           currentQuantity++;
           quantityInput.value = currentQuantity;
           product.product_quantity = currentQuantity;
-          console.log(product.product_quantity);
+          // console.log(product.product_quantity);
           updateTotal(quantityInput.value, product.product_price);
 
           const subtotal = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);
           priceTotal.textContent = `₱ ${subtotal.toFixed(2)}`;
         } else{
-          console.log("Maximum Stock Reached");
+          alert("Maximum Stock Reached");
         }
       });
 
@@ -203,7 +215,7 @@ function showCart(carts){
           currentQuantity--;
           quantityInput.value = currentQuantity;
           product.product_quantity = currentQuantity;
-          console.log(product.product_quantity);
+          // console.log(product.product_quantity);
           updateTotal(quantityInput.value, product.product_price);
 
           const subtotal = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);

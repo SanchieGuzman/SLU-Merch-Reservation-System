@@ -8,6 +8,7 @@ import { serverConfig } from './backend/config.js';
 
 //router imports
 import loginRouter from './backend/routers/login.js';
+import dashboardRouter from './backend/routers/dashboard.js';
 import productsRouter from './backend/routers/products.js';
 import _orgIDRouter from './backend/routers/_orgID.js';
 import vendorsRouter from './backend/routers/vendors.js';
@@ -38,11 +39,12 @@ app.use('/pages', authenticate, express.static(path.join(__dirname, 'frontend', 
 
 //routers
 app.use('/api', loginRouter)
-app.use('/api', productsRouter)
-app.use('/api', _orgIDRouter)
-app.use('/api', cartRouter)
-app.use('/api', ordersRouter)
-app.use('/api', vendorsRouter)
+app.use('/api', authenticate, dashboardRouter)
+app.use('/api', authenticate, productsRouter)
+app.use('/api', authenticate, _orgIDRouter)
+app.use('/api', authenticate, cartRouter)
+app.use('/api', authenticate, ordersRouter)
+app.use('/api', authenticate, vendorsRouter)
 app.use('/api', logoutRouter)
 
 //custom 404

@@ -44,7 +44,7 @@ const viewProductController = async(req, res)=>{
     }
 }
 
-const placeOrderController = async(req, res) => {
+const getSchedulesController = async(req, res) => {
     try {
         const orgID = req.params.orgid;
         const db = Database.getInstance();
@@ -120,4 +120,4 @@ const completeOrderController = async(req, res) => {
     }
 }
 
-export  {seeAllProductsController, viewProductController, placeOrderController, completeOrderController};
+export  {seeAllProductsController, viewProductController, getSchedulesController, completeOrderController};

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { seeAllProductsController, viewProductController, placeOrderController, completeOrderController } from "../controllers/_orgID.js";
+import { seeAllProductsController, viewProductController, completeOrderController, getSchedulesController } from "../controllers/_orgID.js";
 
 
 const _orgIDRouter = Router()
@@ -9,7 +9,7 @@ _orgIDRouter.get('/:orgid/products', seeAllProductsController)
 
 _orgIDRouter.get('/:orgid/products/:prodid', viewProductController)
 
-_orgIDRouter.get('/:orgid/schedules', placeOrderController);
+_orgIDRouter.get('/:orgid/schedules', getSchedulesController);
 
 _orgIDRouter.post('/:orgid/checkout', completeOrderController)
 
