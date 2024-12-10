@@ -242,6 +242,7 @@ function showCart(carts) {
           );
           priceTotal.textContent = `₱ ${subtotal.toFixed(2)}`;
         }else if (currentQuantity ==1){
+          alert(`Product removed on your cart ${product.product_name}`)
           console.log(cart.orgid);
           console.log(product.product_id);
           
@@ -591,13 +592,6 @@ function loadCheckoutPage(prod,total,schedules){
     }
     console.log(payload, prod[0].orgid);
     completeAndPlaceOrder(payload, prod[0].orgid);
-    
-    
-    removeCart();
-
-    let carts = await getCartDetails();
-
-    showCart(carts);
   });
 
   completeOrder.appendChild(totalSection);
@@ -610,11 +604,6 @@ function loadCheckoutPage(prod,total,schedules){
   container.appendChild(checkoutCardContainer);
 }
 
-function removeCart() {
-  const container = document.querySelector(".inner-container");
-
-  container.innerHTML = " "; 
-}
 async function completeAndPlaceOrder(payload, org_id) {
   console.log("sending to server: ")
   console.log(payload);
@@ -630,10 +619,10 @@ async function completeAndPlaceOrder(payload, org_id) {
       const result = await response.json();
       console.log(result);
       if(response.status === 200){
-        console.log("success")
-        // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-        // const ordersUrl = `${currentUrl}/pages/orders.html`;
-        // window.location.href = ordersUrl;
+        alert('Order processed successfully')
+        const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+        const ordersUrl = `${currentUrl}/pages/mycart.html`;
+        window.location.href = ordersUrl;
       }else if(response.status === 400){
         console.log("400 response");
       }
