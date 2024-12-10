@@ -259,10 +259,6 @@ function showCart(carts){
     checkoutButton.textContent = "CHECKOUT";
     checkoutButton.addEventListener("click", async function () {
       const orgId = cart.orgid;
-
-      let carts = await getCartDetails();
-      console.log(carts);
-
       let selectedOrgProducts = carts.orgArray.filter(cart => cart.orgid.toString() === orgId.toString());
 
       selectedOrgProducts.forEach(cart => {
@@ -277,7 +273,7 @@ function showCart(carts){
 
       let schedules = await getScheduleDetails(cart.orgid);
 
-      loadCheckoutPage(carts, selectedOrgProducts, priceTotal.textContent, schedules);
+      loadCheckoutPage(selectedOrgProducts, priceTotal.textContent, schedules);
     });
 
     itemCardFooter.appendChild(checkoutButton);
@@ -291,7 +287,7 @@ function showCart(carts){
   mainContainer.appendChild(innerContainer);
 }
 
-function loadCheckoutPage(carts,prod,total,schedules){
+function loadCheckoutPage(prod,total,schedules){
   const container = document.querySelector(".inner-container");
 
   container.innerHTML = "";
@@ -359,15 +355,7 @@ function loadCheckoutPage(carts,prod,total,schedules){
 
   customerDetailsContainer.appendChild(userNameContainer);
 
-  //Userid
-  const userIdContainer = document.createElement('div');
-  userIdContainer.classList.add('userid-container');
 
-  const customerID = document.createElement('p');
-  customerID.textContent = `customer ID : ${carts.user_id}`;
-  userIdContainer.appendChild(customerID);
-
-  customerDetailsContainer.appendChild(userIdContainer);
   
   leftDetailsContainer.appendChild(customerDetailsContainer);
 
