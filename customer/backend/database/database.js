@@ -109,7 +109,7 @@ class Database {
                     FROM products WHERE status = 'Available'
                 ) AS p
                 JOIN organizations o USING(organization_id)
-                WHERE p.row_num <= 4; `;    
+                WHERE p.row_num <= 4; `;   
         try {
             const results = await this.execute(query);
             return results; 
@@ -122,19 +122,16 @@ class Database {
 
     //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
     async addToCart(organization_id, user_id, product_id, quantity){
-
-        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity, total) VALUES (?,?,?,?, 0)';
+        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity) VALUES (?,?,?,?)';
         const params = [user_id, product_id, organization_id, quantity];
         try{
             const result = await this.execute(query, params);
-            console.log("hell", result.affectedRows);
-            
             if(result.affectedRows>0){
                 return true;
             }else{
                 return false;
             }
-        }catch(err){
+        }catch{
             console.error('Error adding to cart:', err);
             throw err;
         }
@@ -233,7 +230,10 @@ class Database {
             console.log("Failed to fetch schedules");
         }
     }
-    async placeOrder(order) {
+    async placeOrder(order, user_id) {
+
+        console.log(order);
+        console.log("here");
         try {
             await this.execute("START TRANSACTION");
     

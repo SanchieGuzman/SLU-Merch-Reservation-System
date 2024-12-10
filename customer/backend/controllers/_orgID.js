@@ -71,7 +71,12 @@ const placeOrderController = async(req, res) => {
 const completeOrderController = async(req, res) => {
     try {
         const order = req.body;
-
+        const userID = req.cookies.user_id;
+        console.log("im in controller");
+        
+        console.log(req.body);
+        
+        const orgID = req.params.orgid;
         const db = Database.getInstance();
 
         let overallTotal = 0;
@@ -79,6 +84,7 @@ const completeOrderController = async(req, res) => {
 
         for (const product of products) {
             const productPrice = await db.getProductPrice(product.product_id);
+            
             const productTotal = product.quantity * productPrice.price;
             
             product.total = productTotal;
@@ -86,13 +92,13 @@ const completeOrderController = async(req, res) => {
         }
 
         const orderData = {
-            customer_id: order.user_id,
+            customer_id: userID,
             total: overallTotal,
             schedule_id: order.schedule_id,
             products: products,
         }
 
-        const result = await db.placeOrder(orderData);
+        const result = await db.placeOrder(orderData, userID);
 
         if (result) {
             return res.status(200).json({
