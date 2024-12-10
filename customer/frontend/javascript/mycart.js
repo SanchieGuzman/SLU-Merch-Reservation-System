@@ -622,20 +622,11 @@ function loadCheckoutPage(prod, total, schedules) {
   container.appendChild(checkoutCardContainer);
 }
 
-<<<<<<< HEAD
-=======
-function removeCart() {
-  const container = document.querySelector(".inner-container");
-
-  container.innerHTML = " ";
-}
->>>>>>> 860c068e4d1601b49a48e42c23f9d5a72e551601
 async function completeAndPlaceOrder(payload, org_id) {
   console.log("sending to server: ");
   console.log(payload);
 
   try {
-<<<<<<< HEAD
       const response = await fetch(`/api/${org_id}/checkout`, {
           method: "POST",
           body: JSON.stringify(payload),
@@ -653,25 +644,6 @@ async function completeAndPlaceOrder(payload, org_id) {
       }else if(response.status === 400){
         console.log("400 response");
       }
-=======
-    const response = await fetch(`/api/${org_id}/checkout`, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const result = await response.json();
-    console.log(result);
-    if (response.status === 200) {
-      console.log("success");
-      // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-      // const ordersUrl = `${currentUrl}/pages/orders.html`;
-      // window.location.href = ordersUrl;
-    } else if (response.status === 400) {
-      console.log("400 response");
-    }
->>>>>>> 860c068e4d1601b49a48e42c23f9d5a72e551601
   } catch (err) {
     console.error("Error adding to cart:", err);
   }
