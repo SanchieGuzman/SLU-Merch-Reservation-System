@@ -62,7 +62,8 @@ window.onload = async function () {
 
 function showCart(carts) {
   const mainContainer = document.querySelector(".card-content-container");
-
+  console.log(carts);
+  
   mainContainer.innerHTML = "";
 
   const innerContainer = document.createElement("div");
@@ -180,7 +181,7 @@ function showCart(carts) {
       const quantityInput = document.createElement("input");
       quantityInput.classList.add("input-box");
       quantityInput.setAttribute("type", "number");
-      quantityInput.setAttribute("min", "1");
+      quantityInput.setAttribute("min", "0");
       quantityInput.setAttribute("value", product.product_quantity);
       quantityInput.setAttribute("max", product.product_quantity);
       quantityInput.setAttribute("data-product-id", product.product_id);
@@ -226,7 +227,7 @@ function showCart(carts) {
         }
       });
 
-      minusButton.addEventListener("click", () => {
+      minusButton.addEventListener("click", async () => {
         let currentQuantity = parseInt(quantityInput.value);
         if (currentQuantity > 1) {
           currentQuantity--;
@@ -240,6 +241,23 @@ function showCart(carts) {
             0
           );
           priceTotal.textContent = `₱ ${subtotal.toFixed(2)}`;
+        }else if (currentQuantity ==1){
+          console.log(cart.orgid);
+          console.log(product.product_id);
+          
+          
+          const payload ={
+            org_id : cart.orgid,
+            product_id: product.product_id
+          }
+
+          await deleteItemsFromCart(payload);
+          
+          //Remove the product container if quantity is 0
+          const productContainer = minusButton.closest('.product-container');
+          productContainer.remove();
+
+
         }
       });
 
@@ -616,6 +634,31 @@ async function completeAndPlaceOrder(payload, org_id) {
         // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
         // const ordersUrl = `${currentUrl}/pages/orders.html`;
         // window.location.href = ordersUrl;
+      }else if(response.status === 400){
+        console.log("400 response");
+      }
+  } catch (err) {
+      console.error("Error adding to cart:", err);
+    
+  }
+}
+async function deleteItemsFromCart(payload) {
+  console.log("sending to server: ")
+  console.log(payload);
+  
+  try {
+      const response = await fetch(`/api/cart`, {
+          method: "DELETE",
+          body: JSON.stringify(payload),
+          headers: {
+            'Content-Type': 'application/json'
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      if(response.status === 200){
+        console.log("success")
+
       }else if(response.status === 400){
         console.log("400 response");
       }

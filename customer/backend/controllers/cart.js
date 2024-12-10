@@ -98,9 +98,18 @@ const deleteItemFromCartController = async(req, res)=>{
   try{
       const user_id = req.cookies.user_id;
       const db = Database.getInstance();
-      // const result = await db.getCart(user_id);
-
-     
+      const product_id = req.body.product_id;
+      const org_id = req.body.org_id;
+      const result = await db.deleteItemsFromCart(user_id,product_id,org_id);
+     if(result){
+      return res.status(200).json({
+          message: "Deleted items successfully.",
+      });
+     }else{
+      return res.status(400).json({
+        message: "No items in cart found",
+    });
+     }
   }catch(error){
       return res.status(500).json({
           message: "Internal Server Error",

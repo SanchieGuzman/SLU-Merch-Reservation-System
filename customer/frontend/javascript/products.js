@@ -549,7 +549,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
 
   // total price
   const totalInfo = document.createElement("h3");
-  totalInfo.textContent = "Total: ₱ " + product.product_price;
+  totalInfo.textContent = "Total (0 item): ₱ 0"
   totalInfo.id = "totalPrice";
 
   // append price container and total info
@@ -623,7 +623,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
     org_id = product.org_id;
     quantity = document.querySelector(".input-box").value;
     if(quantity ==0){
-      alert('Insufficient amount to add to cartrf ngiuabgfia');
+      alert('Insufficient amount to add to cart');
     }else{
       await addProductsToCart(product_id,org_id,quantity);
     }
@@ -631,7 +631,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
 
   minusButton.addEventListener("click", () => {
     let currentQuantity = parseInt(quantityInput.value);
-    if (currentQuantity > 1) {
+    if (currentQuantity > 0) {
       currentQuantity--;
       quantityInput.value = currentQuantity;
       updateTotalPrice(currentQuantity, product.product_price);

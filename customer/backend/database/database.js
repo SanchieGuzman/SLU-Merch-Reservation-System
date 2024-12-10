@@ -430,9 +430,25 @@ class Database {
     const params = [user_id];
     try {
       const results = await this.execute(query, params);
+      
       return results;
     } catch (error) {
       console.log("Error getting reserved orders");
+      return false;
+    }
+  }
+  async deleteItemsFromCart(user_id,product_id,org_id){
+    const query = `DELETE FROM cart WHERE user_id = ? AND product_id =? AND organization_id = ?`;
+    const params = [user_id,product_id,org_id];
+    try {
+      const results = await this.execute(query, params);
+      if(results.affectedRows>0){
+        return true;
+      }else{
+        return false;
+      }
+    } catch (error) {
+      console.log("Error deleting items from cart");
       return false;
     }
   }
