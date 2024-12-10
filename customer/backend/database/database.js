@@ -233,6 +233,16 @@ class Database {
     async placeOrder(order, user_id, org_id) {
         try {
             await this.execute("START TRANSACTION");
+
+            //Step 0: verify if all products have sufficient stocks
+            const productsQuery = `SELECT quantity FROM products WHERE product_id = ?`;
+            for (const product of order.products) {
+                const params = [product.product_id];
+                const stock = await this.execute(productsQuery, params); 
+                if (stock[0].quantity < product.quantity) {
+                    return ("Insufficient stock for product id: " + `${product.product_id}`);
+                }
+            }
             //Step 1: Add to orders table
             const orderQuery = `
                 INSERT INTO orders (customer_id, created_at, total, status, claimed_at, schedule_id) 
