@@ -1,132 +1,165 @@
-// async function getData(userid) {
-//   try {
-//     const response = await fetch(`/api/dashboard`, {
-//       method: "GET",
-//     });
-//     const result = await response.json();
-//     return result;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
-
-async function getData() {
-  return {
-    completedOrders: [
-      { product_name: "White Mug", quantity: 2, total: 100 },
-      { product_name: "Notebook", quantity: 1, total: 50 },
-      { product_name: "Pen Set", quantity: 3, total: 150 },
-    ],
-    latestOrders: [
-      {
-        product_name: "White Mug",
-        product_image: { data: "" },
-        quantity: 5,
-        total: 100,
-        status: "Successfully",
-      },
-      {
-        product_name: "Diving Mask",
-        product_image: { data: "" },
-        quantity: 2,
-        total: 10,
-        status: "Successfully",
-      },
-    ],
-    reservedProducts: [
-      {
-        order_id: 1,
-        organization_name: "SLU",
-        products: [
-          {
-            product_name: "Hannah",
-            product_image: { data: "" },
-            quantity: 1,
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            quantity: 5,
-            total: 100,
-          },
-        ],
-      },
-      {
-        order_id: 1,
-        organization_name: "SLU",
-        products: [
-          {
-            product_name: "Hannah",
-            product_image: { data: "" },
-            quantity: 4,
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            quantity: 6,
-            total: 100,
-          },
-        ],
-      },
-      {
-        order_id: 1,
-        organization_name: "SLU",
-        products: [
-          {
-            product_name: "Hannah",
-            product_image: { data: "" },
-            quantity: 3,
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            quantity: 6,
-            total: 100,
-          },
-        ],
-      },
-      {
-        order_id: 1,
-        organization_name: "SLU",
-        products: [
-          {
-            product_name: "Hannah",
-            product_image: { data: "" },
-            quantity: 6,
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            quantity: 8,
-            total: 100,
-          },
-        ],
-      },
-      {
-        order_id: 1,
-        organization_name: "SLU",
-        products: [
-          {
-            product_name: "Hannah",
-            product_image: { data: "" },
-            quantity: 4,
-            total: 100,
-          },
-          {
-            product_name: "ID Lace",
-            product_image: { data: "" },
-            quantity: 3,
-            total: 100,
-          },
-        ],
-      },
-    ],
-  };
+async function getData(userid) {
+  try {
+    const response = await fetch(`/api/dashboard`, {
+      method: "GET",
+    });
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
 }
+
+// async function getData() {
+//   return {
+//     completedOrders: [
+//       { product_name: "White Mug", quantity: 2, total: 100 },
+//       { product_name: "Notebook", quantity: 1, total: 50 },
+//       { product_name: "Pen Set", quantity: 3, total: 150 },
+//       { product_name: "Pen Set", quantity: 3, total: 150 },
+//       { product_name: "Pen Set", quantity: 3, total: 150 },
+//       { product_name: "Pen Set", quantity: 3, total: 150 },
+//       { product_name: "Pen Set", quantity: 3, total: 150 },
+//       { product_name: "Pen Set", quantity: 3, total: 150 },
+//     ],
+//     latestOrders: [
+//       {
+//         product_name: "White Mug",
+//         product_image: { data: "" },
+//         quantity: 5,
+//         total: 100,
+//         status: "Successfully",
+//       },
+//       {
+//         product_name: "Diving Mask",
+//         product_image: { data: "" },
+//         quantity: 2,
+//         total: 10,
+//         status: "Successfully",
+//       },
+//       {
+//         product_name: "Diving Mask",
+//         product_image: { data: "" },
+//         quantity: 2,
+//         total: 10,
+//         status: "Successfully",
+//       },
+//       {
+//         product_name: "Diving Mask",
+//         product_image: { data: "" },
+//         quantity: 2,
+//         total: 10,
+//         status: "Successfully",
+//       },
+//       {
+//         product_name: "Diving Mask",
+//         product_image: { data: "" },
+//         quantity: 2,
+//         total: 10,
+//         status: "Successfully",
+//       },
+//       {
+//         product_name: "Diving Mask",
+//         product_image: { data: "" },
+//         quantity: 2,
+//         total: 10,
+//         status: "Successfully",
+//       },
+//     ],
+//     reservedProducts: [
+//       {
+//         order_id: 1,
+//         organization_name: "SLU",
+//         products: [
+//           {
+//             product_name: "Hannah",
+//             product_image: { data: "" },
+//             quantity: 1,
+//             total: 100,
+//           },
+//           {
+//             product_name: "ID Lace",
+//             product_image: { data: "" },
+//             quantity: 5,
+//             total: 100,
+//           },
+//         ],
+//       },
+//       {
+//         order_id: 1,
+//         organization_name: "SLU",
+//         products: [
+//           {
+//             product_name: "Hannah",
+//             product_image: { data: "" },
+//             quantity: 4,
+//             total: 100,
+//           },
+//           {
+//             product_name: "ID Lace",
+//             product_image: { data: "" },
+//             quantity: 6,
+//             total: 100,
+//           },
+//         ],
+//       },
+//       {
+//         order_id: 1,
+//         organization_name: "SLU",
+//         products: [
+//           {
+//             product_name: "Hannah",
+//             product_image: { data: "" },
+//             quantity: 3,
+//             total: 100,
+//           },
+//           {
+//             product_name: "ID Lace",
+//             product_image: { data: "" },
+//             quantity: 6,
+//             total: 100,
+//           },
+//         ],
+//       },
+//       {
+//         order_id: 1,
+//         organization_name: "SLU",
+//         products: [
+//           {
+//             product_name: "Hannah",
+//             product_image: { data: "" },
+//             quantity: 6,
+//             total: 100,
+//           },
+//           {
+//             product_name: "ID Lace",
+//             product_image: { data: "" },
+//             quantity: 8,
+//             total: 100,
+//           },
+//         ],
+//       },
+//       {
+//         order_id: 1,
+//         organization_name: "SLU",
+//         products: [
+//           {
+//             product_name: "Hannah",
+//             product_image: { data: "" },
+//             quantity: 4,
+//             total: 100,
+//           },
+//           {
+//             product_name: "ID Lace",
+//             product_image: { data: "" },
+//             quantity: 3,
+//             total: 100,
+//           },
+//         ],
+//       },
+//     ],
+//   };
+// }
 
 window.onload = function () {
   loadDashboard();
@@ -166,7 +199,7 @@ async function loadDashboard() {
 
   const bottomLeftContainer = document.createElement("div");
   bottomLeftContainer.classList.add("latest-orders-container");
-
+  
   const rightContainer = document.createElement("div");
   rightContainer.classList.add("reserved-products-container");
 
@@ -190,8 +223,12 @@ function generateCompletedOrdersSection(data) {
   // header
   const heading = document.createElement("span");
   heading.textContent = "Completed Orders";
+  heading.classList.add("completed-orders-heading");
 
   container.appendChild(heading);
+
+  const cardContainer = document.createElement("div");
+  cardContainer.classList.add("card-container");
 
   // cards
   data.forEach((entry) => {
@@ -211,8 +248,10 @@ function generateCompletedOrdersSection(data) {
     card.appendChild(quantity);
     card.appendChild(total);
 
-    container.append(card);
+    cardContainer.append(card);
   });
+
+  container.append(cardContainer);
 }
 
 function generateLatestOrdersSection(data) {
@@ -220,30 +259,35 @@ function generateLatestOrdersSection(data) {
 
   // heading
   const headingDiv = document.createElement("div");
+  headingDiv.classList.add("latest-orders-container-heading");
 
   const heading = document.createElement("span");
   heading.textContent = "Latest Orders";
 
-  const btn1 = document.createElement("button");
-  btn1.textContent = "This Week";
-  btn1.id = "last-week-btn";
+  // const btn1 = document.createElement("button");
+  // btn1.textContent = "This Week";
+  // btn1.id = "last-week-btn";
 
-  const btn2 = document.createElement("button");
-  btn2.textContent = "This Week";
-  btn2.id = "this-week-btn";
+  // const btn2 = document.createElement("button");
+  // btn2.textContent = "This Week";
+  // btn2.id = "this-week-btn";
 
-  const imageBtn = document.createElement("button");
+  // const imageBtn = document.createElement("button");
 
   headingDiv.appendChild(heading);
-  headingDiv.appendChild(btn1);
-  headingDiv.appendChild(btn2);
-  headingDiv.appendChild(imageBtn);
+  // headingDiv.appendChild(btn1);
+  // headingDiv.appendChild(btn2);
+  // headingDiv.appendChild(imageBtn);
 
   container.appendChild(headingDiv);
+
+  const latestCardsContainer = document.createElement("div");
+  latestCardsContainer.classList.add("latest-cards-container");
 
   // cards
   data.forEach((entry) => {
     const card = document.createElement("div");
+    card.classList.add("latest-orders-card");
 
     // image
     const image = document.createElement("img");
@@ -251,32 +295,47 @@ function generateLatestOrdersSection(data) {
     image.alt = entry.product_name;
     image.style.height = "40px";
     image.style.width = "40px";
+    image.classList.add("latest-orders-image");
 
     // product name
     const productName = document.createElement("span");
     productName.textContent = entry.product_name;
+    productName.classList.add("latest-orders-product-name")
 
     // total and quantity div
     const totalAndQuantityDiv = document.createElement("div");
+    totalAndQuantityDiv.classList.add("latest-orders-productsquantity");
 
     const total = document.createElement("span");
     total.textContent = `P ${entry.total}`;
+    total.classList.add("latest-orders-price")
 
     const quantity = document.createElement("span");
     quantity.textContent =
       entry.quantity > 1 ? `${entry.quantity} items` : `${entry.quantity} item`;
+      quantity.classList.add("latest-orders-quantity");
 
     totalAndQuantityDiv.appendChild(total);
     totalAndQuantityDiv.appendChild(quantity);
 
     // status div
     const statusDiv = document.createElement("div");
+    statusDiv.classList.add("latest-orders-div-status");
 
     const deliveredText = document.createElement("span");
-    deliveredText.textContent = "Delivered";
+    deliveredText.textContent = "Status";
+    deliveredText.classList.add("latest-orders-delivery-status")
 
     const status = document.createElement("span");
     status.textContent = entry.status;
+    if(entry.status == "Claimed"){
+      status.classList.add("claimed");
+    }else{
+      status.classList.add("pending");
+    }
+    console.log(entry.status);
+    
+    
 
     statusDiv.appendChild(deliveredText);
     statusDiv.appendChild(status);
@@ -286,8 +345,10 @@ function generateLatestOrdersSection(data) {
     card.appendChild(totalAndQuantityDiv);
     card.appendChild(statusDiv);
 
-    container.appendChild(card);
+    latestCardsContainer.appendChild(card);
+    container.appendChild(latestCardsContainer);
   });
+  
 }
 
 function generateReservedProductsSection(data) {
@@ -302,10 +363,13 @@ function generateReservedProductsSection(data) {
 
   const orderCardsContainer = document.createElement("div");
   orderCardsContainer.classList.add("order-cards-container");
-  orderCardsContainer.appendChild(heading);
+  container.appendChild(heading);
 
   // cards
   data.forEach((entry) => {
+    const reservedCardContainer = document.createElement("div");
+    reservedCardContainer.classList.add("reserved-card-container");
+
     const orderCard = document.createElement("div");
     orderCard.classList.add("order-card-container");
 
@@ -313,7 +377,8 @@ function generateReservedProductsSection(data) {
     const orderNumberAndOrg = document.createElement("span");
     orderNumberAndOrg.textContent = `Order # ${entry.order_id}: ${entry.organization_name} Products`;
 
-    orderCardsContainer.appendChild(orderNumberAndOrg);
+    reservedCardContainer.appendChild(orderNumberAndOrg);
+    orderNumberAndOrg.classList.add("order-label");
 
     entry.products.forEach((product) => {
       const productCard = document.createElement("div");
@@ -353,7 +418,9 @@ function generateReservedProductsSection(data) {
       productCard.appendChild(prodPriceAndQuantityDiv);
 
       orderCard.appendChild(productCard);
-      orderCardsContainer.appendChild(orderCard);
+      reservedCardContainer.appendChild(orderCard);
+
+      orderCardsContainer.appendChild(reservedCardContainer)
     });
 
     container.appendChild(orderCardsContainer);

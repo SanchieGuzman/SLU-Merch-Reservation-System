@@ -1,3 +1,4 @@
+
 /* Base reset for body and html */
 body,
 html {
@@ -5,6 +6,7 @@ html {
   padding: 0;
   height: 100vh;
   overflow: hidden;
+  font-family: 'Poppins', sans-serif; 
 }
 
 /* Main container */
@@ -13,7 +15,7 @@ html {
   gap: 1.25rem;
   height: 78vh;
   overflow: hidden;
-  padding: 3rem 4rem;
+  padding: 3rem 3rem;
 }
 
 /* Individual column containers */
@@ -22,12 +24,11 @@ html {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  height: 100%;
+  max-height: 78vh;
 }
 
-/* Completed and Latest Orders panels */
-.completed-orders-container,
-.latest-orders-container {
+/* Completed Orders - 3 Columns */
+.completed-orders-container {
   background-color: #ffffff;
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0.125rem 0.5rem;
@@ -36,8 +37,40 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 100%;
+  gap: 1rem; 
+  height: 34vh;
+}
+
+.completed-orders-container .card-container{
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  height: 36vh;
   overflow-y: auto;
+}
+
+.completed-orders-container .completed-orders-heading {
+  position: sticky;
+  height: 1.7rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #3a50cb;
+  color: #15268b;
+  width: 95%;
+  background-color: transparent;
+  size: 1.2rem;
+  font-weight: bold;
+  padding-bottom: 3%;
+  padding-top: 2%;
+}
+
+.complete-orders-card {
+  display: grid;
+  grid-template-columns: 1.8fr 1.5fr 1fr; 
+  align-items: center; 
+  padding: 0.75rem;
+  background-color: #f5f5f5;
+  border-radius: 0.5rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 /* Reserved Products panel */
@@ -45,7 +78,7 @@ html {
   background-color: #ffffff;
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0.125rem 0.5rem;
-  padding: 0 1.25rem 1.25rem 1.25rem;
+  padding: 1.3rem 1.25rem 1.25rem 1.25rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -57,12 +90,16 @@ html {
 
 .reserved-products-container .reserved-products-heading {
   position: sticky;
-  height: 1.5rem;
-  padding: 0.5rem;
+  height: 1.7rem;
+  padding: 0.4rem;
   border-bottom: 1px solid white;
   color: white;
   width: 95%;
   background-color: transparent;
+  size: 1.2rem;
+  font-weight: bold;
+  /* padding-bottom: 3%; */
+  /* padding-top: 3%; */
 }
 
 .reserved-products-container .order-cards-container {
@@ -74,11 +111,20 @@ html {
   box-shadow: none;
   gap: 1rem;
   width: 95%;
+  height: 65vh;
+  overflow-y: auto;
+}
+
+.order-cards-container .reserved-card-container{
+  display: flex;
+  flex-flow: column nowrap;
+  width: 95%;
 }
 
 .order-cards-container span {
   width: 100%;
   text-align: left;
+  margin-bottom: 4%;
 }
 
 .order-cards-container .price-and-quantity-container {
@@ -100,7 +146,7 @@ html {
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   width: 100%;
-  height: 100%;
+  height: 10%;
   padding: 1rem;
   background-color: transparent;
   margin-bottom: 0.625rem;
@@ -111,7 +157,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #f9f9f9;
+  background-color: white;
   padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
@@ -147,51 +193,119 @@ html {
   flex-direction: row;
 }
 
-/* Cards for items in panels */
-.complete-orders-card,
-.latest-orders-container div {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0.625rem;
-  background-color: #f9f9f9;
-  margin-bottom: 0.625rem;
+
+.latest-orders-container {
+  background-color: #ffffff;
   border-radius: 0.5rem;
-}
-
-/* Specific to Latest Orders layout */
-.latest-orders-container div img {
-  border-radius: 0.25rem;
-  height: 3.75rem;
-  width: 3.75rem;
-  margin-right: 0.625rem;
-}
-
-.latest-orders-container .item-details {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0.125rem 0.5rem;
+  padding: 1.25rem;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.3125rem;
+  justify-content: flex-start;
+  gap: 1rem; 
+  height: 30vh;
 }
 
-.latest-orders-container .item-price {
-  font-size: 0.875rem;
+.latest-orders-container .latest-cards-container{
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1.25rem;
+  height: 30vh;
+  overflow-y: auto;
+}
+
+.latest-orders-container .latest-orders-container-heading {
+  position: sticky;
+  height: 1.7rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #3a50cb;
+  color: #15268b;
+  width: 95%;
+  background-color: transparent;
+  size: 1.2rem;
   font-weight: bold;
+  padding-bottom: 2%; 
+  padding-top: 1%; 
 }
 
-.latest-orders-container .item-quantity {
-  font-size: 0.75rem;
-  color: #666;
+.latest-orders-card {
+  display: grid;
+  grid-template-columns: .5fr 1.3fr 1.5fr .5fr; 
+  align-items: center; 
+  padding: 0.75rem;
+  background-color: #f5f5f5;
+  border-radius: 0.5rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.latest-orders-card .latest-orders-productsquantity {
+  display: flex;
+  flex-direction: column;
+}
+.latest-orders-card .latest-orders-div-status{
+  display: flex;
+  flex-direction: column;
+}
+.latest-orders-div-status .claimed{
+  color:green;
+}
+
+
+.latest-orders-div-status .pending{
+  color:red;
+}
+.latest-orders-container div img {
+  box-shadow: none;
+}
+
+.latest-orders-container img {
+  border-radius: 0.25rem;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
 }
 
 .latest-orders-container .status {
+  text-align: right;
+  font-size: 0.875rem;
+  color: #666;
+  box-shadow: none;
+}
+
+/* Reserved Products Section */
+.reserved-products-container {
   display: flex;
   flex-direction: column;
-  text-align: right;
-  font-size: 0.75rem;
-  color: #333;
-  line-height: 1.2;
+  gap: 1rem;
 }
+
+.reserved-product-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.25rem;
+  object-fit: cover;
+}
+
+.reserved-products-container .order-cards-container .order-label {
+  /* padding: 0.5rem; */
+  size: 1.2rem;
+  padding-left: 5%
+}
+
+.order-card-container {
+  padding: 0.75rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.price-and-quantity-container {
+  display: flex;
+  justify-content: space-between; 
+  font-size: 0.875rem;
+}
+  
 
 /* Empty state placeholder */
 .empty-state {
@@ -199,27 +313,6 @@ html {
   color: #aaa;
   text-align: center;
   margin-top: 3.125rem;
-}
-
-/* Button styles */
-.view-more-button {
-  background-color: #0033cc;
-  color: white;
-  border: none;
-  padding: 0.3125rem 0.625rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  font-size: 0.75rem;
-}
-
-.latest-orders-container button {
-  background-color: #0033cc;
-  color: white;
-  border: none;
-  padding: 0.3125rem 0.625rem;
-  border-radius: 0.25rem;
-  margin-right: 0.3125rem;
-  cursor: pointer;
 }
 
 /* Image styles for reserved products */
