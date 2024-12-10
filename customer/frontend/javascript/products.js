@@ -1018,6 +1018,8 @@ async function completeAndPlaceOrder(payload, org_id) {
         // window.location.href = ordersUrl;
       }else if(response.status === 400){
         console.log("400 response");
+      }else if(response.status === 406){
+        alert('Insufficient product');
       }
   } catch (err) {
       console.error("Error adding to cart:", err);

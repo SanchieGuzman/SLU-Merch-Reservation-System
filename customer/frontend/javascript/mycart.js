@@ -193,6 +193,20 @@ function showCart(carts){
 
       productActionsContainer.appendChild(productQuantity);
       
+      quantityInput.addEventListener("input", () => {
+        let currentQuantity = parseInt(quantityInput.value);
+    
+        if (currentQuantity > product.total_stocks) {
+          quantityInput.value = product.total_stocks;
+          currentQuantity = product.total_stocks;
+        }
+        if (currentQuantity < 1 || isNaN(currentQuantity)) {
+          quantityInput.value = 1;
+          currentQuantity = 1;
+        }
+        updateTotal(currentQuantity, product.product_price);
+      });
+
       plusButton.addEventListener("click", () => {
         let currentQuantity = parseInt(quantityInput.value);
         if(currentQuantity < product.total_stocks){

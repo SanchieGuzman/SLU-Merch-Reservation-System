@@ -102,8 +102,14 @@ const completeOrderController = async(req, res) => {
         console.log(overallTotal);
         
         const result = await db.placeOrder(orderData, userID, orgID);
-        // result = true;
-        if (result) {
+        console.log("hiiiifhafhbaiofaf");
+        
+        console.log(result);
+        if(typeof result === 'string'){
+            return res.status(406).json({
+                message: result,
+            });
+        } else if (result) {
             return res.status(200).json({
                 message: "Order placed successfully",
             });
