@@ -97,9 +97,12 @@ const completeOrderController = async(req, res) => {
             schedule_id: order.schedule_id,
             products: products,
         }
-
-        const result = await db.placeOrder(orderData, userID);
-
+        console.log("here");
+        
+        console.log(overallTotal);
+        
+        const result = await db.placeOrder(orderData, userID, orgID);
+        // result = true;
         if (result) {
             return res.status(200).json({
                 message: "Order placed successfully",

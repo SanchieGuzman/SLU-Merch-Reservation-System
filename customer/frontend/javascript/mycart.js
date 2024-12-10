@@ -426,6 +426,7 @@ function loadCheckoutPage(prod,total,schedules){
 
     optionList.value = `${schedule.date} | ${schedule.start_time} - ${schedule.end_time} | ${schedule.location}`;
     optionList.textContent = `${readableFormat} | ${formattedStartTime} - ${formattedEndTime} | ${schedule.location}`;
+    optionList.id = schedule.schedule_id;
     pickUpDropdown.appendChild(optionList);
   });
 
@@ -512,6 +513,29 @@ function loadCheckoutPage(prod,total,schedules){
   completeOrderButton.classList.add('complete-order-button');
   completeOrderButton.textContent = "Complete Order";
   completeOrder.addEventListener("click", async function (){
+    const selectedOption = pickUpDropdown.options[pickUpDropdown.selectedIndex];
+    console.log("schedule id selected: "+selectedOption.id);
+    //populate array
+    products_array = [];
+    prod.forEach((organization)=>{
+      organization.products.forEach((product)=>{
+        let products = {
+          product_id: product.product_id,
+          quantity: product.product_quantity,
+          total: product.total,
+        };
+        products_array.push(products);
+      })
+    })
+
+    const payload = {
+      schedule_id: selectedOption.id,
+      products : products_array,
+    }
+    console.log(payload, prod[0].orgid);
+    completeAndPlaceOrder(payload, prod[0].orgid);
+    
+    
     removeCart();
 
     let carts = await getCartDetails();
@@ -533,4 +557,31 @@ function removeCart(){
   const container = document.querySelector(".inner-container");
 
   container.innerHTML = " "; 
+}
+async function completeAndPlaceOrder(payload, org_id) {
+  console.log("sending to server: ")
+  console.log(payload);
+  
+  try {
+      const response = await fetch(`/api/${org_id}/checkout`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            'Content-Type': 'application/json'
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      if(response.status === 200){
+        console.log("success")
+        // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+        // const ordersUrl = `${currentUrl}/pages/orders.html`;
+        // window.location.href = ordersUrl;
+      }else if(response.status === 400){
+        console.log("400 response");
+      }
+  } catch (err) {
+      console.error("Error adding to cart:", err);
+    
+  }
 }
