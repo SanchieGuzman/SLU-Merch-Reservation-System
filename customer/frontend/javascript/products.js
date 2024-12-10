@@ -534,9 +534,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
   placeOrderButton.classList.add("place-order-button");
   placeOrderButton.textContent = "Place Order";
   //EVENT LISTENER FOR PLACE BUTTON
-  
   placeOrderButton.addEventListener("click", async () => {
-    let carts = await getCartDetails();
     console.log(product);
     let schedules = await getScheduleDetails(org_id);
     // console.log(schedules);
@@ -563,7 +561,6 @@ function viewProductDetails(orgName, product, reference, org_id) {
     // console.log(prodTotal);
 
     loadCheckoutPage(
-      carts,
       prodImage,
       prodName,
       prodQuantity,
@@ -635,7 +632,6 @@ function viewProductDetails(orgName, product, reference, org_id) {
 
 //=====================================================
 function loadCheckoutPage(
-  carts,
   prodImage,
   prodName,
   prodQuantity,
@@ -722,6 +718,7 @@ function loadCheckoutPage(
     return null;
   })();
 
+
   const customerDetailsContainer = document.createElement("div");
   customerDetailsContainer.classList.add("customer-details-container");
 
@@ -739,16 +736,7 @@ function loadCheckoutPage(
 
   customerDetailsContainer.appendChild(userNameContainer);
 
-  //Userid
-  const userIdContainer = document.createElement("div");
-  userIdContainer.classList.add("userid-container");
-
-  const customerID = document.createElement("p");
-  customerID.textContent = `customer ID : ${carts.user_id}`;
-  userIdContainer.appendChild(customerID);
-
-  customerDetailsContainer.appendChild(userIdContainer);
-
+  
   leftDetailsContainer.appendChild(customerDetailsContainer);
 
   //Orders Summary
