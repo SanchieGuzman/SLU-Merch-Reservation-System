@@ -17,157 +17,6 @@ async function getData(userid) {
   }
 }
 
-// async function getData() {
-//   return {
-//     completedOrders: [
-//       { product_name: "White Mug", quantity: 2, total: 100 },
-//       { product_name: "Notebook", quantity: 1, total: 50 },
-//       { product_name: "Pen Set", quantity: 3, total: 150 },
-//       { product_name: "Pen Set", quantity: 3, total: 150 },
-//       { product_name: "Pen Set", quantity: 3, total: 150 },
-//       { product_name: "Pen Set", quantity: 3, total: 150 },
-//       { product_name: "Pen Set", quantity: 3, total: 150 },
-//       { product_name: "Pen Set", quantity: 3, total: 150 },
-//     ],
-//     latestOrders: [
-//       {
-//         product_name: "White Mug",
-//         product_image: { data: "" },
-//         quantity: 5,
-//         total: 100,
-//         status: "Successfully",
-//       },
-//       {
-//         product_name: "Diving Mask",
-//         product_image: { data: "" },
-//         quantity: 2,
-//         total: 10,
-//         status: "Successfully",
-//       },
-//       {
-//         product_name: "Diving Mask",
-//         product_image: { data: "" },
-//         quantity: 2,
-//         total: 10,
-//         status: "Successfully",
-//       },
-//       {
-//         product_name: "Diving Mask",
-//         product_image: { data: "" },
-//         quantity: 2,
-//         total: 10,
-//         status: "Successfully",
-//       },
-//       {
-//         product_name: "Diving Mask",
-//         product_image: { data: "" },
-//         quantity: 2,
-//         total: 10,
-//         status: "Successfully",
-//       },
-//       {
-//         product_name: "Diving Mask",
-//         product_image: { data: "" },
-//         quantity: 2,
-//         total: 10,
-//         status: "Successfully",
-//       },
-//     ],
-//     reservedProducts: [
-//       {
-//         order_id: 1,
-//         organization_name: "SLU",
-//         products: [
-//           {
-//             product_name: "Hannah",
-//             product_image: { data: "" },
-//             quantity: 1,
-//             total: 100,
-//           },
-//           {
-//             product_name: "ID Lace",
-//             product_image: { data: "" },
-//             quantity: 5,
-//             total: 100,
-//           },
-//         ],
-//       },
-//       {
-//         order_id: 1,
-//         organization_name: "SLU",
-//         products: [
-//           {
-//             product_name: "Hannah",
-//             product_image: { data: "" },
-//             quantity: 4,
-//             total: 100,
-//           },
-//           {
-//             product_name: "ID Lace",
-//             product_image: { data: "" },
-//             quantity: 6,
-//             total: 100,
-//           },
-//         ],
-//       },
-//       {
-//         order_id: 1,
-//         organization_name: "SLU",
-//         products: [
-//           {
-//             product_name: "Hannah",
-//             product_image: { data: "" },
-//             quantity: 3,
-//             total: 100,
-//           },
-//           {
-//             product_name: "ID Lace",
-//             product_image: { data: "" },
-//             quantity: 6,
-//             total: 100,
-//           },
-//         ],
-//       },
-//       {
-//         order_id: 1,
-//         organization_name: "SLU",
-//         products: [
-//           {
-//             product_name: "Hannah",
-//             product_image: { data: "" },
-//             quantity: 6,
-//             total: 100,
-//           },
-//           {
-//             product_name: "ID Lace",
-//             product_image: { data: "" },
-//             quantity: 8,
-//             total: 100,
-//           },
-//         ],
-//       },
-//       {
-//         order_id: 1,
-//         organization_name: "SLU",
-//         products: [
-//           {
-//             product_name: "Hannah",
-//             product_image: { data: "" },
-//             quantity: 4,
-//             total: 100,
-//           },
-//           {
-//             product_name: "ID Lace",
-//             product_image: { data: "" },
-//             quantity: 3,
-//             total: 100,
-//           },
-//         ],
-//       },
-//     ],
-//   };
-// }
-
 window.onload = function () {
   loadDashboard();
 
@@ -206,7 +55,7 @@ async function loadDashboard() {
 
   const bottomLeftContainer = document.createElement("div");
   bottomLeftContainer.classList.add("latest-orders-container");
-  
+
   const rightContainer = document.createElement("div");
   rightContainer.classList.add("reserved-products-container");
 
@@ -229,7 +78,7 @@ function generateCompletedOrdersSection(data) {
 
   // header
   const heading = document.createElement("span");
-  heading.textContent = "Completed Orders";
+  heading.textContent = "Items Bought";
   heading.classList.add("completed-orders-heading");
 
   container.appendChild(heading);
@@ -269,22 +118,9 @@ function generateLatestOrdersSection(data) {
   headingDiv.classList.add("latest-orders-container-heading");
 
   const heading = document.createElement("span");
-  heading.textContent = "Latest Orders";
-
-  // const btn1 = document.createElement("button");
-  // btn1.textContent = "This Week";
-  // btn1.id = "last-week-btn";
-
-  // const btn2 = document.createElement("button");
-  // btn2.textContent = "This Week";
-  // btn2.id = "this-week-btn";
-
-  // const imageBtn = document.createElement("button");
+  heading.textContent = "Latest Order";
 
   headingDiv.appendChild(heading);
-  // headingDiv.appendChild(btn1);
-  // headingDiv.appendChild(btn2);
-  // headingDiv.appendChild(imageBtn);
 
   container.appendChild(headingDiv);
 
@@ -307,20 +143,20 @@ function generateLatestOrdersSection(data) {
     // product name
     const productName = document.createElement("span");
     productName.textContent = entry.product_name;
-    productName.classList.add("latest-orders-product-name")
+    productName.classList.add("latest-orders-product-name");
 
     // total and quantity div
     const totalAndQuantityDiv = document.createElement("div");
     totalAndQuantityDiv.classList.add("latest-orders-productsquantity");
 
     const total = document.createElement("span");
-    total.textContent = `P ${entry.total}`;
-    total.classList.add("latest-orders-price")
+    total.textContent = `₱ ${entry.total}`;
+    total.classList.add("latest-orders-price");
 
     const quantity = document.createElement("span");
     quantity.textContent =
       entry.quantity > 1 ? `${entry.quantity} items` : `${entry.quantity} item`;
-      quantity.classList.add("latest-orders-quantity");
+    quantity.classList.add("latest-orders-quantity");
 
     totalAndQuantityDiv.appendChild(total);
     totalAndQuantityDiv.appendChild(quantity);
@@ -331,13 +167,13 @@ function generateLatestOrdersSection(data) {
 
     const deliveredText = document.createElement("span");
     deliveredText.textContent = "Status";
-    deliveredText.classList.add("latest-orders-delivery-status")
+    deliveredText.classList.add("latest-orders-delivery-status");
 
     const status = document.createElement("span");
     status.textContent = entry.status;
-    if(entry.status == "Claimed"){
+    if (entry.status == "Claimed") {
       status.classList.add("claimed");
-    }else{
+    } else {
       status.classList.add("pending");
     }
     // console.log(entry.status);
@@ -355,7 +191,6 @@ function generateLatestOrdersSection(data) {
     latestCardsContainer.appendChild(card);
     container.appendChild(latestCardsContainer);
   });
-  
 }
 
 function generateReservedProductsSection(data) {
@@ -427,7 +262,7 @@ function generateReservedProductsSection(data) {
       orderCard.appendChild(productCard);
       reservedCardContainer.appendChild(orderCard);
 
-      orderCardsContainer.appendChild(reservedCardContainer)
+      orderCardsContainer.appendChild(reservedCardContainer);
     });
 
     container.appendChild(orderCardsContainer);

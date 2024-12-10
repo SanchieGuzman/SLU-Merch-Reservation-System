@@ -67,35 +67,34 @@
 .active-button:hover {
   background-color: #d6d6d4;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
 /* Default Button Styling */
 .default-button {
-  background-color: transparent; 
+  background-color: transparent;
   color: black;
   border-radius: 0.5rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .default-button:hover {
-  background-color: transparent; 
-  transform: scale(1.05); 
+  background-color: transparent;
+  transform: scale(1.05);
 }
 
 .default-icon {
   width: 1.5rem;
   height: 1.5rem;
-  filter: none;
   filter: invert(38%) sepia(96%) saturate(3241%) hue-rotate(233deg)
-  brightness(0%) contrast(88%)
+    brightness(0%) contrast(88%);
 }
 
 .active-icon {
   width: 1.5rem;
   height: 1.5rem;
   filter: invert(38%) sepia(96%) saturate(3241%) hue-rotate(233deg)
-  brightness(0%) contrast(88%);
+    brightness(0%) contrast(88%);
 }
 
 .spacer {

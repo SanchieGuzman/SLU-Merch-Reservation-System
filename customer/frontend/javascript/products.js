@@ -415,7 +415,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
   boothName.textContent = orgName;
   const closeButton = document.createElement("button");
   closeButton.classList.add("close-button");
-  closeButton.src = "../resources/images/products/returnButton.png";
+  // closeButton.src = "../resources/images/products/returnButton.png";
   closeButton.addEventListener("click", async function () {
     const mainContainer = document.querySelector(".content-container");
     mainContainer.innerHTML = "";
@@ -670,7 +670,6 @@ function viewProductDetails(orgName, product, reference, org_id) {
 
 
 async function addProductsToCart(product_id, organization_id, prodquantity) {
-
   const payload = {
     "product_id": product_id,
     "orgid": organization_id,
@@ -699,8 +698,7 @@ async function addProductsToCart(product_id, organization_id, prodquantity) {
           window.location.href = originURL;
       }
   } catch (err) {
-      console.error("Error adding to cart:", err);
-    
+    console.error("Error adding to cart:", err);
   }
 }
 

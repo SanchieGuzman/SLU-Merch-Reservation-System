@@ -74,8 +74,32 @@ async function showOrders() {
 
     const statusText = document.createElement("h3");
 
+    // =======================
+    console.log(order.startTime);
+
+    const newStartTime = order.startTime;
+
+    const [hours, minutes] = newStartTime.split(":").map(Number);
+
+    const period = hours >= 12 ? "PM" : "AM";
+    const hour12 = hours % 12 || 12;
+
+    const formattedStartTime = `(${hour12}${period}`;
+
+    const newEndTime = order.endTime;
+    const [endHour, endMinute] = newEndTime.split(":").map(Number);
+    const endPeriod = endHour >= 12 ? "PM" : "AM";
+    const endHour12 = endHour % 12 || 12;
+    const formattedEndTime = `${endHour12}${endPeriod})`;
+
     if (order.status === "Pending") {
-      statusText.textContent = "Claim Your Order at: " + order.location;
+      statusText.textContent =
+        "Claim Your Order at: " +
+        order.location +
+        " " +
+        formattedStartTime +
+        "-" +
+        formattedEndTime;
       statusText.classList.add("status-pending");
     } else if (order.status === "Claimed") {
       const newDate = new Date(order.claimed_at);

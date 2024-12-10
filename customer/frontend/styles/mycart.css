@@ -63,13 +63,10 @@ body {
 }
 
 .product-title .column-headers {
-  display: flex;
-  align-items: center;
-}
-
-.product-title .column-headers h1:nth-child(2),
-.product-title .column-headers h1:nth-child(3) {
-  padding-left: 9.2rem;
+  justify-items: right;
+  width: 68%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 /* ======== product container =========== */
@@ -187,7 +184,9 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 3rem;
   height: 3rem;
   /* background-color: transparent; */
-  background-image: url(../resources/images/products/returnButton.png);
+  background-image: url("../resources/images/cart/exit-button-white.png");
+  background-size: cover;
+  background-color: transparent;
   border: none;
 }
 
@@ -241,7 +240,7 @@ input[type="number"]::-webkit-outer-spin-button {
 /* ============== right Container ============ */
 .right-details-container .checkout-scrollable {
   height: 43vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   box-shadow: -0.2rem 0.2rem 1rem rgba(0, 0, 0, 0.422);
 }
 
