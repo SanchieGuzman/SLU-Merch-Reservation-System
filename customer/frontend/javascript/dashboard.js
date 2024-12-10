@@ -6,8 +6,8 @@ async function getData(userid) {
     const result = await response.json();
 
     // babalik sa login if unauthorized
-    if(response.status === 401){
-      const originURL = window.location.origin; 
+    if (response.status === 401) {
+      const originURL = window.location.origin;
       window.location.href = originURL;
     }
 
@@ -150,7 +150,7 @@ function generateLatestOrdersSection(data) {
     totalAndQuantityDiv.classList.add("latest-orders-productsquantity");
 
     const total = document.createElement("span");
-    total.textContent = `₱ ${entry.total}`;
+    total.textContent = `₱ ${entry.each_product_total}`;
     total.classList.add("latest-orders-price");
 
     const quantity = document.createElement("span");
@@ -177,8 +177,6 @@ function generateLatestOrdersSection(data) {
       status.classList.add("pending");
     }
     // console.log(entry.status);
-    
-    
 
     statusDiv.appendChild(deliveredText);
     statusDiv.appendChild(status);
