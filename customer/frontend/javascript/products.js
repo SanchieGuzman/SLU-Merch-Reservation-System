@@ -567,41 +567,46 @@ function viewProductDetails(orgName, product, reference, org_id) {
   placeOrderButton.textContent = "Place Order";
   //EVENT LISTENER FOR PLACE BUTTON
   placeOrderButton.addEventListener("click", async () => {
-    console.log(product);
-    let schedules = await getScheduleDetails(org_id);
-    console.log(schedules);
-    //product id
-    const prod_id = product.product_id;
-    console.log("prodid after pressing place order " +prod_id);
+    quantity = document.querySelector(".input-box").value;
+    if(quantity ==0){
+      alert("Invalid quantity input");
+    }else{
+      console.log(product);
+      let schedules = await getScheduleDetails(org_id);
+      console.log(schedules);
+      //product id
+      const prod_id = product.product_id;
+      console.log("prodid after pressing place order " +prod_id);
+    
+      //product image
+      const prodImage = product.product_image;
   
-    //product image
-    const prodImage = product.product_image;
-
-    // product Name
-    const prodName = product.product_name;
-
-    // product quantity
-    const prodQuantity = container.querySelector(
-      ".quantity-container input[name='input-box']"
-    ).value;
-    // console.log(prodQuantity);
-
-    // product total
-    const prodTotal = container
-      .querySelector("#totalPrice")
-      .textContent.split("₱")[1];
-    // console.log(prodTotal);
-
-    loadCheckoutPage(
-      prodImage,
-      prodName,
-      prodQuantity,
-      prodTotal,
-      schedules,
-      reference,
-      org_id,
-      prod_id
-    );
+      // product Name
+      const prodName = product.product_name;
+  
+      // product quantity
+      const prodQuantity = container.querySelector(
+        ".quantity-container input[name='input-box']"
+      ).value;
+      // console.log(prodQuantity);
+  
+      // product total
+      const prodTotal = container
+        .querySelector("#totalPrice")
+        .textContent.split("₱")[1];
+      // console.log(prodTotal);
+  
+      loadCheckoutPage(
+        prodImage,
+        prodName,
+        prodQuantity,
+        prodTotal,
+        schedules,
+        reference,
+        org_id,
+        prod_id
+      );
+    }
   });
 
   buttonsContainer.appendChild(addToCartButton);
