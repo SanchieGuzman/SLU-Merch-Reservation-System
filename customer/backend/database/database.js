@@ -125,7 +125,7 @@ class Database {
 
     //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
     async addToCart(organization_id, user_id, product_id, quantity){
-        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity,total) VALUES (?,?,?,?,0)';
+        const query = 'INSERT INTO cart (user_id, product_id, organization_id, quantity) VALUES (?,?,?,?)';
         const params = [user_id, product_id, organization_id, quantity];
         try{
             const result = await this.execute(query, params);
@@ -144,7 +144,7 @@ class Database {
   //base ka nalang sa fetchexpress docs ano need pre, pero kahit result set lang bigay mo sakin, ako na bahala sa json formatting
   async getCart(user_id) {
         //NOTE that i used "AS product_price, product_quantity to conform with fetch express"
-        const query = `Select c.organization_id, o.organization_name, c.product_id, p.product_name , p.product_image,p.price AS product_price, p.quantity AS total_stocks, c.quantity AS product_quantity, c.total
+        const query = `Select c.organization_id, o.organization_name, c.product_id, p.product_name , p.product_image,p.price AS product_price, p.quantity AS total_stocks, c.quantity AS product_quantity
                             FROM cart AS c
                             JOIN products as p ON c.product_id = p.product_id 
                             JOIN organizations as o ON o.organization_id = p.organization_id 

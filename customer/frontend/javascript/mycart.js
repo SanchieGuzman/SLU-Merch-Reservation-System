@@ -259,14 +259,11 @@ function showCart(carts) {
 
           await deleteItemsFromCart(payload);
 
-          if (count == 3) {
-            const outerContainer = minusButton.closest(".item-card-container");
-            outerContainer.remove();
-          }
-
-          //Remove the product container if quantity is 0
-          const productContainer = minusButton.closest(".product-container");
-          productContainer.remove();
+          //here yung pagload ng window
+          const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+          const ordersUrl = `${currentUrl}/pages/mycart.html`;
+          window.location.href = ordersUrl;
+          
         }
       });
 
