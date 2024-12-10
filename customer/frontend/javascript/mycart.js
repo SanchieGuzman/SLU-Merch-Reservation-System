@@ -60,7 +60,7 @@ function showCart(carts) {
   const cardHeader = document.createElement("div");
   cardHeader.classList.add("card-header");
 
-  const cardTitle = document.createElement("h1");
+  const cardTitle = document.createElement("h2");
   cardTitle.textContent = "Your Cart";
   cardHeader.appendChild(cardTitle);
 
@@ -82,7 +82,7 @@ function showCart(carts) {
     productTitle.classList.add("product-title");
 
     //Left Header
-    const leftHeader = document.createElement("h1");
+    const leftHeader = document.createElement("h3");
 
     leftHeader.classList.add("booth-name");
     leftHeader.textContent = `Item's from ${cart.orgname}`;
@@ -94,17 +94,17 @@ function showCart(carts) {
     const rightHeader = document.createElement("div");
     rightHeader.classList.add("column-headers");
 
-    const columnHeaderPrice = document.createElement("h1");
+    const columnHeaderPrice = document.createElement("h3");
     columnHeaderPrice.classList.add("column-price-header");
     columnHeaderPrice.textContent = "Price";
     rightHeader.appendChild(columnHeaderPrice);
 
-    const columnHeaderQuantity = document.createElement("h1");
+    const columnHeaderQuantity = document.createElement("h3");
     columnHeaderQuantity.classList.add("column-quantity-header");
     columnHeaderQuantity.textContent = "Quantity";
     rightHeader.appendChild(columnHeaderQuantity);
 
-    const columnHeaderTotal = document.createElement("h1");
+    const columnHeaderTotal = document.createElement("h3");
     columnHeaderTotal.classList.add("column-total-header");
     columnHeaderTotal.textContent = "Total";
     rightHeader.appendChild(columnHeaderTotal);

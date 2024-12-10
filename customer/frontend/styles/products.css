@@ -124,6 +124,15 @@ body {
 .view-button-container .view-button {
   width: 30%;
   height: 2rem;
+  background-color: var(--gradient1);
+  color: white;
+  border-radius: 0.2rem;
+  padding: 0.5rem 0.5rem;
+  border: none;
+}
+
+.view-button-container .view-button:hover {
+  background-color: var(--gradient2);
 }
 
 .booth-container .line-break {
@@ -153,7 +162,7 @@ body {
 .org-name-container .return-button {
   width: 2rem;
   height: 2rem;
-  background-image: url("../resources/images/products/exit-button.png");
+  background-image: url("../resources/images/products/exit-button-black.png");
   background-size: cover;
   border: none;
   background-color: transparent;

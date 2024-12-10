@@ -56,7 +56,7 @@
                         <img></img>
                         <h1>Sales</h1>
                     </div>
-                    <strong><?php echo "P $sales"; ?></strong> <!-- todo: use echo $sales to display the image -->
+                    <strong><?php echo "₱ $sales"; ?></strong> <!-- todo: use echo $sales to display the image -->
                     <div></div>
                 </div>
             </div>

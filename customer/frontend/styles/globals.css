@@ -1,0 +1,11 @@
+/* @font-face {
+  font-family: "Poppins";
+  src: url("../resources/fonts/Poppins-Light.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+} */
+
+* {
+  /* font-family: "Poppins", sans-serif; */
+  font-family: sans-serif;
+}
