@@ -165,7 +165,7 @@ function showCart(carts){
       //Product Price
       const productPrice = document.createElement('p');
       productPrice.classList.add('product-price');
-      productPrice.textContent = `P ${product.product_price}`;
+      productPrice.textContent = `₱ ${product.product_price}`;
       productActionsContainer.appendChild(productPrice);
 
       //Product Quantity

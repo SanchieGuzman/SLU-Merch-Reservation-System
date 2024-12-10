@@ -65,7 +65,6 @@ async function getScheduleDetails(orgid) {
     const response = await fetch(`/api/${orgid}/schedules`, {
       method: "GET",
     });
-nsole.log(result);
     const result = await response.json();
 
     // babalik sa login if unauthorized
@@ -570,7 +569,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
   placeOrderButton.addEventListener("click", async () => {
     console.log(product);
     let schedules = await getScheduleDetails(org_id);
-    // console.log(schedules);
+    console.log(schedules);
     //product id
     const prod_id = product.product_id;
     console.log("prodid after pressing place order " +prod_id);
@@ -826,7 +825,7 @@ function loadCheckoutPage(
   orderSummaryContainer.appendChild(orderSummaryTextContainer);
 
   const orderTotalPrice = document.createElement("p");
-  orderTotalPrice.textContent = `${prodTotal}`;
+  orderTotalPrice.textContent = `₱${prodTotal}`;
   orderSummaryContainer.appendChild(orderTotalPrice);
 
   leftDetailsContainer.appendChild(orderSummaryContainer);
@@ -953,7 +952,7 @@ function loadCheckoutPage(
   totalSection.appendChild(totalLabel);
 
   const productGrandTotal = document.createElement("p");
-  productGrandTotal.textContent = `${prodTotal}`;
+  productGrandTotal.textContent = `₱${prodTotal}`;
   totalSection.appendChild(productGrandTotal);
 
   const completeOrderButton = document.createElement("button");
@@ -1045,9 +1044,9 @@ async function addProductsToCart(product_id, organization_id, prodquantity) {
       const result = await response.json();
         console.log(result);
       if(response.status === 201){
-        const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-        const ordersUrl = `${currentUrl}/pages/mycart.html`;
-        window.location.href = ordersUrl;
+        // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+        // const ordersUrl = `${currentUrl}/pages/mycart.html`;
+        // window.location.href = ordersUrl;
         console.log("success")
         
       }else if(response.status === 400){
