@@ -109,7 +109,7 @@ class Database {
                     FROM products WHERE status = 'Available'
                 ) AS p
                 JOIN organizations o USING(organization_id)
-                WHERE p.row_num <= 4; `;   
+                WHERE p.row_num <= 4; `;    
         try {
             const results = await this.execute(query);
             return results; 

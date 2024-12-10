@@ -5,6 +5,7 @@ const productsController = async(req, res) => {
         const db = Database.getInstance();
 
         const result = await db.getFirstProductsOfEachOrg();
+        console.log(result);
 
         if (result) {
             const map = new Map();

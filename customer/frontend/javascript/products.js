@@ -82,6 +82,8 @@ function showBooths(booths) {
 
   innerContainer.appendChild(cardHeader);
 
+  console.log(booths);
+
   booths.forEach((booth) => {
     const boothContainer = document.createElement("div");
     boothContainer.classList.add("booth-container");
@@ -635,7 +637,7 @@ async function addProductsToCart(product_id, organization_id, prodquantity) {
   }
   console.log("sending to server: "+ payload)
   try {
-      const response = await fetch('http://localhost:3000/api/cart', {
+      const response = await fetch('/api/cart', {
           method: "POST",
           body: JSON.stringify(payload),
           headers: {
