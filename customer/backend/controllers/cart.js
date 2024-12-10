@@ -94,4 +94,19 @@ const getCartController = async(req, res)=>{
     }
 }
 
-export {addToCartController, getCartController};
+const deleteItemFromCartController = async(req, res)=>{
+  try{
+      const user_id = req.cookies.user_id;
+      const db = Database.getInstance();
+      // const result = await db.getCart(user_id);
+
+     
+  }catch(error){
+      return res.status(500).json({
+          message: "Internal Server Error",
+          error: error.message,
+      });
+  }
+}
+
+export {addToCartController, getCartController, deleteItemFromCartController};
