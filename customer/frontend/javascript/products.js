@@ -19,7 +19,7 @@ async function getBoothDetails() {
 
 window.onload = async function () {
   let booths = await getBoothDetails();
-  console.log(booths);
+  // console.log(booths);
   showBooths(booths);
 
   const userName = (() => {
@@ -100,7 +100,7 @@ function showBooths(booths) {
 
   innerContainer.appendChild(cardHeader);
 
-  console.log(booths);
+  // console.log(booths);
 
   booths.forEach((booth) => {
     const boothContainer = document.createElement("div");
@@ -568,10 +568,10 @@ function viewProductDetails(orgName, product, reference, org_id) {
   placeOrderButton.addEventListener("click", async () => {
     let carts = await getCartDetails();
 
-    console.log(org_id);
+    // console.log(org_id);
 
     let schedules = await getScheduleDetails(org_id);
-    console.log(schedules);
+    // console.log(schedules);
 
     //product image
     const prodImage = product.product_image;
@@ -583,13 +583,13 @@ function viewProductDetails(orgName, product, reference, org_id) {
     const prodQuantity = container.querySelector(
       ".quantity-container input[name='input-box']"
     ).value;
-    console.log(prodQuantity);
+    // console.log(prodQuantity);
 
     // product total
     const prodTotal = container
       .querySelector("#totalPrice")
       .textContent.split("₱")[1];
-    console.log(prodTotal);
+    // console.log(prodTotal);
 
     loadCheckoutPage(
       carts,
@@ -615,9 +615,9 @@ function viewProductDetails(orgName, product, reference, org_id) {
     product_id = product.product_id;
     org_id = product.org_id;
     quantity = document.querySelector(".input-box").value;
-    console.log(product_id);
-    console.log(org_id);
-    console.log(quantity);
+    // console.log(product_id);
+    // console.log(org_id);
+    // console.log(quantity);
     await addProductsToCart(product_id,org_id,quantity);
   });
 
@@ -667,7 +667,7 @@ async function addProductsToCart(product_id, organization_id, prodquantity) {
     "orgid": organization_id,
     "quantity": prodquantity
   }
-  console.log("sending to server: "+ payload)
+  // console.log("sending to server: "+ payload)
   try {
       const response = await fetch('/api/cart', {
           method: "POST",
@@ -683,10 +683,8 @@ async function addProductsToCart(product_id, organization_id, prodquantity) {
         // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
         // const ordersUrl = `${currentUrl}/pages/mycart.html`;
         // window.location.href = ordersUrl;
-        console.log("success") //TODO: PROVIDE A MESSAGE THAT ADDING TO CART IS SUCCESSFUL
+        // console.log("success") 
       }else if(response.status === 401){
-        console.log();
-        
         // babalik sa login if unauthorized
           const originURL = window.location.origin; 
           window.location.href = originURL;

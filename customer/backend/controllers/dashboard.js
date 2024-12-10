@@ -46,7 +46,6 @@ const dashboardController = async(req, res) => {
         });
 
     } catch(error) {
-        console.log("Failed to fetch data");
         return res.status(500).json({ message: "Internal Server Error" });
     }
 }

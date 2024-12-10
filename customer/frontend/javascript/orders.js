@@ -57,7 +57,7 @@ async function showOrders() {
 
   let orders = await getOrders();
 
-  console.log(orders);
+  // console.log(orders);
 
   orders.forEach((order) => {
     //order

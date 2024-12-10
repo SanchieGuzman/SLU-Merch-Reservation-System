@@ -11,9 +11,7 @@ const addToCartController = async(req, res)=>{
 
        
         const existingItem = await db.getSingleCartRow(user_id, product_id, organization_id);
-        console.log("existingItem: ", existingItem);
         if (existingItem) {
-          console.log("product already exists in the db");
           const updatedRow = await db.updateCartRow(user_id, product_id, organization_id, quantity);
           if (updatedRow){
             return res.status(201).json({message: "Updated existing row"});
@@ -24,7 +22,6 @@ const addToCartController = async(req, res)=>{
             return res.status(201).json({message: "Added product to cart"})
           }
         };
-        
         
     }catch(error){   
         return res.status(500).json({
@@ -44,7 +41,6 @@ const getCartController = async(req, res)=>{
         // Transformation
         const data = { user_id: user_id, orgArray: [] };
 
-        console.log('length of result: ', result.length);
         for (let i = 0; i < result.length; i++) {
           
           const item = result[i];
@@ -88,9 +84,7 @@ const getCartController = async(req, res)=>{
             });
           }
         }
-        
-        console.log();
-        
+                
         res.status(200).json(data)
     }catch(error){
         return res.status(500).json({

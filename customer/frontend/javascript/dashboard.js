@@ -340,7 +340,7 @@ function generateLatestOrdersSection(data) {
     }else{
       status.classList.add("pending");
     }
-    console.log(entry.status);
+    // console.log(entry.status);
     
     
 

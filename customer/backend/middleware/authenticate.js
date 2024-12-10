@@ -1,6 +1,4 @@
 const authenticate = (req, res, next) => {
-    console.log('authenticate here');
-    
     const isLoggedIn = req.signedCookies.loggedin === "true";
     if (isLoggedIn) return next(); // Allow access if authenticated
 

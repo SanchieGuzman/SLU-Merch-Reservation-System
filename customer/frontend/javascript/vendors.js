@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       const userNameTopBar = document.querySelector(".username");
       userNameTopBar.textContent = userName;
     let result = await getVendorDetails();
-    console.log(result);
+    // console.log(result);
         result.forEach(vendorData => {
         const vendorCard = document.createElement('div');
         vendorCard.classList.add('vendor-card');

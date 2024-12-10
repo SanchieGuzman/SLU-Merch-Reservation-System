@@ -30,7 +30,7 @@ class Database {
         //make the arguments an array
         const params = [username, password]
         const result = await this.execute(query, params);        
-        console.log(result);
+        // console.log(result);
         
         if(result[0] && (result[0].username === username && result[0].password === password)){
             return result[0];
@@ -127,7 +127,7 @@ class Database {
         const params = [user_id, product_id, organization_id, quantity];
         try{
             const result = await this.execute(query, params);
-            console.log("hell", result.affectedRows);
+            // console.log("hell", result.affectedRows);
             
             if(result.affectedRows>0){
                 return true;
@@ -163,7 +163,7 @@ class Database {
         const params = [user_id, product_id, organization_id]
         try {
             const results = await this.execute(query, params); 
-            console.log(results);
+            // console.log(results);
             
             if(results[0]){
                 return true;
@@ -179,7 +179,7 @@ class Database {
         const query = `UPDATE cart SET quantity = quantity + ? WHERE user_id = ? AND product_id = ? AND organization_id = ?`;
         const params = [quantity, user_id, product_id, organization_id];
         try{
-            console.log("updating cart row");
+            // console.log("updating cart row");
             const result = await this.execute(query, params);
             if(result.affectedRows>0){
                 return true;

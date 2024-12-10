@@ -199,13 +199,13 @@ function showCart(carts){
           currentQuantity++;
           quantityInput.value = currentQuantity;
           product.product_quantity = currentQuantity;
-          console.log(product.product_quantity);
+          // console.log(product.product_quantity);
           updateTotal(quantityInput.value, product.product_price);
 
           const subtotal = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);
           priceTotal.textContent = `₱ ${subtotal.toFixed(2)}`;
         } else{
-          console.log("Maximum Stock Reached");
+          alert("Maximum Stock Reached");
         }
       });
 
@@ -215,7 +215,7 @@ function showCart(carts){
           currentQuantity--;
           quantityInput.value = currentQuantity;
           product.product_quantity = currentQuantity;
-          console.log(product.product_quantity);
+          // console.log(product.product_quantity);
           updateTotal(quantityInput.value, product.product_price);
 
           const subtotal = cart.products.reduce((acc, product) => acc + parseFloat(product.total || 0), 0);
@@ -273,7 +273,7 @@ function showCart(carts){
       const orgId = cart.orgid;
 
       let carts = await getCartDetails();
-      console.log(carts);
+      // console.log(carts);
 
       let selectedOrgProducts = carts.orgArray.filter(cart => cart.orgid.toString() === orgId.toString());
 
