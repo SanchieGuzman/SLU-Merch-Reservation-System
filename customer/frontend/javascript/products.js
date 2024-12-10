@@ -4,6 +4,13 @@ async function getBoothDetails() {
       method: "GET",
     });
     const result = await response.json();
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);
@@ -40,6 +47,13 @@ async function getCartDetails() {
     });
 
     const result = await response.json();
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);
@@ -51,10 +65,14 @@ async function getScheduleDetails(orgid) {
     const response = await fetch(`/api/${orgid}/schedules`, {
       method: "GET",
     });
-    console.log(response);
-
     const result = await response.json();
-    console.log(result);
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);
@@ -215,6 +233,13 @@ async function getBoothProducts(orgId) {
       method: "GET",
     });
     const result = await response.json();
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);
@@ -363,6 +388,13 @@ async function getProductDetails(orgId, productId) {
       method: "GET",
     });
     const result = await response.json();
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);
@@ -645,15 +677,19 @@ async function addProductsToCart(product_id, organization_id, prodquantity) {
         },
       });
       const result = await response.json();
-        console.log(result);
+
       if(response.status === 201){
+        alert('Product successfully added to your cart!')
         // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
         // const ordersUrl = `${currentUrl}/pages/mycart.html`;
         // window.location.href = ordersUrl;
-        console.log("success")
+        console.log("success") //TODO: PROVIDE A MESSAGE THAT ADDING TO CART IS SUCCESSFUL
+      }else if(response.status === 401){
+        console.log();
         
-      }else if(response.status === 400){
-        console.log("400 response");
+        // babalik sa login if unauthorized
+          const originURL = window.location.origin; 
+          window.location.href = originURL;
       }
   } catch (err) {
       console.error("Error adding to cart:", err);

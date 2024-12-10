@@ -39,12 +39,12 @@ app.use('/pages', authenticate, express.static(path.join(__dirname, 'frontend', 
 
 //routers
 app.use('/api', loginRouter)
-app.use('/api', dashboardRouter)
-app.use('/api', productsRouter)
-app.use('/api', _orgIDRouter)
-app.use('/api', cartRouter)
-app.use('/api', ordersRouter)
-app.use('/api', vendorsRouter)
+app.use('/api', authenticate, dashboardRouter)
+app.use('/api', authenticate, productsRouter)
+app.use('/api', authenticate, _orgIDRouter)
+app.use('/api', authenticate, cartRouter)
+app.use('/api', authenticate, ordersRouter)
+app.use('/api', authenticate, vendorsRouter)
 app.use('/api', logoutRouter)
 
 //custom 404

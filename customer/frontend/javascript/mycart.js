@@ -5,6 +5,13 @@ async function getCartDetails() {
     });
     
     const result = await response.json();
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);
@@ -16,10 +23,15 @@ async function getScheduleDetails(orgid) {
     const response = await fetch(`/api/${orgid}/schedules`, {
       method: "GET",
     });
-    console.log(response);
     
     const result = await response.json();
-    console.log(result);
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);

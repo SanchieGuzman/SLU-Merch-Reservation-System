@@ -4,6 +4,13 @@ async function getOrders(userid) {
       method: "GET",
     });
     const result = await response.json();
+
+    // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
     return result;
   } catch (err) {
     console.log(err);

@@ -34,6 +34,11 @@ async function login() {
       }
 
       container.prepend(message);
+
+    }else if(response.status === 401){
+       // babalik sa login if unauthorized
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
     }
   } catch (err) {
     console.log(err);

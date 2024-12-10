@@ -1,24 +1,4 @@
-
-
-
-
-    //  // IMMAGE ISSUES
-    //   // Convert the product.product_image to a Uint8Array
-    //   const byteArray = new Uint8Array(product.product_image.data);
-
-    //   // Create a Blob from the byteArray
-    //   const blob = new Blob([byteArray], { type: "image/jpeg" }); // Adjust MIME type if necessary
-
-    //   // Create a temporary object URL for the blob
-    //   const imageUrl = URL.createObjectURL(blob);
-
-    //   //image
-    //   const itemImage = document.createElement("img");
-    //   itemImage.classList.add("item-image");
-    //   itemImage.src = imageUrl;
-
-
-    document.addEventListener('DOMContentLoaded', async function () {
+document.addEventListener('DOMContentLoaded', async function () {
       const userName = (() => {
         const cookies = document.cookie.split("; ");
         for (const cookie of cookies) {
@@ -129,6 +109,13 @@ async function getVendorDetails() {
         method: "GET",
       });
       const result = await response.json();
+
+      // babalik sa login if unauthorized
+    if(response.status === 401){
+      const originURL = window.location.origin; 
+      window.location.href = originURL;
+    }
+
       return result;
     } catch (err) {
       console.log(err);
