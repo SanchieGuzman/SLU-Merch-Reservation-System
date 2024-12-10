@@ -7,8 +7,8 @@ async function getCartDetails() {
     const result = await response.json();
 
     // babalik sa login if unauthorized
-    if(response.status === 401){
-      const originURL = window.location.origin; 
+    if (response.status === 401) {
+      const originURL = window.location.origin;
       window.location.href = originURL;
     }
 
@@ -23,12 +23,12 @@ async function getScheduleDetails(orgid) {
     const response = await fetch(`/api/${orgid}/schedules`, {
       method: "GET",
     });
-    
+
     const result = await response.json();
 
     // babalik sa login if unauthorized
-    if(response.status === 401){
-      const originURL = window.location.origin; 
+    if (response.status === 401) {
+      const originURL = window.location.origin;
       window.location.href = originURL;
     }
 
@@ -63,7 +63,7 @@ window.onload = async function () {
 function showCart(carts) {
   const mainContainer = document.querySelector(".card-content-container");
   console.log(carts);
-  
+
   mainContainer.innerHTML = "";
 
   const innerContainer = document.createElement("div");
@@ -164,8 +164,8 @@ function showCart(carts) {
       productActionsContainer.classList.add("product-actions-container");
 
       //Product Price
-      const productPrice = document.createElement('p');
-      productPrice.classList.add('product-price');
+      const productPrice = document.createElement("p");
+      productPrice.classList.add("product-price");
       productPrice.textContent = `₱ ${product.product_price}`;
       productActionsContainer.appendChild(productPrice);
 
@@ -179,6 +179,7 @@ function showCart(carts) {
       productQuantity.appendChild(minusButton);
 
       const quantityInput = document.createElement("input");
+      quantityInput.disabled = true;
       quantityInput.classList.add("input-box");
       quantityInput.setAttribute("type", "number");
       quantityInput.setAttribute("min", "0");
@@ -193,10 +194,10 @@ function showCart(carts) {
       productQuantity.appendChild(plusButton);
 
       productActionsContainer.appendChild(productQuantity);
-      
+
       quantityInput.addEventListener("input", () => {
         let currentQuantity = parseInt(quantityInput.value);
-    
+
         if (currentQuantity > product.total_stocks) {
           quantityInput.value = product.total_stocks;
           currentQuantity = product.total_stocks;
@@ -222,12 +223,17 @@ function showCart(carts) {
             0
           );
           priceTotal.textContent = `₱ ${subtotal.toFixed(2)}`;
-        } else{
+        } else {
           alert("Maximum Stock Reached");
         }
       });
 
       minusButton.addEventListener("click", async () => {
+        // const outerContainer = document.querySelector(".item-card-container");
+        const cardContainer = minusButton.closest(".inner-item-card-container");
+        console.log(cardContainer);
+        const count = cardContainer.childElementCount;
+
         let currentQuantity = parseInt(quantityInput.value);
         if (currentQuantity > 1) {
           currentQuantity--;
@@ -245,20 +251,22 @@ function showCart(carts) {
           alert(`Product removed on your cart ${product.product_name}`)
           console.log(cart.orgid);
           console.log(product.product_id);
-          
-          
-          const payload ={
-            org_id : cart.orgid,
-            product_id: product.product_id
-          }
+
+          const payload = {
+            org_id: cart.orgid,
+            product_id: product.product_id,
+          };
 
           await deleteItemsFromCart(payload);
-          
+
+          if (count == 3) {
+            const outerContainer = minusButton.closest(".item-card-container");
+            outerContainer.remove();
+          }
+
           //Remove the product container if quantity is 0
-          const productContainer = minusButton.closest('.product-container');
+          const productContainer = minusButton.closest(".product-container");
           productContainer.remove();
-
-
         }
       });
 
@@ -313,7 +321,9 @@ function showCart(carts) {
     checkoutButton.textContent = "CHECKOUT";
     checkoutButton.addEventListener("click", async function () {
       const orgId = cart.orgid;
-      let selectedOrgProducts = carts.orgArray.filter(cart => cart.orgid.toString() === orgId.toString());
+      let selectedOrgProducts = carts.orgArray.filter(
+        (cart) => cart.orgid.toString() === orgId.toString()
+      );
 
       selectedOrgProducts.forEach((cart) => {
         cart.products.forEach((product) => {
@@ -341,7 +351,7 @@ function showCart(carts) {
   mainContainer.appendChild(innerContainer);
 }
 
-function loadCheckoutPage(prod,total,schedules){
+function loadCheckoutPage(prod, total, schedules) {
   const container = document.querySelector(".inner-container");
 
   container.innerHTML = "";
@@ -408,7 +418,6 @@ function loadCheckoutPage(prod,total,schedules){
   userNameContainer.appendChild(customerName);
 
   customerDetailsContainer.appendChild(userNameContainer);
-
 
   leftDetailsContainer.appendChild(customerDetailsContainer);
 
@@ -570,28 +579,37 @@ function loadCheckoutPage(prod,total,schedules){
   const completeOrderButton = document.createElement("button");
   completeOrderButton.classList.add("complete-order-button");
   completeOrderButton.textContent = "Complete Order";
-  completeOrder.addEventListener("click", async function (){
+  completeOrder.addEventListener("click", async function () {
     const selectedOption = pickUpDropdown.options[pickUpDropdown.selectedIndex];
-    console.log("schedule id selected: "+selectedOption.id);
+    console.log("schedule id selected: " + selectedOption.id);
     //populate array
     products_array = [];
-    prod.forEach((organization)=>{
-      organization.products.forEach((product)=>{
+    prod.forEach((organization) => {
+      organization.products.forEach((product) => {
         let products = {
           product_id: product.product_id,
           quantity: product.product_quantity,
           total: product.total,
         };
         products_array.push(products);
-      })
-    })
+      });
+    });
 
     const payload = {
       schedule_id: selectedOption.id,
-      products : products_array,
-    }
+      products: products_array,
+    };
     console.log(payload, prod[0].orgid);
     completeAndPlaceOrder(payload, prod[0].orgid);
+<<<<<<< HEAD
+=======
+
+    removeCart();
+
+    let carts = await getCartDetails();
+
+    showCart(carts);
+>>>>>>> 860c068e4d1601b49a48e42c23f9d5a72e551601
   });
 
   completeOrder.appendChild(totalSection);
@@ -604,11 +622,20 @@ function loadCheckoutPage(prod,total,schedules){
   container.appendChild(checkoutCardContainer);
 }
 
+<<<<<<< HEAD
+=======
+function removeCart() {
+  const container = document.querySelector(".inner-container");
+
+  container.innerHTML = " ";
+}
+>>>>>>> 860c068e4d1601b49a48e42c23f9d5a72e551601
 async function completeAndPlaceOrder(payload, org_id) {
-  console.log("sending to server: ")
+  console.log("sending to server: ");
   console.log(payload);
-  
+
   try {
+<<<<<<< HEAD
       const response = await fetch(`/api/${org_id}/checkout`, {
           method: "POST",
           body: JSON.stringify(payload),
@@ -626,33 +653,49 @@ async function completeAndPlaceOrder(payload, org_id) {
       }else if(response.status === 400){
         console.log("400 response");
       }
+=======
+    const response = await fetch(`/api/${org_id}/checkout`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    if (response.status === 200) {
+      console.log("success");
+      // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+      // const ordersUrl = `${currentUrl}/pages/orders.html`;
+      // window.location.href = ordersUrl;
+    } else if (response.status === 400) {
+      console.log("400 response");
+    }
+>>>>>>> 860c068e4d1601b49a48e42c23f9d5a72e551601
   } catch (err) {
-      console.error("Error adding to cart:", err);
-    
+    console.error("Error adding to cart:", err);
   }
 }
 async function deleteItemsFromCart(payload) {
-  console.log("sending to server: ")
+  console.log("sending to server: ");
   console.log(payload);
-  
-  try {
-      const response = await fetch(`/api/cart`, {
-          method: "DELETE",
-          body: JSON.stringify(payload),
-          headers: {
-            'Content-Type': 'application/json'
-        },
-      });
-      const result = await response.json();
-      console.log(result);
-      if(response.status === 200){
-        console.log("success")
 
-      }else if(response.status === 400){
-        console.log("400 response");
-      }
+  try {
+    const response = await fetch(`/api/cart`, {
+      method: "DELETE",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    if (response.status === 200) {
+      console.log("success");
+    } else if (response.status === 400) {
+      console.log("400 response");
+    }
   } catch (err) {
-      console.error("Error adding to cart:", err);
-    
+    console.error("Error adding to cart:", err);
   }
 }
