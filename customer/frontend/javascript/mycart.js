@@ -523,6 +523,13 @@ function loadCheckoutPage(carts,prod,total,schedules){
   const completeOrderButton = document.createElement('button');
   completeOrderButton.classList.add('complete-order-button');
   completeOrderButton.textContent = "Complete Order";
+  completeOrder.addEventListener("click", async function (){
+    removeCart();
+
+    let carts = await getCartDetails();
+
+    showCart(carts);
+  });
   
   completeOrder.appendChild(totalSection);
   completeOrder.appendChild(completeOrderButton);
@@ -532,4 +539,10 @@ function loadCheckoutPage(carts,prod,total,schedules){
   checkoutDetailsContainer.appendChild(rightDetailsContainer);
   
   container.appendChild(checkoutCardContainer);
+}
+
+function removeCart(){
+  const container = document.querySelector(".inner-container");
+
+  container.innerHTML = " "; 
 }
