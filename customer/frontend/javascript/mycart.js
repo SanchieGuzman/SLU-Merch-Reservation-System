@@ -62,7 +62,6 @@ window.onload = async function () {
 
 function showCart(carts) {
   const mainContainer = document.querySelector(".card-content-container");
-  console.log(carts);
 
   mainContainer.innerHTML = "";
 
@@ -232,8 +231,8 @@ function showCart(carts) {
             0
           );
           priceTotal.textContent = `₱ ${subtotal.toFixed(2)}`;
-        }else if (currentQuantity ==1){
-          alert(`Product removed on your cart ${product.product_name}`)
+        } else if (currentQuantity == 1) {
+          alert(`Product removed on your cart ${product.product_name}`);
           console.log(cart.orgid);
           console.log(product.product_id);
 
@@ -241,7 +240,7 @@ function showCart(carts) {
             org_id: cart.orgid,
             product_id: product.product_id,
           };
-          
+
           await deleteItemsFromCart(payload);
           // console.log("cart before removing from local");
           // console.log(cart);
@@ -250,27 +249,28 @@ function showCart(carts) {
           );
           // console.log("cart after removing products");
           // console.log(cart);
-        
+
           // console.log("cart before removing the whole org");
           // console.log(cart);
           if (cart.products.length === 0) {
-            carts.orgArray = carts.orgArray.filter((c) => c.orgid !== cart.orgid);
+            carts.orgArray = carts.orgArray.filter(
+              (c) => c.orgid !== cart.orgid
+            );
           }
           // console.log("cart after removing the whole org");
           // console.log(cart);
-      
-           if (count == 3) {
-             const outerContainer = minusButton.closest(".item-card-container");
-             outerContainer.remove();
-           }
-           //Remove the product container if quantity is 0
-           const productContainer = minusButton.closest(".product-container");
-           productContainer.remove();
+
+          if (count == 3) {
+            const outerContainer = minusButton.closest(".item-card-container");
+            outerContainer.remove();
+          }
+          //Remove the product container if quantity is 0
+          const productContainer = minusButton.closest(".product-container");
+          productContainer.remove();
           // //here yung pagload ng window
           // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
           // const ordersUrl = `${currentUrl}/pages/mycart.html`;
           // window.location.href = ordersUrl;
-          
         }
       });
 
@@ -622,23 +622,23 @@ async function completeAndPlaceOrder(payload, org_id) {
   console.log(payload);
 
   try {
-      const response = await fetch(`/api/${org_id}/checkout`, {
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: {
-            'Content-Type': 'application/json'
-        },
-      });
-      const result = await response.json();
-      console.log(result);
-      if(response.status === 200){
-        alert('Order processed successfully')
-        const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-        const ordersUrl = `${currentUrl}/pages/mycart.html`;
-        window.location.href = ordersUrl;
-      }else if(response.status === 400){
-        console.log("400 response");
-      }
+    const response = await fetch(`/api/${org_id}/checkout`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    if (response.status === 200) {
+      alert("Order processed successfully");
+      const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+      const ordersUrl = `${currentUrl}/pages/mycart.html`;
+      window.location.href = ordersUrl;
+    } else if (response.status === 400) {
+      console.log("400 response");
+    }
   } catch (err) {
     console.error("Error adding to cart:", err);
   }
