@@ -9,6 +9,7 @@
         <title>Order History</title>
         <link rel="stylesheet" href="../../assets/css/globals.css">
         <link rel="stylesheet" href="../../assets/css/order-history.css">
+        <link rel="icon" href="../../assets/images/vendor-side.png">
     </head>
     <body>
         <?php

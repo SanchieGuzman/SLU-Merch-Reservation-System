@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../../assets/css/schedule-popup.css">
     <link rel="stylesheet" href="../../assets/css/schedule-edit-popup.css">
     <link rel="stylesheet" href="../../assets/css/schedule-delete-popup.css">
+    <link rel="icon" href="../../assets/images/vendor-side.png">
 </head>
 <body>
     <?php 

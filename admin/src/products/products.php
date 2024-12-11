@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../../assets/css/add-product-popup.css">
     <link rel="stylesheet" href="../../assets/css/delete-product-popup.css">
     <link rel="stylesheet" href="../../assets/css/edit-product-popup.css">
+    <link rel="icon" href="../../assets/images/vendor-side.png">
 </head>
 <body>
     <?php
