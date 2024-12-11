@@ -1,8 +1,8 @@
 # CS312-MidtermProject-Leonardos
-Welcome to the `Leonardos Project`, an online reservation web application designed for Saint Louis University (SLU). This application hosts products for reservation by different organizations within SLU, enabling users to reserve products easily and reducing booth traffic.
+Welcome to the `Leonardos Project`, a web application for online reservations created specifically for Saint Louis University (SLU). This application hosts products for reservation by various SLU organizations allowing users to quickly book products and lower booth traffic during events.
 
 ## Prerequisites
-Before setting up the application, ensure the following tools are installed on your system:
+Before setting up the application, the following tools should be installed on your system:
 1. Docker
 2. MySQL Workbench
 
@@ -10,7 +10,7 @@ Before setting up the application, ensure the following tools are installed on y
 The following steps will guide you through running the web application.
 
 ### 1. Clone the Repository
-Clone the project repository from the GitHub link below:
+Clone the project repository from the GitHub link:
 ```
 # Clone the repository using the following command:
 git clone https://github.com/Stephen-Coloma/CS312-MidtermProject-Leonardos
@@ -61,7 +61,7 @@ http://192.168.xxx.xxx:3000
 ```
 
 ## Project Contributors:
-This project is a collaborate effor by the following contributors:
+This project is a collaborate effort by the following contributors:
 1. COLOMA, Stephen M.
 2. GUZMAN, Sanchie Earl M.
 3. LEUNG, Leonhard T.
