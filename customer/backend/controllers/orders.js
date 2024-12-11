@@ -4,6 +4,7 @@ const getOrdersController = async (req, res) => {
   const userid = req.cookies.user_id;
   const db = Database.getInstance();
   const result = await db.getOrders(userid);
+
   try {
     if (result) {
       const ordersMap = new Map();
@@ -22,6 +23,7 @@ const getOrdersController = async (req, res) => {
             location: item.location,
             startTime: item.start_time,
             endTime: item.end_time,
+            date: item.date,
             products: [],
           });
         }

@@ -6,8 +6,8 @@ async function getOrders(userid) {
     const result = await response.json();
 
     // babalik sa login if unauthorized
-    if(response.status === 401){
-      const originURL = window.location.origin; 
+    if (response.status === 401) {
+      const originURL = window.location.origin;
       window.location.href = originURL;
     }
 
@@ -57,8 +57,6 @@ async function showOrders() {
 
   let orders = await getOrders();
 
-  // console.log(orders);
-
   orders.forEach((order) => {
     //order
     const orderCard = document.createElement("div");
@@ -75,7 +73,6 @@ async function showOrders() {
     const statusText = document.createElement("h3");
 
     // =======================
-    console.log(order.startTime);
 
     const newStartTime = order.startTime;
 
@@ -84,22 +81,32 @@ async function showOrders() {
     const period = hours >= 12 ? "PM" : "AM";
     const hour12 = hours % 12 || 12;
 
-    const formattedStartTime = `(${hour12}${period}`;
+    const formattedStartTime = `${hour12}${period}`;
 
     const newEndTime = order.endTime;
     const [endHour, endMinute] = newEndTime.split(":").map(Number);
     const endPeriod = endHour >= 12 ? "PM" : "AM";
     const endHour12 = endHour % 12 || 12;
-    const formattedEndTime = `${endHour12}${endPeriod})`;
+    const formattedEndTime = `${endHour12}${endPeriod}`;
+
+    const claimDate = new Date(order.date);
+    const claimingDate = claimDate.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    });
 
     if (order.status === "Pending") {
       statusText.textContent =
         "Claim Your Order at: " +
         order.location +
+        " (" +
+        claimingDate +
         " " +
         formattedStartTime +
         "-" +
-        formattedEndTime;
+        formattedEndTime +
+        ")";
       statusText.classList.add("status-pending");
     } else if (order.status === "Claimed") {
       const newDate = new Date(order.claimed_at);
