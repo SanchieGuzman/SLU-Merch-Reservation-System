@@ -149,30 +149,7 @@ class Database
         return $mostOrderedProducts;
     }
 
-    //todo:create a fuction that fetches the orders that pending
-    public function getPendingOrders($organizationID){
-        $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location 
-                                        FROM organization_schedules AS os
-                                        JOIN orders AS o USING (schedule_id)
-                                        JOIN order_products AS op USING (order_id) 
-                                        JOIN products AS p USING (product_id) 
-                                        JOIN users AS u ON o.customer_id = u.user_id 
-                                        WHERE p.organization_id = ?
-                                        AND o.status = 'pending'");
 
-        $stmt->bind_param('i', $organizationID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $pendingOrders = [];
-
-        // Fetch each row one by one
-        while ($row = $result->fetch_assoc()) {
-            $pendingOrders[] = $row;
-        }
-        $stmt->close();
-        // Return the pending orders array, even if theres no pending orders
-        return $pendingOrders;
-    }
     public function getClaimedOrders($organizationID){
         $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location 
                                         FROM organization_schedules AS os
@@ -337,30 +314,66 @@ class Database
         return $allProducts;   
     }
 
-    public function getPendingProducts($organizationID){
-        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, TO_BASE64(p.product_image) AS product_image_base64
-										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
-                                        JOIN products AS p ON op.product_id = p.product_id 
+    public function getPendingOrders($organizationID) {
+        $stmt = $this->mysqli->prepare("SELECT DISTINCT u.user_id, u.first_name, u.last_name, o.total AS order_total, o.status, o.order_id, o.created_at, o.claimed_at, os.location, os.date
+                                        FROM organization_schedules AS os
+                                        JOIN orders AS o USING (schedule_id)
+                                        JOIN order_products AS op USING (order_id) 
+                                        JOIN products AS p USING (product_id) 
                                         JOIN users AS u ON o.customer_id = u.user_id 
-                                        WHERE p.organization_id = ?
-                                        AND o.status = 'pending'");
+                                        WHERE p.organization_id = ? AND o.status = 'pending'");
+    
         $stmt->bind_param('i', $organizationID);
         $stmt->execute();
         $result = $stmt->get_result();
-        $pendingProducts = [];
+        $pendingOrders = [];
+    
+        // Get the current date
+        $currentDate = date('Y-m-d'); // Format to match os.date
+    
+        // Fetch each row and check the date
         while ($row = $result->fetch_assoc()) {
-            $pendingProducts[] = $row;
+            // Check if the current date is greater than os.date
+            if ($currentDate > $row['date']) {
+                // Update the order status to 'Cancelled'
+                $updateStmt = $this->mysqli->prepare("UPDATE orders SET status = 'Cancelled' WHERE order_id = ?");
+                $updateStmt->bind_param('i', $row['order_id']);
+                $updateStmt->execute();
+                $updateStmt->close();
+    
+                // Update the product quantities in the products table
+                // Fetch the products related to the order
+                $productStmt = $this->mysqli->prepare("SELECT op.product_id, op.quantity FROM order_products AS op WHERE op.order_id = ?");
+                $productStmt->bind_param('i', $row['order_id']);
+                $productStmt->execute();
+                $productResult = $productStmt->get_result();
+    
+                // Loop through each product and update the quantity in the products table
+                while ($productRow = $productResult->fetch_assoc()) {
+                    $productUpdateStmt = $this->mysqli->prepare("UPDATE products SET quantity = quantity + ? WHERE product_id = ?");
+                    $productUpdateStmt->bind_param('ii', $productRow['quantity'], $productRow['product_id']);
+                    $productUpdateStmt->execute();
+                    $productUpdateStmt->close();
+                }
+                $productStmt->close();
+            }
+            // Add the order to the result array
+            $pendingOrders[] = $row;
         }
+    
         $stmt->close();
-        return $pendingProducts;
+    
+        // Return the updated pending orders
+        return $pendingOrders;
     }
+    
     public function getClaimedProducts($organizationID){
         $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, TO_BASE64(p.product_image) AS product_image_base64
 										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
                                         JOIN products AS p ON op.product_id = p.product_id 
                                         JOIN users AS u ON o.customer_id = u.user_id 
                                         WHERE p.organization_id = ?
-                                        AND o.status = 'Claimed'");
+                                        AND (o.status = 'Claimed' OR o.status = 'Cancelled')");
         $stmt->bind_param('i', $organizationID);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -457,7 +470,7 @@ class Database
                 JOIN order_products AS op USING (order_id)
                 JOIN products AS p USING (product_id)
                 JOIN users AS u ON o.customer_id = u.user_id
-                WHERE p.organization_id = ? AND o.status = 'Claimed'";
+                WHERE p.organization_id = ? AND (o.status = 'Claimed' OR o.status = 'Cancelled')";
     
         $params = [$organizationID];
         $types = 'i'; 
