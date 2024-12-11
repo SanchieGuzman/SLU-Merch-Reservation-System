@@ -220,7 +220,7 @@ class Database {
     const currentDateTime = new Date();
     const query = `
                 SELECT schedule_id, date, start_time, end_time, location FROM organization_schedules 
-                WHERE organization_id = ? 
+                WHERE organization_id = ? AND status is Null
                 AND (
                     date > CURRENT_DATE OR
                     (date = CURRENT_DATE AND start_time > NOW())
