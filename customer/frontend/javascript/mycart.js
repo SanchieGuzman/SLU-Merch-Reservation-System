@@ -195,20 +195,6 @@ function showCart(carts) {
 
       productActionsContainer.appendChild(productQuantity);
 
-      quantityInput.addEventListener("input", () => {
-        let currentQuantity = parseInt(quantityInput.value);
-
-        if (currentQuantity > product.total_stocks) {
-          quantityInput.value = product.total_stocks;
-          currentQuantity = product.total_stocks;
-        }
-        if (currentQuantity < 1 || isNaN(currentQuantity)) {
-          quantityInput.value = 1;
-          currentQuantity = 1;
-        }
-        updateTotal(currentQuantity, product.product_price);
-      });
-
       plusButton.addEventListener("click", () => {
         let currentQuantity = parseInt(quantityInput.value);
         if (currentQuantity < product.total_stocks) {
@@ -231,7 +217,6 @@ function showCart(carts) {
       minusButton.addEventListener("click", async () => {
         // const outerContainer = document.querySelector(".item-card-container");
         const cardContainer = minusButton.closest(".inner-item-card-container");
-        console.log(cardContainer);
         const count = cardContainer.childElementCount;
 
         let currentQuantity = parseInt(quantityInput.value);
@@ -256,13 +241,35 @@ function showCart(carts) {
             org_id: cart.orgid,
             product_id: product.product_id,
           };
-
+          
           await deleteItemsFromCart(payload);
-
-          //here yung pagload ng window
-          const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-          const ordersUrl = `${currentUrl}/pages/mycart.html`;
-          window.location.href = ordersUrl;
+          // console.log("cart before removing from local");
+          // console.log(cart);
+          cart.products = cart.products.filter(
+            (p) => p.product_id !== product.product_id
+          );
+          // console.log("cart after removing products");
+          // console.log(cart);
+        
+          // console.log("cart before removing the whole org");
+          // console.log(cart);
+          if (cart.products.length === 0) {
+            carts.orgArray = carts.orgArray.filter((c) => c.orgid !== cart.orgid);
+          }
+          // console.log("cart after removing the whole org");
+          // console.log(cart);
+      
+           if (count == 3) {
+             const outerContainer = minusButton.closest(".item-card-container");
+             outerContainer.remove();
+           }
+           //Remove the product container if quantity is 0
+           const productContainer = minusButton.closest(".product-container");
+           productContainer.remove();
+          // //here yung pagload ng window
+          // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+          // const ordersUrl = `${currentUrl}/pages/mycart.html`;
+          // window.location.href = ordersUrl;
           
         }
       });
