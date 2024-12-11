@@ -35,7 +35,7 @@ Since the Docker containers start with an empty database, import the necessary d
     ![My Image](admin/assets/images/setup/create-connection.png)
 2. Access the connection and import the MySQL file located at `./admin/src/database/reservationdb.sql`.
 3. Use the database name `reservationDB` during the import.
-    ![My Image](admin/assets/images/setup/import-database.png)
+    ![My Image](admin/assets/images/setup/import-databse.png)
 
 ## Accessing the Web Application
 ### Vendor Side
