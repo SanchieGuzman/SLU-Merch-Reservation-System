@@ -963,6 +963,8 @@ function loadCheckoutPage(
     };
 
     await completeAndPlaceOrder(payload, org_id);
+
+    asdfasdfasdf
   });
   
 }
@@ -983,9 +985,9 @@ async function completeAndPlaceOrder(payload, org_id) {
       console.log(result);
       if(response.status === 200){
         console.log("success")
-        // const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-        // const ordersUrl = `${currentUrl}/pages/orders.html`;
-        // window.location.href = ordersUrl;
+        const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+        const ordersUrl = `${currentUrl}/pages/products.html`;
+        window.location.href = ordersUrl;
       }else if(response.status === 400){
         console.log("400 response");
       }else if(response.status === 406){

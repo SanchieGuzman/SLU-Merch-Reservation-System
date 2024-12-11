@@ -96,7 +96,13 @@ async function showOrders() {
       day: "2-digit",
     });
 
-    if (order.status === "Pending") {
+    // Parse order.date into a Date object
+    const productDate = new Date(order.date);
+
+    // Compare with the current date
+    const now = new Date();
+    
+    if (order.status === "Pending" && productDate > now) {
       statusText.textContent =
         "Claim Your Order at: " +
         order.location +
@@ -120,7 +126,7 @@ async function showOrders() {
       });
       statusText.textContent = "Order Claimed at: " + readableDate;
       statusText.classList.add("status-claimed");
-    } else {
+    } else { //pending status pero old yung date
       statusText.textContent = "Cancelled";
       statusText.classList.add("status-cancelled");
     }

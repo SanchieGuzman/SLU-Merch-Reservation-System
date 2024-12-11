@@ -93,7 +93,7 @@ function showFilter() {
     "Last 5 Days",
     "Last 7 Days",
   ];
-  const dateRangeValue = [-1, 0, 1, 3, 5, 30]; //todo: change to 7
+  const dateRangeValue = [-1, 0, 1, 3, 5, 7]; //todo: change to 7
 
   dateRange.forEach((range, index) => {
     const radioButton = document.createElement("input");

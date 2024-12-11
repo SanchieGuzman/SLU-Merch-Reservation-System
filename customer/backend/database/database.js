@@ -379,35 +379,8 @@ class Database {
       return false;
     }
   }
-  // async getLatestClaimedOrder(user_id){
-  //     const query = `SELECT o.order_id, o.customer_id, o.created_at, o.total, o.status,
-  //                     op.quantity, op.total AS each_product_total,
-  //                     p.product_id, p.product_name, p.product_image, p.product_description
-  //                     FROM orders AS o JOIN order_products AS op USING (order_id) JOIN products AS p USING (product_id) WHERE o.customer_id =2 AND o.order_id =
-  //                     (SELECT o1.order_id FROM orders AS o1 WHERE o1.customer_id =2 AND o1.status = 'Claimed' ORDER BY o1.created_at DESC LIMIT 1);`;
-  // }
-
-  // async getLatestPendingOrder(user_id){
-  //     const query = `SELECT o.order_id, o.customer_id, o.created_at, o.total, o.status,
-  //                     op.quantity, op.total AS each_product_total,
-  //                     p.product_id, p.product_name, p.product_image, p.product_description
-  //                     FROM orders AS o JOIN order_products AS op USING (order_id) JOIN products AS p USING (product_id) WHERE o.customer_id =2 AND o.order_id =
-  //                     (SELECT o1.order_id FROM orders AS o1 WHERE o1.customer_id =2 AND o1.status = 'Pending' ORDER BY o1.created_at DESC LIMIT 1);`;
-  // }
 
   async getLatestOrder(user_id) {
-    // const query = `SELECT o.order_id, o.customer_id, o.created_at, o.total, o.status,
-    //                 op.quantity, op.total AS each_product_total,
-    //                 p.product_id, p.product_name, p.product_image, p.product_description
-    //                 FROM orders AS o
-    //                 JOIN order_products AS op USING (order_id)
-    //                 JOIN products AS p USING (product_id)
-    //                 WHERE o.customer_id = ? AND o.order_id =
-    //                     (SELECT o1.order_id
-    //                         FROM orders AS o1
-    //                         WHERE o1.customer_id =2
-    //                         ORDER BY o1.created_at
-    //                         DESC LIMIT 1);`;
     const query = `SELECT o.order_id, o.customer_id, o.created_at, o.total, o.status,
                         op.quantity, op.total AS each_product_total, 
                         p.product_id, p.product_name, p.product_image
@@ -417,10 +390,10 @@ class Database {
                         WHERE o.customer_id = ? AND o.order_id = 
                             (SELECT o1.order_id 
                                 FROM orders AS o1 
-                                WHERE o1.customer_id =2 
+                                WHERE o1.customer_id =? 
                                 ORDER BY o1.created_at 
                                 DESC LIMIT 1);`;
-    const params = [user_id];
+    const params = [user_id, user_id];
     try {
       const results = await this.execute(query, params);
       return results;

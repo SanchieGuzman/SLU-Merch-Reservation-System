@@ -158,7 +158,7 @@ class Database
                                         JOIN products AS p USING (product_id) 
                                         JOIN users AS u ON o.customer_id = u.user_id 
                                         WHERE p.organization_id = ?
-                                        AND o.status = 'Claimed'");
+                                        AND (o.status = 'Claimed' OR o.status = 'Cancelled')");
         $stmt->bind_param('i', $organizationID);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -321,7 +321,7 @@ class Database
                                         JOIN order_products AS op USING (order_id) 
                                         JOIN products AS p USING (product_id) 
                                         JOIN users AS u ON o.customer_id = u.user_id 
-                                        WHERE p.organization_id = ? AND o.status = 'pending'");
+                                        WHERE p.organization_id = ? AND o.status = 'Pending'");
     
         $stmt->bind_param('i', $organizationID);
         $stmt->execute();
@@ -365,6 +365,24 @@ class Database
     
         // Return the updated pending orders
         return $pendingOrders;
+    }
+
+    public function getPendingProducts($organizationID){
+        $stmt = $this->mysqli->prepare("SELECT o.order_id, u.user_id, u.first_name, u.last_name, o.status,  p.product_name, op.quantity, op.total, TO_BASE64(p.product_image) AS product_image_base64
+										FROM orders AS o JOIN order_products AS op ON o.order_id = op.order_id 
+                                        JOIN products AS p ON op.product_id = p.product_id 
+                                        JOIN users AS u ON o.customer_id = u.user_id 
+                                        WHERE p.organization_id = ?
+                                        AND o.status = 'pending'");
+        $stmt->bind_param('i', $organizationID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pendingProducts = [];
+        while ($row = $result->fetch_assoc()) {
+            $pendingProducts[] = $row;
+        }
+        $stmt->close();
+        return $pendingProducts;
     }
     
     public function getClaimedProducts($organizationID){
