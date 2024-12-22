@@ -366,4 +366,17 @@ html {
   .content-container .container {
     max-height: 100vh;
   }
+
+  .card-container {
+    gap: 0;
+    align-items: center;
+  }
+
+  .card-container .complete-orders-card {
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid black;
+    width: 85%;
+  }
 }
