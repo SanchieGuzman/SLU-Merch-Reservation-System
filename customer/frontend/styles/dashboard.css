@@ -332,7 +332,7 @@ html {
   }
 
   .right-container {
-    height: 90vh;
+    height: 80vh;
     overflow-y: scroll;
     width: 100%;
     padding-top: 1rem;
@@ -360,7 +360,7 @@ html {
   }
 
   .content-container .reserved-products-container {
-    min-height: 50vh;
+    min-height: 45vh;
   }
 
   .content-container .container {
@@ -378,5 +378,52 @@ html {
     box-shadow: none;
     border-bottom: 1px solid black;
     width: 85%;
+  }
+
+  .reserved-products-container {
+    border-radius: 0.4rem;
+  }
+
+  .reserved-card-container .order-card-container .product-card {
+    border-radius: 0.2rem;
+  }
+
+  .reserved-products-container .order-cards-container {
+    width: 90%;
+    overflow-x: hidden;
+  }
+
+  .reserved-products-container .reserved-products-heading {
+    width: 90%;
+  }
+
+  .product-card > span:first-child {
+    font-size: 0.8rem;
+  }
+
+  .product-card .span-left {
+    font-size: 0.8rem;
+  }
+  .product-card .span-right {
+    font-size: 0.8rem;
+  }
+
+  .container .completed-orders-container {
+    border-radius: 0.2rem;
+  }
+
+  .container .latest-orders-container {
+    border-radius: 0.2rem;
+  }
+
+  .container .latest-cards-container .latest-orders-card {
+    background-color: transparent;
+    border-radius: 0;
+    border-bottom: 1px solid black;
+    box-shadow: none;
+  }
+
+  .container .latest-cards-container {
+    gap: 0;
   }
 }
