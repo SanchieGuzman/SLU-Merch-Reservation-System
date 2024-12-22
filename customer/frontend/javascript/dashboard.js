@@ -71,6 +71,10 @@ async function loadDashboard() {
   generateLatestOrdersSection(latestOrdersList);
 
   generateReservedProductsSection(reservedProductsList);
+
+  document
+    .querySelector(".reserved-products-container")
+    .scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function generateCompletedOrdersSection(data) {

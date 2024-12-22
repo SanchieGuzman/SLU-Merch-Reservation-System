@@ -1,4 +1,3 @@
-
 /* Base reset for body and html */
 body,
 html {
@@ -6,7 +5,7 @@ html {
   padding: 0;
   height: 100vh;
   overflow: hidden;
-  font-family: 'Poppins', sans-serif; 
+  font-family: "Poppins", sans-serif;
 }
 
 /* Main container */
@@ -37,11 +36,11 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 1rem; 
+  gap: 1rem;
   height: 34vh;
 }
 
-.completed-orders-container .card-container{
+.completed-orders-container .card-container {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
@@ -65,12 +64,12 @@ html {
 
 .complete-orders-card {
   display: grid;
-  grid-template-columns: 1.8fr 1.5fr 1fr; 
-  align-items: center; 
+  grid-template-columns: 1.8fr 1.5fr 1fr;
+  align-items: center;
   padding: 0.75rem;
   background-color: #f5f5f5;
   border-radius: 0.5rem;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Reserved Products panel */
@@ -115,7 +114,7 @@ html {
   overflow-y: auto;
 }
 
-.order-cards-container .reserved-card-container{
+.order-cards-container .reserved-card-container {
   display: flex;
   flex-flow: column nowrap;
   width: 95%;
@@ -193,7 +192,6 @@ html {
   flex-direction: row;
 }
 
-
 .latest-orders-container {
   background-color: #ffffff;
   border-radius: 0.5rem;
@@ -203,11 +201,11 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 1rem; 
+  gap: 1rem;
   height: 30vh;
 }
 
-.latest-orders-container .latest-cards-container{
+.latest-orders-container .latest-cards-container {
   display: flex;
   flex-flow: column nowrap;
   gap: 1.25rem;
@@ -225,35 +223,34 @@ html {
   background-color: transparent;
   size: 1.2rem;
   font-weight: bold;
-  padding-bottom: 2%; 
-  padding-top: 1%; 
+  padding-bottom: 2%;
+  padding-top: 1%;
 }
 
 .latest-orders-card {
   display: grid;
-  grid-template-columns: .5fr 1.3fr 1.5fr .5fr; 
-  align-items: center; 
+  grid-template-columns: 0.5fr 1.3fr 1.5fr 0.5fr;
+  align-items: center;
   padding: 0.75rem;
   background-color: #f5f5f5;
   border-radius: 0.5rem;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .latest-orders-card .latest-orders-productsquantity {
   display: flex;
   flex-direction: column;
 }
-.latest-orders-card .latest-orders-div-status{
+.latest-orders-card .latest-orders-div-status {
   display: flex;
   flex-direction: column;
 }
-.latest-orders-div-status .claimed{
-  color:green;
+.latest-orders-div-status .claimed {
+  color: green;
 }
 
-
-.latest-orders-div-status .pending{
-  color:red;
+.latest-orders-div-status .pending {
+  color: red;
 }
 .latest-orders-container div img {
   box-shadow: none;
@@ -290,7 +287,7 @@ html {
 .reserved-products-container .order-cards-container .order-label {
   /* padding: 0.5rem; */
   size: 1.2rem;
-  padding-left: 5%
+  padding-left: 5%;
 }
 
 .order-card-container {
@@ -302,10 +299,9 @@ html {
 
 .price-and-quantity-container {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   font-size: 0.875rem;
 }
-  
 
 /* Empty state placeholder */
 .empty-state {
@@ -327,4 +323,47 @@ html {
 
   align-items: center;
   padding: 0.625rem;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    max-height: 100vh;
+    overflow-y: scroll;
+  }
+
+  .right-container {
+    height: 90vh;
+    overflow-y: scroll;
+    width: 100%;
+    padding-top: 1rem;
+    scroll-padding-bottom: 5vh;
+  }
+
+  .content-container {
+    padding: 1rem;
+    width: 90%;
+    flex-direction: column-reverse;
+    height: 90vh;
+    overflow-y: scroll;
+  }
+
+  .content-container .reserved-products-container,
+  .completed-orders-container,
+  .latest-cards-container {
+    height: 20vh;
+    width: 100%;
+    padding: 0;
+  }
+
+  .completed-orders-container .card-container {
+    width: 100%;
+  }
+
+  .content-container .reserved-products-container {
+    min-height: 50vh;
+  }
+
+  .content-container .container {
+    max-height: 100vh;
+  }
 }
