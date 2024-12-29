@@ -297,12 +297,16 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @media screen and (max-width: 600px) {
+  .inner-container .card-header h2 {
+    font-size: 1rem;
+  }
+
   .inner-container .inner-item-card-container {
     padding: 0;
   }
 
   .inner-container .card-header h1 {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 
   .complete-order-container .total-section p {
