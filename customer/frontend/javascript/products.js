@@ -6,8 +6,8 @@ async function getBoothDetails() {
     const result = await response.json();
 
     // babalik sa login if unauthorized
-    if(response.status === 401){
-      const originURL = window.location.origin; 
+    if (response.status === 401) {
+      const originURL = window.location.origin;
       window.location.href = originURL;
     }
 
@@ -49,8 +49,8 @@ async function getCartDetails() {
     const result = await response.json();
 
     // babalik sa login if unauthorized
-    if(response.status === 401){
-      const originURL = window.location.origin; 
+    if (response.status === 401) {
+      const originURL = window.location.origin;
       window.location.href = originURL;
     }
 
@@ -68,8 +68,8 @@ async function getScheduleDetails(orgid) {
     const result = await response.json();
 
     // babalik sa login if unauthorized
-    if(response.status === 401){
-      const originURL = window.location.origin; 
+    if (response.status === 401) {
+      const originURL = window.location.origin;
       window.location.href = originURL;
     }
 
@@ -90,7 +90,7 @@ function showBooths(booths) {
 
   const headerText = document.createElement("h2");
   headerText.classList.add("header-text");
-  headerText.textContent = "See Products of Each SLU Organizations";
+  headerText.textContent = "Products";
   cardHeader.appendChild(headerText);
 
   const headerIcon = document.createElement("img");
@@ -235,8 +235,8 @@ async function getBoothProducts(orgId) {
     const result = await response.json();
 
     // babalik sa login if unauthorized
-    if(response.status === 401){
-      const originURL = window.location.origin; 
+    if (response.status === 401) {
+      const originURL = window.location.origin;
       window.location.href = originURL;
     }
 
@@ -390,8 +390,8 @@ async function getProductDetails(orgId, productId) {
     const result = await response.json();
 
     // babalik sa login if unauthorized
-    if(response.status === 401){
-      const originURL = window.location.origin; 
+    if (response.status === 401) {
+      const originURL = window.location.origin;
       window.location.href = originURL;
     }
 
@@ -404,7 +404,7 @@ async function getProductDetails(orgId, productId) {
 function viewProductDetails(orgName, product, reference, org_id) {
   const container = document.querySelector(".inner-container");
   // console.log(product);
-  
+
   container.innerHTML = "";
 
   //card header ====================================start================
@@ -432,7 +432,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
 
       const headerText = document.createElement("h2");
       headerText.classList.add("header-text");
-      headerText.textContent = "See Products of Each SLU Organizations";
+      headerText.textContent = "Products";
       cardHeader.appendChild(headerText);
 
       const headerIcon = document.createElement("img");
@@ -549,7 +549,7 @@ function viewProductDetails(orgName, product, reference, org_id) {
 
   // total price
   const totalInfo = document.createElement("h3");
-  totalInfo.textContent = "Total (0 item): ₱ 0"
+  totalInfo.textContent = "Total (0 item): ₱ 0";
   totalInfo.id = "totalPrice";
 
   // append price container and total info
@@ -568,34 +568,34 @@ function viewProductDetails(orgName, product, reference, org_id) {
   //EVENT LISTENER FOR PLACE BUTTON
   placeOrderButton.addEventListener("click", async () => {
     quantity = document.querySelector(".input-box").value;
-    if(quantity ==0){
+    if (quantity == 0) {
       alert("Invalid quantity input");
-    }else{
+    } else {
       console.log(product);
       let schedules = await getScheduleDetails(org_id);
       console.log(schedules);
       //product id
       const prod_id = product.product_id;
-      console.log("prodid after pressing place order " +prod_id);
-    
+      console.log("prodid after pressing place order " + prod_id);
+
       //product image
       const prodImage = product.product_image;
-  
+
       // product Name
       const prodName = product.product_name;
-  
+
       // product quantity
       const prodQuantity = container.querySelector(
         ".quantity-container input[name='input-box']"
       ).value;
       // console.log(prodQuantity);
-  
+
       // product total
       const prodTotal = container
         .querySelector("#totalPrice")
         .textContent.split("₱")[1];
       // console.log(prodTotal);
-  
+
       loadCheckoutPage(
         prodImage,
         prodName,
@@ -622,10 +622,10 @@ function viewProductDetails(orgName, product, reference, org_id) {
     product_id = product.product_id;
     org_id = product.org_id;
     quantity = document.querySelector(".input-box").value;
-    if(quantity ==0){
-      alert('Insufficient amount to add to cart');
-    }else{
-      await addProductsToCart(product_id,org_id,quantity);
+    if (quantity == 0) {
+      alert("Insufficient amount to add to cart");
+    } else {
+      await addProductsToCart(product_id, org_id, quantity);
     }
   });
 
@@ -679,7 +679,6 @@ function loadCheckoutPage(
   product_id
 ) {
   const container = document.querySelector(".inner-container");
- 
 
   container.innerHTML = "";
 
@@ -755,7 +754,6 @@ function loadCheckoutPage(
     return null;
   })();
 
-
   const customerDetailsContainer = document.createElement("div");
   customerDetailsContainer.classList.add("customer-details-container");
 
@@ -773,7 +771,6 @@ function loadCheckoutPage(
 
   customerDetailsContainer.appendChild(userNameContainer);
 
-  
   leftDetailsContainer.appendChild(customerDetailsContainer);
 
   //Orders Summary
@@ -818,7 +815,7 @@ function loadCheckoutPage(
 
   schedules.schedules.forEach((schedule) => {
     const optionList = document.createElement("option");
-    
+
     const dateFormat = new Date(schedule.date);
     const readableFormat = dateFormat.toLocaleString("en-us", {
       year: "numeric",
@@ -937,97 +934,91 @@ function loadCheckoutPage(
   checkoutDetailsContainer.appendChild(rightDetailsContainer);
 
   container.appendChild(checkoutCardContainer);
-  console.log("product id before completing order:"+ product_id);
-  completeOrderButton.addEventListener("click", async ()=>{
+  console.log("product id before completing order:" + product_id);
+  completeOrderButton.addEventListener("click", async () => {
     const selectedOption = pickUpDropdown.options[pickUpDropdown.selectedIndex];
-    console.log("schedule id selected: "+selectedOption.id);
-    console.log("org id: "+ org_id);
-    
+    console.log("schedule id selected: " + selectedOption.id);
+    console.log("org id: " + org_id);
 
     //order_products
-    console.log("product quantity: "+ prodQuantity);
-    console.log("product id before completing order:"+ product_id);
+    console.log("product quantity: " + prodQuantity);
+    console.log("product id before completing order:" + product_id);
 
     //both orders and order_products
     console.log("total " + prodTotal);
 
     const payload = {
       schedule_id: selectedOption.id,
-      products:[
+      products: [
         {
-        product_id: product_id,
-        quantity: prodQuantity,
-        total: prodTotal,
+          product_id: product_id,
+          quantity: prodQuantity,
+          total: prodTotal,
         },
       ],
     };
 
     await completeAndPlaceOrder(payload, org_id);
 
-    asdfasdfasdf
+    asdfasdfasdf;
   });
-  
 }
 
 async function completeAndPlaceOrder(payload, org_id) {
-  console.log("sending to server: ")
+  console.log("sending to server: ");
   console.log(payload);
-  
+
   try {
-      const response = await fetch(`/api/${org_id}/checkout`, {
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: {
-            'Content-Type': 'application/json'
-        },
-      });
-      const result = await response.json();
-      console.log(result);
-      if(response.status === 200){
-        console.log("success")
-        const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-        const ordersUrl = `${currentUrl}/pages/products.html`;
-        window.location.href = ordersUrl;
-      }else if(response.status === 400){
-        console.log("400 response");
-      }else if(response.status === 406){
-        alert('Insufficient product');
-      }
+    const response = await fetch(`/api/${org_id}/checkout`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    if (response.status === 200) {
+      console.log("success");
+      const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+      const ordersUrl = `${currentUrl}/pages/products.html`;
+      window.location.href = ordersUrl;
+    } else if (response.status === 400) {
+      console.log("400 response");
+    } else if (response.status === 406) {
+      alert("Insufficient product");
+    }
   } catch (err) {
-      console.error("Error adding to cart:", err);
-    
+    console.error("Error adding to cart:", err);
   }
 }
 
 async function addProductsToCart(product_id, organization_id, prodquantity) {
-
   const payload = {
-    "product_id": product_id,
-    "orgid": organization_id,
-    "quantity": prodquantity
-  }
-  console.log("sending to server: "+ payload)
+    product_id: product_id,
+    orgid: organization_id,
+    quantity: prodquantity,
+  };
+  console.log("sending to server: " + payload);
   try {
-      const response = await fetch('/api/cart', {
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: {
-            'Content-Type': 'application/json'
-        },
-      });
-      const result = await response.json();
-        console.log(result);
-      if(response.status === 201){
-        alert('Product successfully added to your cart!')
-        const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
-        const ordersUrl = `${currentUrl}/pages/products.html`;
-        window.location.href = ordersUrl;
-        
-      }else if(response.status === 400){
-        console.log("400 response");
-      }
+    const response = await fetch("/api/cart", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    if (response.status === 201) {
+      alert("Product successfully added to your cart!");
+      const currentUrl = window.location.origin; // Get base URL (e.g., http://localhost:3000/) // I made this dynamic for the purpose of docker
+      const ordersUrl = `${currentUrl}/pages/products.html`;
+      window.location.href = ordersUrl;
+    } else if (response.status === 400) {
+      console.log("400 response");
+    }
   } catch (err) {
-      console.error("Error adding to cart:", err);
-    
+    console.error("Error adding to cart:", err);
   }
 }
