@@ -106,3 +106,62 @@ body {
 .inner-container .bottom-spacer {
   height: 10vh;
 }
+
+@media screen and (max-width: 600px) {
+  .inner-container {
+    border: none;
+  }
+
+  .content-container {
+    padding: 1rem;
+  }
+
+  .cards-container {
+    padding: 0;
+  }
+
+  .order-card {
+    padding: 0.5rem;
+    /* box-shadow: none; */
+  }
+
+  .order-card .card-header {
+    padding: 0.5rem;
+  }
+
+  .order-card .product-container,
+  .order-card .total-price-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .card-header .status-claimed,
+  .card-header .status-pending,
+  .card-header .status-cancelled {
+    font-size: 0.9rem;
+    width: 60%;
+    text-align: right;
+  }
+
+  .order-card .total-price-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .order-card .total-price-container p {
+    font-size: 1rem;
+    width: 50%;
+  }
+
+  .order-card .total-price-container h3 {
+    font-size: 1rem;
+    text-align: right;
+  }
+
+  .order-card .product-spacer {
+    width: 20%;
+  }
+
+  .order-card .quantity-price-container {
+    width: 40%;
+  }
+}
