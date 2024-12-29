@@ -261,7 +261,7 @@ body {
 
   .side-nav .sidenav-buttons-container button:hover {
     border-radius: 0.5rem 0.5rem 0 0;
-    background-color: yellow;
+    background-color: var(--gradient1);
   }
 
   .side-nav .sidenav-buttons-container .active {
