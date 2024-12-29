@@ -466,6 +466,10 @@ hr {
     padding: 1rem;
   }
 
+  .inner-container .checkout-card-container {
+    height: auto;
+  }
+
   .inner-container .booth-container {
     padding: 1rem;
   }
@@ -476,6 +480,10 @@ hr {
 
   .booth-container .booth-name-container {
     padding: 0.5rem 1rem;
+  }
+
+  .inner-container .card-header h1 {
+    font-size: 1rem;
   }
 
   .item-card .item-card-image-container {
@@ -505,11 +513,57 @@ hr {
     width: 10 0%;
   }
 
+  .left-details-container h1 {
+    font-size: 1rem;
+  }
+
+  .pickup-container .pickup-dropdown {
+    height: 3rem;
+  }
+
   .right-container-specific-product {
     width: 100%;
   }
 
+  .right-details-container .checkout-scrollable {
+    box-shadow: none;
+  }
+
   .products-container .org-name-container {
     padding: 1rem;
+  }
+
+  .checkout-details-container {
+    flex-direction: column;
+  }
+
+  .left-details-container,
+  .right-details-container {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .left-details-container .orders-summary-container {
+    width: 90%;
+  }
+
+  .pickup-container .pickup-dropdown {
+    width: 95%;
+  }
+
+  .right-details-container .checkout-scrollable {
+    width: 95%;
+  }
+
+  .complete-order-container {
+    font-size: 1rem;
+  }
+
+  .complete-order-container .total-section {
+    width: 95%;
+  }
+
+  .complete-order-container button {
+    width: 95%;
   }
 }

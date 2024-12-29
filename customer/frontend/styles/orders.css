@@ -112,6 +112,10 @@ body {
     border: none;
   }
 
+  .inner-container .orders-header h2 {
+    font-size: 1rem;
+  }
+
   .content-container {
     padding: 1rem;
   }
